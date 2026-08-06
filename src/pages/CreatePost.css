@@ -1,0 +1,122 @@
+.create-post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-3xl);
+}
+
+.create-post__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--muted);
+  padding: var(--space-xs) 0;
+  transition: color var(--duration-fast);
+}
+
+.create-post__back:hover {
+  color: var(--text);
+}
+
+.create-post__title {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Type selector */
+.create-post__types {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.create-post__type-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--muted);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.create-post__type-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.create-post__type-btn--active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+/* Fields */
+.create-post__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.create-post__label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.create-post__input {
+  padding: 14px var(--space-md);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  border-radius: var(--radius-lg);
+}
+
+.create-post__input::placeholder {
+  color: var(--border);
+  font-weight: 500;
+}
+
+.create-post__textarea {
+  padding: 14px var(--space-md);
+  border-radius: var(--radius-lg);
+  line-height: 1.6;
+  min-height: 120px;
+}
+
+.create-post__textarea::placeholder {
+  color: var(--border);
+}
+
+.create-post__interest-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+/* Actions */
+.create-post__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Success */
+.create-post__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-md);
+  min-height: 60vh;
+}
+
+.create-post__success h2 {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+}

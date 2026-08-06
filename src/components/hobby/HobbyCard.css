@@ -1,0 +1,136 @@
+.hobby-card {
+  position: absolute;
+  width: 100%;
+  max-width: 380px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hobby-card--top {
+  z-index: 3;
+}
+
+.hobby-card__inner {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl) var(--space-xl);
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.hobby-card--top .hobby-card__inner {
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Emoji */
+.hobby-card__emoji {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+  line-height: 1;
+}
+
+/* Name */
+.hobby-card__name {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+/* Description */
+.hobby-card__desc {
+  font-size: var(--text-base);
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 280px;
+  margin-bottom: var(--space-xl);
+}
+
+/* Meta */
+.hobby-card__meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.hobby-card__category {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+.hobby-card__members {
+  display: flex;
+  align-items: center;
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+/* Accent bar */
+.hobby-card__accent-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+/* Swipe indicators */
+.hobby-card__indicator {
+  position: absolute;
+  top: var(--space-lg);
+  z-index: 10;
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+.hobby-card__indicator--like {
+  right: var(--space-lg);
+  color: var(--green);
+  border: 2.5px solid var(--green);
+  transform: rotate(12deg);
+}
+
+.hobby-card__indicator--skip {
+  left: var(--space-lg);
+  color: var(--red);
+  border: 2.5px solid var(--red);
+  transform: rotate(-12deg);
+}
+
+@media (max-width: 480px) {
+  .hobby-card {
+    max-width: 320px;
+  }
+
+  .hobby-card__inner {
+    min-height: 340px;
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .hobby-card__emoji {
+    font-size: 3rem;
+  }
+
+  .hobby-card__name {
+    font-size: var(--text-2xl);
+  }
+}

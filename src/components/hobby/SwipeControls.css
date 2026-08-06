@@ -1,0 +1,36 @@
+.swipe-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+.swipe-controls__btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.swipe-controls__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.swipe-controls__btn--skip:hover:not(:disabled) {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(255, 92, 92, 0.08);
+}
+
+.swipe-controls__btn--like:hover:not(:disabled) {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(91, 203, 119, 0.08);
+}

@@ -1,0 +1,17 @@
+.chess-pattern {
+  width: calc(var(--chess-cols) * var(--chess-size));
+  height: calc(var(--chess-rows) * var(--chess-size));
+  opacity: var(--chess-opacity);
+  background-image:
+    linear-gradient(45deg, var(--chess-color) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--chess-color) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--chess-color) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--chess-color) 75%);
+  background-size: calc(var(--chess-size) * 2) calc(var(--chess-size) * 2);
+  background-position:
+    0 0,
+    0 var(--chess-size),
+    var(--chess-size) calc(-1 * var(--chess-size)),
+    calc(-1 * var(--chess-size)) 0;
+  pointer-events: none;
+}

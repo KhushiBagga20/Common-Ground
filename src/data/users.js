@@ -1,0 +1,108 @@
+export const users = [
+  {
+    id: 'u1',
+    name: 'Maya Chen',
+    avatar: null,
+    bio: 'Film photography nerd. Trying to shoot more street. Always looking for golden hour.',
+    interests: ['photography', 'film', 'cycling'],
+    wantToTry: ['pottery', 'calligraphy'],
+    communities: ['street-photography', 'film-photography', 'cinema-club'],
+  },
+  {
+    id: 'u2',
+    name: 'Jake Morrison',
+    avatar: null,
+    bio: 'Learning guitar one broken string at a time. Also into cooking when I can afford ingredients.',
+    interests: ['guitar', 'cooking', 'gaming'],
+    wantToTry: ['skateboarding', 'woodworking'],
+    communities: ['acoustic-sessions', 'student-chefs'],
+  },
+  {
+    id: 'u3',
+    name: 'Priya Sharma',
+    avatar: null,
+    bio: 'I draw things and grow things. Sometimes I draw the things I grow.',
+    interests: ['drawing', 'gardening', 'writing'],
+    wantToTry: ['pottery', 'calligraphy'],
+    communities: ['sketch-daily', 'plant-parents', 'creative-writing-circle'],
+  },
+  {
+    id: 'u4',
+    name: 'Sam Taylor',
+    avatar: null,
+    bio: 'CS student who cooks to procrastinate. My stir fry game is strong tho.',
+    interests: ['cooking', 'ai-ml', 'chess'],
+    wantToTry: ['bouldering'],
+    communities: ['student-chefs', 'ml-study-group', 'chess-beginners'],
+  },
+  {
+    id: 'u5',
+    name: 'Luna Park',
+    avatar: null,
+    bio: 'Cinephile and aspiring dancer. I have opinions about Terrence Malick and I\'m not sorry.',
+    interests: ['film', 'dance', 'writing'],
+    wantToTry: ['photography', 'fashion'],
+    communities: ['cinema-club', 'dance-freestyle', 'creative-writing-circle'],
+  },
+  {
+    id: 'u6',
+    name: 'Alex Rivera',
+    avatar: null,
+    bio: 'Just started running. Previously my only cardio was running late.',
+    interests: ['running', 'gaming', 'cooking'],
+    wantToTry: ['bouldering', 'cycling'],
+    communities: ['couch-to-5k', 'indie-game-nights', 'student-chefs'],
+  },
+  {
+    id: 'u7',
+    name: 'Jordan Lee',
+    avatar: null,
+    bio: 'Climber, gamer, chaos goblin. V5 is my Everest.',
+    interests: ['bouldering', 'gaming', 'skateboarding'],
+    wantToTry: ['dance', 'photography'],
+    communities: ['beta-crushers', 'indie-game-nights'],
+  },
+  {
+    id: 'u8',
+    name: 'Nadia Hassan',
+    avatar: null,
+    bio: 'Building neural nets and questioning my life choices. Also I make really good chai.',
+    interests: ['ai-ml', 'cooking', 'chess'],
+    wantToTry: ['astronomy', 'writing'],
+    communities: ['ml-study-group', 'chess-beginners', 'student-chefs'],
+  },
+  {
+    id: 'u9',
+    name: 'Theo Williams',
+    avatar: null,
+    bio: 'Writer. Mostly unfinished novels and very finished cups of coffee.',
+    interests: ['writing', 'film', 'guitar'],
+    wantToTry: ['drawing', 'photography'],
+    communities: ['creative-writing-circle', 'cinema-club', 'acoustic-sessions'],
+  },
+  {
+    id: 'u10',
+    name: 'Kai Nakamura',
+    avatar: null,
+    bio: 'Chess player (800 elo and climbing). I also know what the London System is now.',
+    interests: ['chess', 'gaming', 'ai-ml'],
+    wantToTry: ['guitar', 'cooking'],
+    communities: ['chess-beginners', 'indie-game-nights', 'ml-study-group'],
+  },
+];
+
+// The "current user" for the prototype
+export const currentUser = {
+  id: 'current',
+  name: 'You',
+  avatar: null,
+  bio: '',
+  interests: [],
+  wantToTry: [],
+  communities: [],
+  completedOnboarding: false,
+};
+
+export function getUserById(id) {
+  return users.find(u => u.id === id);
+}

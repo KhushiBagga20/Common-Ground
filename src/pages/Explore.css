@@ -1,0 +1,218 @@
+.explore {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-3xl);
+}
+
+/* Header */
+.explore__header-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.explore__title {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* Search */
+.explore__search {
+  position: relative;
+  max-width: 480px;
+}
+
+.explore__search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.explore__search-input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+}
+
+/* Categories */
+.explore__categories {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.explore__category-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border: 1.5px solid var(--border-subtle);
+  background: transparent;
+  color: var(--muted);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.explore__category-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.explore__category-btn--active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+/* Sections */
+.explore__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.explore__section-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Hobby grid */
+.explore__hobby-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.explore__hobby-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.explore__hobby-card:hover {
+  border-color: var(--border);
+}
+
+.explore__hobby-emoji {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.explore__hobby-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.explore__hobby-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.explore__hobby-desc {
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.explore__hobby-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+/* Trending */
+.explore__trending {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-md);
+}
+
+.explore__trending-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.explore__trending-card:hover {
+  border-color: var(--border);
+}
+
+.explore__trending-accent {
+  width: 28px;
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: var(--space-md);
+}
+
+.explore__trending-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.explore__trending-desc {
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  margin-bottom: var(--space-md);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.explore__trending-meta {
+  font-size: var(--text-xs);
+}
+
+/* Tags cloud */
+.explore__tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* Empty */
+.explore__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .explore__title {
+    font-size: var(--text-2xl);
+  }
+
+  .explore__hobby-grid,
+  .explore__trending {
+    grid-template-columns: 1fr;
+  }
+}

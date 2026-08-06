@@ -1,0 +1,241 @@
+/* ============================================
+   COMMONGROUND — DESIGN SYSTEM
+   ============================================ */
+
+/* --- CSS Custom Properties / Design Tokens --- */
+:root,
+[data-theme="light"] {
+  /* Colors — Foundation */
+  --bg: #F7F6F2;
+  --surface: #FFFFFF;
+  --text: #111111;
+  --text-secondary: #3A3A38;
+  --muted: #6F6F6A;
+  --border: #191919;
+  --border-light: #E2E1DC;
+  --border-subtle: #D6D5D0;
+
+  /* Colors — Accents */
+  --yellow: #FFD43B;
+  --blue: #4D7CFE;
+  --pink: #FF72B6;
+  --red: #FF5C5C;
+  --green: #5BCB77;
+  --orange: #FF914D;
+  --purple: #9B72FF;
+
+  /* Surfaces */
+  --card-bg: #FFFFFF;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --nav-bg: var(--bg);
+  --nav-border: var(--border);
+
+  /* Overlays */
+  --overlay: rgba(17, 17, 17, 0.4);
+}
+
+[data-theme="dark"] {
+  --bg: #0D0D0D;
+  --surface: #171717;
+  --text: #F7F6F2;
+  --text-secondary: #CCCBC5;
+  --muted: #A6A49D;
+  --border: #F7F6F2;
+  --border-light: #2A2A2A;
+  --border-subtle: #333333;
+
+  --card-bg: #171717;
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --nav-bg: var(--bg);
+  --nav-border: var(--border);
+
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
+/* --- Spacing Scale --- */
+:root {
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-accent: 'Caveat', cursive;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.5rem;
+  --text-6xl: 4.5rem;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  /* Z-index */
+  --z-nav: 100;
+  --z-modal: 200;
+  --z-toast: 300;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color var(--duration-normal) var(--ease-out),
+              color var(--duration-normal) var(--ease-out);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-primary);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+input, textarea, select {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: var(--text);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--blue);
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* --- Typography Classes --- */
+.font-accent {
+  font-family: var(--font-accent);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+/* --- Utility Classes --- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Scrollbar Styling --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* --- Selection --- */
+::selection {
+  background: var(--yellow);
+  color: var(--text);
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Page padding for floating bottom dock --- */
+.page-with-nav {
+  padding-top: var(--space-2xl);
+  padding-bottom: 120px;
+}
+
+@media (max-width: 768px) {
+  .page-with-nav {
+    padding-top: var(--space-lg);
+    padding-bottom: 110px;
+  }
+}

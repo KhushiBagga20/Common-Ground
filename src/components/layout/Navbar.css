@@ -1,0 +1,145 @@
+/* ============================================
+   FLOATING BOTTOM DOCK NAVBAR
+   ============================================ */
+
+.dock-nav {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  z-index: var(--z-nav);
+  pointer-events: auto;
+  user-select: none;
+}
+
+.dock-nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 6px 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+}
+
+[data-theme="dark"] .dock-nav__inner {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Brand mark */
+.dock-nav__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--text);
+  font-size: 13px;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.dock-nav__logo:hover {
+  transform: scale(1.1);
+}
+
+/* Divider */
+.dock-nav__divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-subtle);
+  margin: 0 2px;
+}
+
+/* Links row */
+.dock-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dock-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.dock-nav__item:hover {
+  color: var(--text);
+}
+
+.dock-nav__item--active {
+  color: var(--bg);
+  font-weight: 600;
+}
+
+/* Active sliding pill background */
+.dock-nav__active-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--text);
+  z-index: 0;
+}
+
+.dock-nav__icon-wrap,
+.dock-nav__label {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Theme toggle */
+.dock-nav__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--muted);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.dock-nav__theme-toggle:hover {
+  color: var(--text);
+  background: var(--border-subtle);
+}
+
+/* Mobile responsive dock */
+@media (max-width: 640px) {
+  .dock-nav {
+    bottom: 16px;
+    width: calc(100% - 32px);
+    max-width: 420px;
+  }
+
+  .dock-nav__inner {
+    justify-content: space-between;
+    padding: 6px 10px;
+    width: 100%;
+  }
+
+  .dock-nav__label {
+    display: none;
+  }
+
+  .dock-nav__item {
+    padding: 8px 14px;
+  }
+
+  .dock-nav__divider {
+    display: none;
+  }
+}
