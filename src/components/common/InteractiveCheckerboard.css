@@ -1,0 +1,68 @@
+/* ============================================
+   INTERACTIVE CHECKERBOARD — CSS Grid
+   ============================================ */
+
+.ichecker {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* No drift — static grid that covers the full viewport */
+.ichecker__grid {
+  display: grid;
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  right: -80px;
+  bottom: -80px;
+  will-change: transform;
+}
+
+/* Individual tile */
+.ichecker__tile {
+  width: 100%;
+  height: 100%;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease,
+    background-color 0.25s ease;
+  will-change: transform;
+}
+
+/* Light tile */
+.ichecker__tile--light {
+  background-color: var(--checker-light, #F0EDE4);
+}
+
+/* Dark tile */
+.ichecker__tile--dark {
+  background-color: var(--checker-dark, #191919);
+}
+
+/* Accent flash — overrides bg on closest tiles */
+.ichecker__tile--accent {
+  background-color: var(--tile-accent, #FFD43B) !important;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease,
+    background-color 0.12s ease;
+}
+
+/* Dark mode tile colors */
+[data-theme="dark"] .ichecker__tile--light {
+  background-color: var(--checker-light-dark, #282828);
+}
+
+[data-theme="dark"] .ichecker__tile--dark {
+  background-color: var(--checker-dark-dark, #484848);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ichecker__tile {
+    transition: none;
+  }
+}

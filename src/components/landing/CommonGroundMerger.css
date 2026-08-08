@@ -1,0 +1,164 @@
+/* ============================================
+   COMMON GROUND MERGER
+   ============================================ */
+
+.merger {
+  padding: var(--space-4xl) var(--space-lg);
+  background: var(--bg);
+  border-bottom: 1.5px solid var(--border-subtle);
+}
+
+.merger__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.merger__header {
+  margin-bottom: var(--space-3xl);
+}
+
+.merger__label {
+  font-family: var(--font-accent);
+  font-size: var(--text-lg);
+  color: var(--muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.merger__title {
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-xs);
+}
+
+.merger__subtitle {
+  font-size: var(--text-base);
+}
+
+/* Arena */
+.merger__arena {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  min-height: 200px;
+  position: relative;
+  padding: var(--space-xl) 0;
+}
+
+/* Draggable cards */
+.merger__card {
+  width: 140px;
+  padding: var(--space-lg) var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 2.5px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  z-index: 2;
+  position: relative;
+}
+
+.merger__card:active {
+  cursor: grabbing;
+}
+
+.merger__card-emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.merger__card-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.merger__card-accent {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  position: absolute;
+  top: var(--space-sm);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Plus sign */
+.merger__plus {
+  font-size: var(--text-3xl);
+  color: var(--muted);
+  opacity: 0.5;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Result */
+.merger__result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+  padding: var(--space-xl);
+  border: 2px solid var(--yellow);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+}
+
+.merger__result-label {
+  font-family: var(--font-accent);
+  font-size: var(--text-2xl);
+  color: var(--yellow);
+}
+
+.merger__result-emoji {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.merger__result-name {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.merger__result-from {
+  font-size: var(--text-sm);
+}
+
+.merger__result-again {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.merger__result-again:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .merger__card {
+    width: 110px;
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .merger__card-emoji {
+    font-size: 2rem;
+  }
+}

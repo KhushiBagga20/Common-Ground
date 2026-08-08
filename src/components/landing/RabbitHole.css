@@ -1,0 +1,119 @@
+/* ============================================
+   RABBIT HOLE — Progressive Discovery
+   ============================================ */
+
+.rabbit {
+  padding: var(--space-4xl) var(--space-lg);
+  background: var(--surface);
+  border-bottom: 1.5px solid var(--border-subtle);
+}
+
+.rabbit__inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rabbit__header {
+  margin-bottom: var(--space-2xl);
+}
+
+.rabbit__label {
+  font-family: var(--font-accent);
+  font-size: var(--text-lg);
+  color: var(--muted);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.rabbit__title {
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-xs);
+}
+
+.rabbit__subtitle {
+  font-size: var(--text-base);
+}
+
+/* Chain — vertical */
+.rabbit__chain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rabbit__step-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Arrow doodle */
+.rabbit__arrow {
+  width: 24px;
+  height: 40px;
+  margin: var(--space-xs) 0;
+}
+
+/* Step button */
+.rabbit__step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-subtle);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.rabbit__step:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.rabbit__step--active {
+  border-color: var(--border);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.rabbit__step--active:hover {
+  border-color: var(--yellow);
+}
+
+.rabbit__step-emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.rabbit__step-name {
+  letter-spacing: -0.01em;
+}
+
+.rabbit__step-hint {
+  font-family: var(--font-accent);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin-left: var(--space-xs);
+}
+
+/* Finale */
+.rabbit__finale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+  padding: var(--space-lg);
+}
+
+.rabbit__finale-text {
+  font-family: var(--font-accent);
+  font-size: var(--text-xl);
+  color: var(--muted);
+}

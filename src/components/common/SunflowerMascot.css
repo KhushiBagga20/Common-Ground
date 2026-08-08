@@ -1,0 +1,44 @@
+/* ============================================
+   SUNFLOWER MASCOT — Alive Character (big head only)
+   ============================================ */
+
+.sunflower-mascot {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sunflower-mascot__svg {
+  width: min(500px, 90%);
+  height: auto;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.12));
+  animation: mascot-float 5s ease-in-out infinite;
+}
+
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  40%      { transform: translateY(-10px) rotate(0.8deg); }
+  70%      { transform: translateY(-4px) rotate(-0.4deg); }
+}
+
+/* Click reaction — brief wobble */
+.sunflower-mascot--react .sunflower-mascot__svg {
+  animation: mascot-react 0.6s ease-in-out;
+}
+
+@keyframes mascot-react {
+  0%   { transform: scale(1) rotate(0deg); }
+  20%  { transform: scale(1.06) rotate(-3deg); }
+  40%  { transform: scale(1.02) rotate(2deg); }
+  60%  { transform: scale(1.04) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sunflower-mascot__svg {
+    width: min(300px, 85%);
+  }
+}
