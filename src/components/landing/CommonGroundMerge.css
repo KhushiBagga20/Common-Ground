@@ -1,0 +1,163 @@
+/* ============================================
+   COMMON GROUND MERGE — Scroll-driven collision
+   ============================================ */
+
+.merge {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-4xl) var(--space-lg);
+  min-height: 70vh;
+}
+
+.merge__inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xl);
+}
+
+.merge__header {
+  text-align: center;
+}
+
+.merge__label {
+  font-family: var(--font-accent);
+  font-size: var(--text-xl);
+  color: var(--muted);
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.merge__title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+/* Stage where blocks collide */
+.merge__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  min-height: 200px;
+  width: 100%;
+}
+
+/* Hobby block */
+.merge__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-2xl);
+  background: var(--surface);
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: 4px 4px 0 var(--border);
+  user-select: none;
+}
+
+.merge__block-emoji {
+  font-size: 2.5rem;
+}
+
+.merge__block-name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+/* Plus sign */
+.merge__plus {
+  font-size: var(--text-3xl);
+  font-weight: 300;
+  color: var(--muted);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Result card */
+.merge__result {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-2xl);
+  background: var(--surface);
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: 4px 4px 0 var(--border);
+  min-width: 220px;
+  overflow: hidden;
+}
+
+.merge__result-accent {
+  position: absolute;
+  top: 0;
+  left: var(--space-lg);
+  right: var(--space-lg);
+  height: 4px;
+  border-radius: 0 0 2px 2px;
+}
+
+.merge__result-emoji {
+  font-size: 2rem;
+  margin-top: var(--space-sm);
+}
+
+.merge__result-name {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.merge__result-label {
+  font-family: var(--font-accent);
+  font-size: var(--text-base);
+  color: var(--muted);
+}
+
+.merge__annotation {
+  font-family: var(--font-accent);
+  font-size: var(--text-lg);
+  color: var(--muted);
+}
+
+/* Dark mode */
+[data-theme="dark"] .merge__block,
+[data-theme="dark"] .merge__result {
+  box-shadow: 4px 4px 0 rgba(247, 246, 242, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .merge__stage {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .merge__block {
+    padding: var(--space-lg) var(--space-xl);
+  }
+
+  .merge__result {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: var(--space-lg);
+  }
+}

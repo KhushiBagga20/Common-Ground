@@ -1,0 +1,306 @@
+/* ============================================
+   CARD SWAP — CommonGround Hobby Discovery Deck
+   ============================================ */
+
+.cardswap {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Stack Stage - Taller, Longer Cards */
+.cardswap__stage {
+  position: relative;
+  width: 360px;
+  height: 530px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+/* Individual Card */
+.cardswap__card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--surface, #ffffff);
+  border: 2.5px solid var(--border, #191919);
+  border-radius: 28px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  user-select: none;
+  touch-action: pan-y;
+  box-shadow: 6px 6px 0 var(--border, #191919);
+  transform-origin: top center;
+  will-change: transform, opacity;
+  box-sizing: border-box;
+}
+
+.cardswap__card--top {
+  cursor: grab;
+}
+
+.cardswap__card--top:active {
+  cursor: grabbing;
+}
+
+/* Accent Top Stripe */
+.cardswap__card-stripe {
+  position: absolute;
+  top: 0;
+  left: 32px;
+  right: 32px;
+  height: 6px;
+  border-radius: 0 0 4px 4px;
+}
+
+/* Header Badge & Emoji */
+.cardswap__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.cardswap__card-emoji {
+  font-size: 3.8rem;
+  line-height: 1;
+}
+
+.cardswap__card-tag {
+  font-family: var(--font-accent, cursive);
+  font-size: 0.95rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border, #191919);
+  background: var(--bg, #f7f6f2);
+  color: var(--text, #111111);
+}
+
+/* Card Body Copy */
+.cardswap__card-body {
+  margin: 20px 0;
+}
+
+.cardswap__card-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text, #111111);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.cardswap__card-desc {
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--muted, #6f6f6a);
+  font-weight: 500;
+}
+
+/* Card Footer */
+.cardswap__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1.5px solid var(--border-subtle, rgba(25, 25, 25, 0.12));
+}
+
+.cardswap__card-count {
+  font-family: var(--font-accent, cursive);
+  font-size: 1rem;
+  color: var(--text, #111111);
+  font-weight: 700;
+}
+
+/* Stamp Overlays during drag */
+.cardswap__stamp {
+  position: absolute;
+  top: 24px;
+  z-index: 20;
+  font-family: var(--font-accent, cursive);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.cardswap__stamp--like {
+  right: 20px;
+  color: #111111;
+  background: var(--yellow, #FFD43B);
+  border: 2px solid #111111;
+  transform: rotate(8deg);
+}
+
+.cardswap__stamp--skip {
+  left: 20px;
+  color: var(--text, #111111);
+  background: var(--bg, #f7f6f2);
+  border: 2px solid var(--border, #191919);
+  transform: rotate(-8deg);
+}
+
+/* Action Controls under Stack */
+.cardswap__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.cardswap__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border: 2.5px solid var(--border, #191919);
+  background: var(--surface, #ffffff);
+  color: var(--text, #111111);
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--border, #191919);
+  transition: transform 0.15s ease, background 0.15s ease;
+  user-select: none;
+}
+
+.cardswap__btn:hover {
+  transform: translateY(-2px);
+  background: var(--bg, #f7f6f2);
+}
+
+.cardswap__btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--border, #191919);
+}
+
+.cardswap__btn--like {
+  background: var(--text, #111111);
+  color: var(--bg, #f7f6f2);
+  border-color: var(--text, #111111);
+}
+
+.cardswap__btn--like:hover {
+  background: #222222;
+  color: #ffffff;
+}
+
+/* Completion Card State */
+.cardswap__completion {
+  width: 360px;
+  min-height: 480px;
+  background: var(--surface, #ffffff);
+  border: 2.5px solid var(--border, #191919);
+  border-radius: 28px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 6px 6px 0 var(--border, #191919);
+  gap: 18px;
+}
+
+.cardswap__completion-emoji {
+  font-size: 3.8rem;
+  line-height: 1;
+}
+
+.cardswap__completion-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text, #111111);
+}
+
+.cardswap__completion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.cardswap__completion-tag {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #111111;
+  border: 1.5px solid #111111;
+}
+
+.cardswap__completion-sub {
+  font-size: 1rem;
+  color: var(--muted, #6f6f6a);
+  font-weight: 500;
+}
+
+.cardswap__reset-btn {
+  margin-top: 8px;
+  font-family: var(--font-accent, cursive);
+  font-size: 0.95rem;
+  color: var(--muted, #6f6f6a);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cardswap__reset-btn:hover {
+  color: var(--text, #111111);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .cardswap__card,
+[data-theme="dark"] .cardswap__completion {
+  box-shadow: 6px 6px 0 rgba(247, 246, 242, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .cardswap__stage,
+  .cardswap__completion {
+    width: 310px;
+    height: 480px;
+  }
+
+  .cardswap__card {
+    padding: 28px 22px;
+  }
+
+  .cardswap__card-title {
+    font-size: 1.8rem;
+  }
+
+  .cardswap__card-emoji {
+    font-size: 3rem;
+  }
+
+  .cardswap__controls {
+    gap: 10px;
+  }
+
+  .cardswap__btn {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+}

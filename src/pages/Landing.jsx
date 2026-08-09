@@ -1,49 +1,19 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRight, Compass, Sun, Moon } from 'lucide-react';
 import Button from '../components/common/Button';
 import InteractiveCheckerboard from '../components/common/InteractiveCheckerboard';
-import SunflowerMascot from '../components/common/SunflowerMascot';
-import RabbitHole from '../components/landing/RabbitHole';
-import SurpriseMe from '../components/landing/SurpriseMe';
-import { getTrendingCommunities } from '../data/communities';
+import SunflowerGroup from '../components/common/SunflowerGroup';
+import TextLoop from '../components/common/TextLoop';
+import HobbyCloud from '../components/landing/HobbyCloud';
+import HobbyPath from '../components/landing/HobbyPath';
+import HobbyCardStack from '../components/landing/HobbyCardStack';
+import LandingJourney from '../components/landing/LandingJourney';
+import Footer from '../components/layout/Footer';
 import { useTheme } from '../hooks/useTheme';
 import { staggerContainer, staggerItem } from '../animations/variants';
 import './Landing.css';
-
-/* ================================================================
-   FLOATING INTEREST WORDS — appear around the hero on hover
-   ================================================================ */
-const FLOAT_WORDS = [
-  { text: 'film', x: '62%', y: '18%' },
-  { text: 'guitar', x: '55%', y: '42%' },
-  { text: 'cooking', x: '70%', y: '58%' },
-  { text: 'astronomy', x: '48%', y: '72%' },
-  { text: 'running', x: '75%', y: '32%' },
-  { text: 'drawing', x: '58%', y: '85%' },
-  { text: 'chess', x: '82%', y: '48%' },
-  { text: 'dance', x: '45%', y: '55%' },
-];
-
-function FloatingWord({ word, visible }) {
-  return (
-    <AnimatePresence>
-      {visible && (
-        <motion.span
-          className="landing__float-word font-accent"
-          style={{ left: word.x, top: word.y }}
-          initial={{ opacity: 0, scale: 0.7, y: 8 }}
-          animate={{ opacity: 0.6, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: -6 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {word.text}
-        </motion.span>
-      )}
-    </AnimatePresence>
-  );
-}
 
 /* ================================================================
    INTERACTIVE TITLE WORD — hover reveals underline + shift
@@ -81,48 +51,7 @@ function TitleWord({ children, color = 'var(--yellow)', delay = 0 }) {
   );
 }
 
-/* ================================================================
-   3D TILT CARD — spring-physics tilt on hover
-   ================================================================ */
-function TiltCard({ children, className = '', onClick, delay = 0 }) {
-  const cardRef = useRef(null);
-  const rawRotX = useMotionValue(0);
-  const rawRotY = useMotionValue(0);
-  const rotX = useSpring(rawRotX, { stiffness: 300, damping: 24 });
-  const rotY = useSpring(rawRotY, { stiffness: 300, damping: 24 });
 
-  const handleMove = (e) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    rawRotX.set(-ny * 10);
-    rawRotY.set(nx * 10);
-  };
-
-  const handleLeave = () => {
-    rawRotX.set(0);
-    rawRotY.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={cardRef}
-      className={className}
-      style={{ rotateX: rotX, rotateY: rotY, transformPerspective: 900 }}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      onClick={onClick}
-      initial={{ opacity: 0, y: 24, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -6, transition: { duration: 0.18 } }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 /* ================================================================
    LANDING PAGE
@@ -130,29 +59,6 @@ function TiltCard({ children, className = '', onClick, delay = 0 }) {
 export default function Landing() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-  const trendingCommunities = getTrendingCommunities().slice(0, 4);
-  const [heroHovered, setHeroHovered] = useState(false);
-  const [floatIndices, setFloatIndices] = useState([]);
-
-  /* Floating words: cycle 2-3 at a time while hero is hovered */
-  useEffect(() => {
-    if (!heroHovered) {
-      setFloatIndices([]);
-      return;
-    }
-    const cycle = () => {
-      const count = 2 + Math.floor(Math.random() * 2); // 2-3 words
-      const indices = [];
-      while (indices.length < count) {
-        const idx = Math.floor(Math.random() * FLOAT_WORDS.length);
-        if (!indices.includes(idx)) indices.push(idx);
-      }
-      setFloatIndices(indices);
-    };
-    cycle();
-    const interval = setInterval(cycle, 2800);
-    return () => clearInterval(interval);
-  }, [heroHovered]);
 
   /* CTA hover → sunflower looks at button */
   const handleCtaHover = useCallback((e) => {
@@ -189,30 +95,7 @@ export default function Landing() {
       {/* ======================================================
           HERO
           ====================================================== */}
-      <section
-        className="landing__hero"
-        onMouseEnter={() => setHeroHovered(true)}
-        onMouseLeave={() => setHeroHovered(false)}
-      >
-
-        {/* Floating interest words */}
-        <div className="landing__float-container" aria-hidden="true">
-          {FLOAT_WORDS.map((word, i) => (
-            <FloatingWord key={word.text} word={word} visible={floatIndices.includes(i)} />
-          ))}
-        </div>
-
-        {/* Logo */}
-        <motion.a
-          href="/"
-          className="landing__logo"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <span className="landing__logo-mark">⬛</span>
-          <span>CommonGround</span>
-        </motion.a>
+      <section className="landing__hero">
 
         {/* Left — Interactive Copy */}
         <motion.div
@@ -222,7 +105,7 @@ export default function Landing() {
           animate="animate"
         >
           <motion.div className="landing__hero-label" variants={staggerItem}>
-            <span className="font-accent">a place for curious people</span>
+            <span className="font-accent" style={{ fontSize: '1.4rem', letterSpacing: '-0.02em', color: 'var(--text)', fontWeight: 800 }}>CommonGround</span>
           </motion.div>
 
           <h1 className="landing__hero-title">
@@ -270,97 +153,43 @@ export default function Landing() {
           </motion.div>
         </motion.div>
 
-        {/* Right — Alive Sunflower */}
+        {/* Right — Sunflower group */}
         <div className="landing__hero-right">
-          <SunflowerMascot />
+          <SunflowerGroup />
         </div>
       </section>
 
-
+      {/* ======================================================
+          TEXT LOOP BANNER — React Bits Animated Text Ribbon
+          ====================================================== */}
+      <section className="landing__loop-banner" aria-label="About CommonGround">
+        <TextLoop
+          text="FIND YOUR PEOPLE ✦ DISCOVER NEW HOBBIES ✦ JOIN REAL COMMUNITIES ✦ NOT A SOCIAL FEED ✦ COMMON GROUND"
+          shape="wave"
+          speed={85}
+          direction="forward"
+          separator="✦"
+          curviness={50}
+          fontSize={38}
+          fontWeight={800}
+          letterSpacing={2}
+          uppercase
+          color="var(--text)"
+          ribbon
+          ribbonColor="var(--yellow)"
+          ribbonWidth={72}
+          pauseOnHover
+        />
+      </section>
 
       {/* ======================================================
-          RABBIT HOLE — progressive discovery
+          POST-HERO SECTIONS
           ====================================================== */}
-      <RabbitHole />
-
-      {/* ======================================================
-          SURPRISE ME — random hobby reveal
-          ====================================================== */}
-      <SurpriseMe />
-
-      {/* ======================================================
-          TRENDING COMMUNITIES — 3D tilt cards
-          ====================================================== */}
-      <motion.section
-        className="landing__trending"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className="landing__section-header">
-          <h2 className="landing__section-title">Trending communities</h2>
-          <p className="landing__section-subtitle text-muted">
-            People are talking right now
-          </p>
-        </div>
-
-        <div className="landing__trending-grid">
-          {trendingCommunities.map((community, i) => (
-            <TiltCard
-              key={community.id}
-              className="landing__trending-card"
-              onClick={() => navigate(`/community/${community.id}`)}
-              delay={i * 0.08}
-            >
-              <div
-                className="landing__trending-accent"
-                style={{ backgroundColor: community.color }}
-              />
-              <h3 className="landing__trending-name">{community.name}</h3>
-              <p className="landing__trending-desc text-muted">{community.description}</p>
-              <div className="landing__trending-meta">
-                <span>{community.memberCount} people</span>
-                <span>·</span>
-                <span>{community.postCount} posts</span>
-              </div>
-            </TiltCard>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* ======================================================
-          CTA
-          ====================================================== */}
-      <motion.section
-        className="landing__cta"
-        initial={{ opacity: 0, y: 30, scale: 0.97 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className="landing__cta-checker" aria-hidden="true" />
-        <div className="landing__cta-inner">
-          <p className="landing__cta-text font-accent">
-            Ready to find your people?
-          </p>
-          <Button
-            size="lg"
-            onClick={() => handleCtaClick('/onboarding')}
-            iconRight={<ArrowRight size={20} />}
-          >
-            Let's go
-          </Button>
-        </div>
-      </motion.section>
-
-      {/* Footer */}
-      <footer className="landing__footer">
-        <span className="landing__footer-mark">⬛</span>
-        <span>CommonGround</span>
-        <span className="text-muted">·</span>
-        <span className="text-muted font-accent">find your people</span>
-      </footer>
+      <HobbyCloud />
+      <HobbyPath />
+      <HobbyCardStack />
+      <LandingJourney />
+      <Footer />
     </div>
   );
 }

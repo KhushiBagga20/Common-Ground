@@ -1,0 +1,151 @@
+/* ============================================
+   HOBBY PATH — Discovery chain
+   ============================================ */
+
+.hobbypath {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-4xl) var(--space-lg);
+}
+
+.hobbypath__inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hobbypath__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.hobbypath__label {
+  display: inline-block;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #111111;
+  background: var(--blue, #4D7CFE);
+  padding: 8px 28px;
+  border-radius: 18px;
+  border: 2.5px solid #111111;
+  box-shadow: 4px 4px 0 #111111;
+  transform: rotate(-1.5deg);
+  text-transform: capitalize;
+  user-select: none;
+}
+
+/* Chain container */
+.hobbypath__chain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hobbypath__step-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+/* Individual step block */
+.hobbypath__step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-xl);
+  background: var(--surface);
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 3px 3px 0 var(--border);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.hobbypath__step--left {
+  align-self: flex-start;
+  margin-left: 10%;
+}
+
+.hobbypath__step--right {
+  align-self: flex-end;
+  margin-right: 10%;
+}
+
+.hobbypath__step-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.hobbypath__step-emoji {
+  font-size: 1.6rem;
+  margin-left: var(--space-sm);
+}
+
+.hobbypath__step-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* SVG connector */
+.hobbypath__connector {
+  width: 200px;
+  height: 60px;
+  margin: var(--space-xs) 0;
+}
+
+/* Annotations */
+.hobbypath__annotation {
+  font-family: var(--font-accent);
+  font-size: var(--text-lg);
+  color: var(--muted);
+  margin: var(--space-sm) 0;
+}
+
+.hobbypath__annotation--left {
+  align-self: flex-end;
+  margin-right: 15%;
+}
+
+.hobbypath__annotation--right {
+  align-self: flex-start;
+  margin-left: 15%;
+}
+
+/* Conclusion */
+.hobbypath__conclusion {
+  font-family: var(--font-accent);
+  font-size: var(--text-xl);
+  color: var(--text);
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+/* Dark mode */
+[data-theme="dark"] .hobbypath__step {
+  box-shadow: 3px 3px 0 rgba(247, 246, 242, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hobbypath__step--left {
+    margin-left: 0;
+  }
+
+  .hobbypath__step--right {
+    margin-right: 0;
+  }
+
+  .hobbypath__connector {
+    width: 150px;
+    height: 45px;
+  }
+}

@@ -1,0 +1,221 @@
+.depth-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: var(--dc-perspective, 1400px);
+  perspective-origin: 50% 50%;
+  touch-action: pan-y;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.depth-carousel:active {
+  cursor: grabbing;
+}
+
+.depth-carousel:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.depth-carousel__stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.depth-carousel__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  overflow: hidden;
+  background: var(--surface, #0b0d12);
+  border: 2px solid var(--border, #191919);
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.4),
+    0 8px 20px -10px rgba(0, 0, 0, 0.3);
+  will-change: transform, opacity, filter;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.depth-carousel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.depth-carousel__tint {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  z-index: 2;
+}
+
+/* Custom Hobby Content Overlay */
+.depth-carousel__content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 15, 15, 0.15) 0%,
+    rgba(15, 15, 15, 0.85) 60%,
+    rgba(15, 15, 15, 0.95) 100%
+  );
+  color: #ffffff;
+  text-align: left;
+}
+
+.depth-carousel__emoji {
+  font-size: 3.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+.depth-carousel__name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: #ffffff;
+}
+
+.depth-carousel__desc {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.9;
+  margin-bottom: 12px;
+  color: #f0f0f0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.depth-carousel__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding-top: 10px;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.depth-carousel__category {
+  background: var(--hobby-color, #FFD43B);
+  color: #111111;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.depth-carousel__members {
+  opacity: 0.9;
+  color: #ffffff;
+}
+
+.depth-carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3000;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--border, #191919);
+  border-radius: 999px;
+  background: var(--surface, #ffffff);
+  color: var(--text, #111111);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.depth-carousel__arrow:hover {
+  background: var(--yellow, #FFD43B);
+  color: #111111;
+}
+
+.depth-carousel__arrow:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.depth-carousel__arrow--prev {
+  left: 16px;
+}
+
+.depth-carousel__arrow--next {
+  right: 16px;
+}
+
+.depth-carousel__dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3000;
+  display: flex;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--surface, #ffffff);
+  border: 1.5px solid var(--border, #191919);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.depth-carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--muted, #A6A49D);
+  cursor: pointer;
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+.depth-carousel__dot.is-active {
+  width: 24px;
+  background: var(--text, #111111);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-carousel__card {
+    will-change: auto;
+  }
+  .depth-carousel__arrow,
+  .depth-carousel__dot {
+    transition: none;
+  }
+}

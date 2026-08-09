@@ -1,0 +1,121 @@
+/* ============================================
+   HOBBY CLOUD — Floating hobby blocks
+   ============================================ */
+
+.hobbycloud {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+.hobbycloud__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hobbycloud__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.hobbycloud__label {
+  display: inline-block;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #111111;
+  background: var(--pink, #FF72B6);
+  padding: 8px 28px;
+  border-radius: 18px;
+  border: 2.5px solid #111111;
+  box-shadow: 4px 4px 0 #111111;
+  transform: rotate(-1.5deg);
+  text-transform: capitalize;
+  user-select: none;
+}
+
+/* The field where blocks float */
+.hobbycloud__field {
+  position: relative;
+  width: 100%;
+  height: clamp(500px, 60vh, 700px);
+}
+
+/* Individual block */
+.hobbycloud__block {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--surface);
+  border: 2.5px solid var(--border);
+  border-radius: 18px;
+  cursor: default;
+  user-select: none;
+  box-shadow: 4px 4px 0 var(--border);
+  transition: box-shadow 0.2s ease;
+  transform-style: preserve-3d;
+}
+
+.hobbycloud__block-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.hobbycloud__block-name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+/* Annotations */
+.hobbycloud__annotation {
+  position: absolute;
+  font-family: var(--font-accent);
+  font-size: var(--text-lg);
+  color: var(--muted);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Dark mode shadow */
+[data-theme="dark"] .hobbycloud__block {
+  box-shadow: 4px 4px 0 rgba(247, 246, 242, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hobbycloud__field {
+    height: 450px;
+  }
+
+  .hobbycloud__block {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .hobbycloud__block-emoji {
+    font-size: 1.5rem;
+  }
+
+  .hobbycloud__block-name {
+    font-size: var(--text-sm);
+  }
+
+  .hobbycloud__annotation {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hobbycloud__field {
+    height: 400px;
+  }
+
+  .hobbycloud__block {
+    padding: var(--space-sm) var(--space-md);
+  }
+}

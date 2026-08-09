@@ -1,0 +1,93 @@
+/* ============================================
+   HOBBY CARD STACK — Clean Header with Yellow Ribbon Behind Title
+   ============================================ */
+
+.cardstack {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-3xl) var(--space-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardstack__header-clean {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+/* Yellow Ribbon Badge Directly Behind Title */
+.cardstack__clean-title {
+  display: inline-block;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #111111;
+  background: var(--yellow, #FFD43B);
+  padding: 10px 32px;
+  border-radius: 20px;
+  border: 2.5px solid #111111;
+  box-shadow: 5px 5px 0 #111111;
+  transform: rotate(-1.5deg);
+  text-transform: capitalize;
+  user-select: none;
+}
+
+/* Counter & Feedback Inline Row */
+.cardstack__header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 4px;
+  min-height: 36px;
+}
+
+/* Progress counter badge */
+.cardstack__progress-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--surface, #ffffff);
+  border: 2px solid var(--border, #191919);
+  box-shadow: 2.5px 2.5px 0 var(--border, #191919);
+}
+
+.cardstack__progress-text {
+  font-family: var(--font-accent, cursive);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text, #111111);
+}
+
+/* Brief feedback annotation */
+.cardstack__feedback-note {
+  font-family: var(--font-accent, cursive);
+  font-size: 1.15rem;
+  color: #111111;
+  background: var(--surface, #ffffff);
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #111111;
+  display: inline-block;
+  transform: rotate(2deg);
+  box-shadow: 2px 2px 0 #111111;
+}
+
+/* Card Deck Wrapper */
+.cardstack__deck-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

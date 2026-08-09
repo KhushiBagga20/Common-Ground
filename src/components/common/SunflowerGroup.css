@@ -1,0 +1,53 @@
+/* ============================================
+   SUNFLOWER GROUP — Main + companion sunflowers
+   ============================================ */
+
+.sfgroup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+/* Main mascot — larger than default */
+.sfgroup__main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sfgroup__main .sunflower-mascot__svg {
+  width: min(420px, 85%) !important;
+}
+
+/* Companion sunflowers */
+.sfgroup__companion {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sfgroup {
+    min-height: 360px;
+  }
+
+  .sfgroup__main .sunflower-mascot__svg {
+    width: min(280px, 80%) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .sfgroup__main .sunflower-mascot__svg {
+    width: min(200px, 75%) !important;
+  }
+
+  /* Hide some companions on mobile to avoid clutter */
+  .sfgroup__companion:nth-child(4),
+  .sfgroup__companion:nth-child(5) {
+    display: none;
+  }
+}

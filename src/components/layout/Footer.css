@@ -1,0 +1,288 @@
+/* ============================================
+   COMMONGROUND FOOTER — Hand-drawn Storybook End
+   ============================================ */
+
+.cg-footer {
+  position: relative;
+  z-index: 5;
+  background: var(--bg, #F7F6F2);
+  color: var(--text, #111111);
+  border-top: 2.5px solid var(--border, #191919);
+  padding: var(--space-4xl) var(--space-lg) var(--space-2xl);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .cg-footer {
+  background: #0D0D0D;
+  border-top-color: var(--border, #F7F6F2);
+}
+
+.cg-footer__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Illustrated Hero CTA Card */
+.cg-footer__cta-card {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  background: var(--surface, #ffffff);
+  border: 2.5px solid var(--border, #191919);
+  border-radius: 32px;
+  padding: 64px 48px;
+  box-shadow: 8px 8px 0 var(--border, #191919);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+[data-theme="dark"] .cg-footer__cta-card {
+  box-shadow: 8px 8px 0 rgba(247, 246, 242, 0.15);
+}
+
+/* Sunflower Mascot in Footer */
+.cg-footer__sunflower-wrap {
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.cg-footer__sunflower-mascot {
+  width: 72px;
+  height: 72px;
+}
+
+/* Headline & Copy */
+.cg-footer__headline {
+  font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text, #111111);
+  margin: 0;
+}
+
+.cg-footer__subline {
+  font-size: var(--text-lg, 1.15rem);
+  color: var(--muted, #6f6f6a);
+  max-width: 520px;
+  line-height: 1.55;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+/* Primary Button CTA */
+.cg-footer__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--text, #111111);
+  color: var(--bg, #f7f6f2);
+  border: 2.5px solid var(--text, #111111);
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 16px 36px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 var(--border, #191919);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  user-select: none;
+  text-decoration: none;
+}
+
+.cg-footer__btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 7px 7px 0 var(--border, #191919);
+  background: #222222;
+}
+
+.cg-footer__btn:active {
+  transform: translateY(1px);
+  box-shadow: 2px 2px 0 var(--border, #191919);
+}
+
+.cg-footer__btn-arrow {
+  transition: transform 0.2s ease;
+}
+
+.cg-footer__btn:hover .cg-footer__btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Flowing Dotted Path SVG Canvas */
+.cg-footer__path-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating Doodle Elements */
+.cg-footer__doodle {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 3;
+  user-select: none;
+}
+
+.cg-footer__doodle-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
+  transition: transform 0.2s ease;
+}
+
+.cg-footer__doodle:hover .cg-footer__doodle-icon {
+  transform: scale(1.25) rotate(6deg);
+}
+
+.cg-footer__doodle-tooltip {
+  font-family: var(--font-accent, cursive);
+  font-size: 0.95rem;
+  color: #111111;
+  background: var(--yellow, #FFD43B);
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1.5px solid #111111;
+  box-shadow: 2px 2px 0 #111111;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  margin-top: 4px;
+}
+
+.cg-footer__doodle:hover .cg-footer__doodle-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Positioned Doodle Placements around CTA Card */
+.cg-footer__doodle--cam { top: 20px; left: 30px; }
+.cg-footer__doodle--guitar { top: 35px; right: 40px; }
+.cg-footer__doodle--paint { bottom: 40px; left: 40px; }
+.cg-footer__doodle--book { bottom: 45px; right: 50px; }
+.cg-footer__doodle--chess { top: 50%; left: -25px; transform: translateY(-50%); }
+.cg-footer__doodle--star { top: 50%; right: -25px; transform: translateY(-50%); }
+
+/* Minimalist Navigation Section at Bottom */
+.cg-footer__bottom-nav {
+  width: 100%;
+  max-width: 960px;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1.5px solid var(--border-subtle, rgba(25, 25, 25, 0.12));
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cg-footer__nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cg-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text, #111111);
+}
+
+.cg-footer__links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cg-footer__link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted, #6f6f6a);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.cg-footer__link:hover {
+  color: var(--text, #111111);
+}
+
+.cg-footer__copyright {
+  font-family: var(--font-accent, cursive);
+  font-size: 0.95rem;
+  color: var(--muted, #6f6f6a);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .cg-footer__cta-card {
+    padding: 48px 24px;
+  }
+
+  .cg-footer__doodle--chess,
+  .cg-footer__doodle--star {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cg-footer {
+    padding: var(--space-2xl) var(--space-md) var(--space-xl);
+  }
+
+  .cg-footer__cta-card {
+    padding: 36px 20px;
+    border-radius: 24px;
+  }
+
+  .cg-footer__headline {
+    font-size: 2rem;
+  }
+
+  .cg-footer__subline {
+    font-size: 1rem;
+  }
+
+  .cg-footer__btn {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    width: 100%;
+  }
+
+  .cg-footer__doodle--cam { top: 12px; left: 12px; }
+  .cg-footer__doodle--guitar { top: 12px; right: 12px; }
+  .cg-footer__doodle--paint { bottom: 12px; left: 12px; }
+  .cg-footer__doodle--book { bottom: 12px; right: 12px; }
+
+  .cg-footer__nav-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+}

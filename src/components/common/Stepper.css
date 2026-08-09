@@ -1,0 +1,200 @@
+/* ============================================
+   STEPPER — CommonGround Journey Stepper Component
+   ============================================ */
+
+.stepper-outer-container {
+  display: flex;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-circle-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  border-radius: 28px;
+  background: var(--surface, #ffffff);
+  border: 2.5px solid var(--border, #191919);
+  box-shadow: 6px 6px 0 var(--border, #191919);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.step-indicator-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 24px 28px 16px;
+  box-sizing: border-box;
+}
+
+.step-content-default {
+  position: relative;
+  overflow: hidden;
+}
+
+.step-default {
+  padding: 8px 32px 24px;
+}
+
+.step-default h2 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text, #111111);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.step-default p {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--muted, #6f6f6a);
+  font-weight: 500;
+}
+
+.footer-container {
+  padding: 0 32px 28px;
+}
+
+.footer-nav {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.footer-nav.spread {
+  justify-content: space-between;
+}
+
+.footer-nav.end {
+  justify-content: flex-end;
+}
+
+.back-button {
+  font-family: var(--font-accent, cursive);
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 10px 20px;
+  color: var(--text, #111111);
+  background: var(--bg, #f7f6f2);
+  border: 2px solid var(--border, #191919);
+  box-shadow: 2.5px 2.5px 0 var(--border, #191919);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+}
+
+.back-button.inactive {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.next-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 14px;
+  background-color: var(--text, #111111);
+  color: var(--bg, #f7f6f2);
+  border: 2px solid var(--text, #111111);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  padding: 10px 22px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--border, #191919);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.next-button:hover {
+  transform: translateY(-2px);
+  background-color: #222222;
+}
+
+.next-button:active {
+  transform: translateY(1px);
+}
+
+.step-indicator {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.step-indicator-inner {
+  display: flex;
+  height: 2.4rem;
+  width: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: 800;
+  border: 2px solid var(--border, #191919);
+  box-shadow: 2px 2px 0 var(--border, #191919);
+}
+
+.active-dot {
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--text, #111111);
+}
+
+.step-number {
+  font-size: 0.9rem;
+}
+
+.step-connector {
+  position: relative;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  height: 3px;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: var(--border-subtle, rgba(25, 25, 25, 0.15));
+}
+
+.step-connector-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+.check-icon {
+  height: 1.1rem;
+  width: 1.1rem;
+  color: #111111;
+}
+
+/* Dark mode shadow adjustments */
+[data-theme="dark"] .step-circle-container {
+  box-shadow: 6px 6px 0 rgba(247, 246, 242, 0.15);
+}
+
+@media (max-width: 640px) {
+  .step-indicator-row {
+    padding: 18px 16px 12px;
+  }
+  .step-default {
+    padding: 4px 20px 20px;
+  }
+  .footer-container {
+    padding: 0 20px 20px;
+  }
+  .step-default h2 {
+    font-size: 1.4rem;
+  }
+}
