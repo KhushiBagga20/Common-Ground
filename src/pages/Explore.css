@@ -6,6 +6,16 @@
 
 /* Color Variables and Typography Setup */
 .explore-layout {
+  box-sizing: border-box;
+}
+
+.explore-layout *,
+.explore-layout *::before,
+.explore-layout *::after {
+  box-sizing: border-box;
+}
+
+.explore-layout {
   --explore-bg: #FFF8F1;
   --explore-surface: #FFFFFF;
   --explore-pink-soft: #FFB6C8;
@@ -48,16 +58,28 @@
 /* Grid Layout structure */
 .explore-layout {
   display: grid;
-  grid-template-columns: 85px 1fr;
+  grid-template-columns: 85px minmax(0, 1fr);
   gap: var(--space-xl);
   align-items: start;
+  min-width: 0;
 }
 
 .explore-main-grid {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: minmax(0, 1fr) 340px;
   gap: var(--space-xl);
   align-items: start;
+  min-width: 0;
+}
+
+.explore-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.explore-widgets-column {
+  min-width: 0;
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -499,6 +521,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  position: relative;
   z-index: 2;
   pointer-events: none;
 }
@@ -669,8 +692,9 @@
 /* Hobby Cards Grid */
 .explore__hobby-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-md);
+  min-width: 0;
 }
 
 .explore__hobby-card {
@@ -1275,15 +1299,23 @@
 
 @media (max-width: 1280px) {
   .explore-main-grid {
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: minmax(0, 1fr) 300px;
     gap: var(--space-lg);
   }
 }
 
 @media (max-width: 1024px) {
+  /* Reduce outer padding of the page canvas on tablets and below */
+  .page-canvas--padded .page-canvas__inner {
+    padding: var(--space-lg) var(--space-md) !important;
+  }
+
   .explore-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-lg);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
   
   .explore-sidebar {
@@ -1295,7 +1327,7 @@
   }
 
   .explore-header-row-wrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
     gap: var(--space-md);
   }
@@ -1304,39 +1336,197 @@
     max-width: 100%;
     width: 100%;
   }
-}
 
-@media (max-width: 768px) {
+  /* Stack Main Grid at 1024px to prevent tablet overflow */
   .explore-main-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-xl);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
   
   .explore-widgets-column {
     margin-top: var(--space-lg);
-  }
-  
-  .explore__hobby-grid {
-    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .explore-hero {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: var(--space-lg);
     min-height: auto;
     gap: var(--space-lg);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .explore-hero__illustration-col {
     min-height: 150px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
+  .explore__hobby-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .explore-layout {
+    padding-bottom: 120px; /* Safe padding to prevent floating navbar overlap */
+  }
+
+  /* Force single column using display: contents to interleave layout components */
+  .explore-main-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .explore-content,
+  .explore-widgets-column {
+    display: contents;
+  }
+
+  /* Exact section ordering as requested */
+  .explore-hero {
+    order: 1;
+    display: block; /* Disable grid to allow text and bottom-right absolute illustration layout */
+    position: relative;
+    padding: 24px;
+    min-height: 250px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .explore-hero__checkerboard {
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .explore-hero__text-col {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding-right: 120px; /* Leave space for bottom-right sunflower */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .explore-hero__illustration-col {
+    position: absolute;
+    right: 12px;
+    bottom: 0px;
+    width: 130px;
+    height: 130px;
+    min-height: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .explore-hero__flower-mascot {
+    width: 95px;
+    height: 95px;
+  }
+
+  .explore-hero__airplane {
+    position: absolute;
+    top: 5px;
+    left: -15px;
+    transform: scale(0.75) rotate(-10deg);
+  }
+
+  .explore-hero__trail-svg {
+    width: 80px;
+    height: 60px;
+    top: 20px;
+    left: -25px;
+  }
+
+  .explore-trending-widgets {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .explore-create-community-card {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .explore-create-community-card__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .explore-create-community-card__subtitle {
+    max-width: none;
+  }
+
+  .explore-create-community-card__illustration {
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  #all-hobbies-section {
+    order: 4;
+  }
+
+  .explore__hobby-grid {
+    grid-template-columns: minmax(0, 1fr); /* 1 column on mobile */
+    width: 100%;
+    min-width: 0;
+    gap: var(--space-md);
+  }
+
+  .explore-events-widgets {
+    order: 5;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .explore__quick-explore-section {
+    order: 6;
+  }
+
+  /* Category Filter Pill Horizontal Scroll */
   .explore__categories {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 8px;
+    margin-bottom: var(--space-xs);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .explore__categories::-webkit-scrollbar {
@@ -1346,25 +1536,161 @@
   .explore__category-btn {
     flex-shrink: 0;
   }
-}
 
-@media (max-width: 580px) {
-  .explore__hobby-grid {
-    grid-template-columns: 1fr;
-  }
-  
+  /* Mobile Responsive Typography overrides */
   .explore__title {
-    font-size: var(--text-3xl);
+    font-size: 32px;
+  }
+
+  .explore__section-title {
+    font-size: 22px;
+  }
+
+  .explore-widget-card__title {
+    font-size: 20px;
+  }
+
+  .explore-create-community-card__title {
+    font-size: 20px;
+  }
+
+  .explore__hobby-name {
+    font-size: 17px;
+  }
+
+  .explore-trending-item__name {
+    font-size: 15px;
+  }
+
+  .explore-event-item__title {
+    font-size: 15px;
+  }
+
+  .explore-quiz-card__title {
+    font-size: 17px;
+  }
+
+  .explore-hero__title {
+    font-size: 28px;
+  }
+
+  .explore-hero__subtitle {
+    font-size: 14px;
+  }
+
+  .explore__hobby-desc,
+  .explore-trending-item__meta,
+  .explore-event-item__location,
+  .explore-event-item__time,
+  .explore-create-community-card__subtitle,
+  .explore-quiz-card__desc {
+    font-size: 13px;
   }
 }
 
+/* Small Mobile Styles: <= 480px */
 @media (max-width: 480px) {
-  .explore-hero__title {
-    font-size: var(--text-2xl);
+  /* Quiz card horizontal layout adjustments for tight viewports */
+  .explore-quiz-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
-  
-  .explore-hero__subtitle {
-    font-size: var(--text-sm);
+
+  .explore-quiz-card__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .explore-quiz-card__illustration {
+    flex-shrink: 0;
+    transform: scale(0.9);
+  }
+
+  .explore-quiz-card__btn {
+    width: fit-content;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* Create community layout stacks on very narrow widths */
+  .explore-create-community-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+  }
+
+  .explore-create-community-card__illustration {
+    align-self: center;
+    margin-left: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .explore-create-community-card__btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Search input comfortable box-sizing */
+  .explore__search {
+    width: 100%;
+  }
+
+  .explore__search-input {
+    height: 48px;
+    padding: 10px 14px 10px 44px;
+  }
+
+  /* Event cards adjustments */
+  .explore-event-item {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .explore-event-item__icon-wrap {
+    display: none; /* Hide mini visual icon to conserve text space */
+  }
+
+  .explore-event-item__date-block {
+    width: 44px;
+    height: 44px;
+  }
+
+  .explore-event-item__date-day {
+    font-size: 15px;
+  }
+}
+
+/* Very Small Mobile Styles: <= 375px */
+@media (max-width: 375px) {
+  /* Scale down hero elements to avoid overlaps */
+  .explore-hero__text-col {
+    padding-right: 90px;
+  }
+
+  .explore-hero__illustration-col {
+    width: 100px;
+    height: 100px;
+  }
+
+  .explore-hero__flower-mascot {
+    width: 75px;
+    height: 75px;
+  }
+
+  .explore-hero__airplane {
+    transform: scale(0.6) rotate(-10deg);
+    left: -20px;
+  }
+
+  .explore-hero__trail-svg {
+    width: 60px;
+    height: 40px;
+    left: -30px;
   }
 }
 

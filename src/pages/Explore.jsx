@@ -981,7 +981,7 @@ export default function Explore() {
           <aside className="explore-widgets-column">
             
             {/* Trending Communities Widget */}
-            <section className="explore-widget-card">
+            <section className="explore-widget-card explore-trending-widgets">
               <div className="explore-widget-card__header">
                 <h3 className="explore-widget-card__title">Trending communities</h3>
                 <span className="explore-widget-card__link" onClick={() => navigate('/ground')}>See all →</span>
@@ -1031,7 +1031,7 @@ export default function Explore() {
             </section>
 
             {/* Upcoming Events Widget */}
-            <section className="explore-widget-card">
+            <section className="explore-widget-card explore-events-widgets">
               <div className="explore-widget-card__header">
                 <h3 className="explore-widget-card__title">Upcoming Events</h3>
                 <span className="explore-widget-card__link">See all →</span>
