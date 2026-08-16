@@ -7,12 +7,12 @@ import './HobbyCloud.css';
    --------------------------------------------------------------- */
 
 const HOBBY_MENU_ITEMS = [
-  { text: 'Photography', link: '/explore', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&h=400&fit=crop&auto=format' },
-  { text: 'Film & Cinema', link: '/explore', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=600&h=400&fit=crop&auto=format' },
-  { text: 'Music & Guitar', link: '/explore', image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&h=400&fit=crop&auto=format' },
-  { text: 'Pottery & Craft', link: '/explore', image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?q=80&w=600&h=400&fit=crop&auto=format' },
-  { text: 'Cooking & Food', link: '/explore', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&h=400&fit=crop&auto=format' },
-  { text: 'Bouldering & Sport', link: '/explore', image: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=600&h=400&fit=crop&auto=format' },
+  { text: 'Photography', link: '/community/street-photography', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&h=400&fit=crop&auto=format' },
+  { text: 'Film & Cinema', link: '/community/cinema-club', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=600&h=400&fit=crop&auto=format' },
+  { text: 'Music & Guitar', link: '/community/acoustic-sessions', image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&h=400&fit=crop&auto=format' },
+  { text: 'Pottery & Craft', link: '/ground', image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?q=80&w=600&h=400&fit=crop&auto=format' },
+  { text: 'Cooking & Food', link: '/community/student-chefs', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&h=400&fit=crop&auto=format' },
+  { text: 'Bouldering & Sport', link: '/community/beta-crushers', image: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=600&h=400&fit=crop&auto=format' },
 ];
 
 export default function HobbyCloud() {

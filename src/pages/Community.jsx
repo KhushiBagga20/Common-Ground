@@ -41,7 +41,7 @@ export default function Community() {
           <Smiley size={48} mood="neutral" />
           <h2>Community not found</h2>
           <p className="text-muted">This community might not exist yet.</p>
-          <Button onClick={() => navigate('/explore')}>Explore communities</Button>
+          <Button onClick={() => navigate('/ground')}>Explore communities</Button>
         </div>
       </PageCanvas>
     );
@@ -186,7 +186,7 @@ export default function Community() {
                       label={h.name}
                       emoji={h.emoji}
                       color={h.color}
-                      onClick={() => navigate('/explore')}
+                      onClick={() => navigate('/ground')}
                     />
                   ))}
                 </div>

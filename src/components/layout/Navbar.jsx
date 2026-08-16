@@ -28,7 +28,7 @@ export default function Navbar() {
     >
       <div className="dock-nav__inner">
         {/* Brand Mark */}
-        <NavLink to="/ground" className="dock-nav__logo" title="CommonGround">
+        <NavLink to="/" className="dock-nav__logo" title="CommonGround">
           <span className="dock-nav__logo-mark">⬛</span>
         </NavLink>
 

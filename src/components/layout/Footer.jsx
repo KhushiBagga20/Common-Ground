@@ -37,7 +37,7 @@ export default function Footer() {
 
   const handleCtaClick = () => {
     window.dispatchEvent(new Event('sunflower-react'));
-    setTimeout(() => navigate('/explore'), 350);
+    setTimeout(() => navigate('/ground'), 350);
   };
 
   return (
@@ -163,10 +163,10 @@ export default function Footer() {
 
             {/* Product Nav Links */}
             <div className="cg-footer__links">
-              <Link to="/explore" className="cg-footer__link">Explore</Link>
-              <Link to="/explore" className="cg-footer__link">Communities</Link>
+              <Link to="/Ground" className="cg-footer__link">Ground</Link>
+              <Link to="/Events" className="cg-footer__link">Events</Link>
               <Link to="/onboarding" className="cg-footer__link">Hobbies</Link>
-              <Link to="/ground" className="cg-footer__link">Ground</Link>
+              <Link to="/Profile" className="cg-footer__link">Profile</Link>
             </div>
 
             {/* External Links */}
@@ -177,7 +177,7 @@ export default function Footer() {
               <a href="https://github.com" target="_blank" rel="noreferrer" className="cg-footer__link">
                 GitHub
               </a>
-              <Link to="/explore" className="cg-footer__link">Contact</Link>
+              <Link to="/Ground" className="cg-footer__link">Contact</Link>
             </div>
           </div>
 

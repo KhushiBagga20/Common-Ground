@@ -72,7 +72,7 @@ export default function FinalCTA() {
           <Button
             variant="secondary"
             size="lg"
-            onClick={() => handleClick('/explore')}
+            onClick={() => handleClick('/ground')}
             icon={<Compass size={18} />}
           >
             Explore first
