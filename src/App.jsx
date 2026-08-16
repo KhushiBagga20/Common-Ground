@@ -5,6 +5,7 @@ import Landing from './pages/Landing';
 import Onboarding from './pages/Onboarding';
 import Ground from './pages/Ground';
 import Explore from './pages/Explore';
+import Events from './pages/Events';
 import Community from './pages/Community';
 import CreatePost from './pages/CreatePost';
 import Profile from './pages/Profile';
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/ground" element={<Ground />} />
           <Route path="/explore" element={<Explore />} />
+          <Route path="/events" element={<Events />} />
           <Route path="/community/:id" element={<Community />} />
           <Route path="/create" element={<CreatePost />} />
           <Route path="/profile" element={<Profile />} />

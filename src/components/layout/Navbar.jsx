@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Compass, Plus, User, Sun, Moon, Layers } from 'lucide-react';
+import { Calendar, Plus, User, Sun, Moon, Layers } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import './Navbar.css';
 
@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const links = [
     { to: '/ground', icon: Layers, label: 'Ground' },
-    { to: '/explore', icon: Compass, label: 'Explore' },
+    { to: '/events', icon: Calendar, label: 'Events' },
     { to: '/create', icon: Plus, label: 'Create' },
     { to: '/profile', icon: User, label: 'Profile' },
   ];
@@ -37,7 +37,9 @@ export default function Navbar() {
         {/* Navigation Links */}
         <div className="dock-nav__links">
           {links.map(({ to, icon: Icon, label }) => {
-            const isActive = location.pathname === to || (to !== '/ground' && location.pathname.startsWith(to));
+            const isActive = to === '/ground'
+              ? (location.pathname === '/ground' || location.pathname.startsWith('/explore'))
+              : (location.pathname === to || (to !== '/ground' && location.pathname.startsWith(to)));
 
             return (
               <NavLink

@@ -140,7 +140,7 @@ export default function Landing() {
               <Button
                 variant="secondary"
                 size="lg"
-                onClick={() => handleCtaClick('/explore')}
+                onClick={() => handleCtaClick('/ground')}
                 icon={<Compass size={18} />}
               >
                 Explore first
