@@ -1,169 +1,1647 @@
-.profile {
+/* ============================================
+   USER PROFILE PAGE STYLES
+   Palette: ivory/cream · blush pink · sunflower
+            yellow · peach · mint · lavender · charcoal
+   ============================================ */
+
+/* ── Profile-specific CSS tokens ─────────────────────────────── */
+:root,
+[data-theme="light"] {
+  --profile-bg:            #F7F4EE;
+  --profile-checker:       #EDE9DF;
+  --profile-pink:          #FF8FAB;
+  --profile-yellow:        #FFD43B;
+  --profile-peach:         #FFCCAA;
+  --profile-mint:          #B8F0D0;
+  --profile-lavender:      #D9BBFF;
+  --profile-dark:          #1A1A1A;
+  --profile-card-bg:       #FFFFFF;
+  --profile-card-border:   #1A1A1A;
+  --profile-shadow:        rgba(26,26,26,0.18);
+  --profile-shadow-offset: #1A1A1A;
+  --profile-cream-light:   #FFF8F0;
+  --profile-ivory:         #FDFAF5;
+
+  /* Pastel tag colours */
+  --pastel-pink-bg:        #FFE8F0;
+  --pastel-pink-border:    #FFBDCF;
+  --pastel-pink-text:      #B5005A;
+  --pastel-yellow-bg:      #FFF8CC;
+  --pastel-yellow-border:  #F0D95A;
+  --pastel-yellow-text:    #7A5F00;
+  --pastel-green-bg:       #E0FAE9;
+  --pastel-green-border:   #A8E6BA;
+  --pastel-green-text:     #1C6B38;
+  --pastel-blue-bg:        #E8F0FF;
+  --pastel-blue-border:    #B0C8FF;
+  --pastel-blue-text:      #1A3FAA;
+  --pastel-purple-bg:      #F0EAFF;
+  --pastel-purple-border:  #C9AEFF;
+  --pastel-purple-text:    #5900B3;
+  --pastel-peach-bg:       #FFF0E0;
+  --pastel-peach-border:   #FFCCAA;
+  --pastel-peach-text:     #8B4000;
+  --pastel-mint-bg:        #E0FAF0;
+  --pastel-mint-border:    #A0E8C8;
+  --pastel-mint-text:      #0A5C3A;
+}
+
+[data-theme="dark"] {
+  --profile-bg:            #0E0E0E;
+  --profile-checker:       #181818;
+  --profile-pink:          #FF8FAB;
+  --profile-yellow:        #FFD43B;
+  --profile-peach:         #FFCCAA;
+  --profile-mint:          #7DE8B0;
+  --profile-lavender:      #C9AEFF;
+  --profile-dark:          #F2EFE8;
+  --profile-card-bg:       #191919;
+  --profile-card-border:   #F2EFE8;
+  --profile-shadow:        rgba(0,0,0,0.45);
+  --profile-shadow-offset: rgba(242,239,232,0.15);
+  --profile-cream-light:   #1F1D18;
+  --profile-ivory:         #161410;
+
+  --pastel-pink-bg:        #3A0020;
+  --pastel-pink-border:    #7A2050;
+  --pastel-pink-text:      #FF99CC;
+  --pastel-yellow-bg:      #2A2200;
+  --pastel-yellow-border:  #7A6500;
+  --pastel-yellow-text:    #FFD96B;
+  --pastel-green-bg:       #002210;
+  --pastel-green-border:   #1A6030;
+  --pastel-green-text:     #7DE8A8;
+  --pastel-blue-bg:        #001240;
+  --pastel-blue-border:    #1A3A99;
+  --pastel-blue-text:      #99BBFF;
+  --pastel-purple-bg:      #1A0040;
+  --pastel-purple-border:  #5A1AAA;
+  --pastel-purple-text:    #CC99FF;
+  --pastel-peach-bg:       #2A1200;
+  --pastel-peach-border:   #7A3A00;
+  --pastel-peach-text:     #FFCCAA;
+  --pastel-mint-bg:        #001A10;
+  --pastel-mint-border:    #005A30;
+  --pastel-mint-text:      #7DE8B0;
+}
+
+/* ============================================
+   KINETIC CHECKERBOARD BACKGROUND
+   Diagonal drift ~15s loop – smooth, no jump
+   ============================================ */
+
+@keyframes checker-drift {
+  0%   { background-position: 0px 0px; }
+  100% { background-position: 64px 64px; }
+}
+
+.profile-bg-pattern {
+  position: fixed;
+  inset: 0;
+  background-color: var(--profile-bg);
+  background-image:
+    conic-gradient(
+      var(--profile-checker) 90deg,
+      transparent           90deg 180deg,
+      var(--profile-checker) 180deg 270deg,
+      transparent           270deg
+    );
+  background-size: 64px 64px;
+  background-position: 0 0;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: -1;
+  animation: checker-drift 15s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-bg-pattern { animation: none; }
+}
+
+/* ============================================
+   MAIN PAGE LAYOUT
+   ============================================ */
+
+.profile-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xl);
-  max-width: 640px;
+  gap: var(--space-xl);
   padding-bottom: var(--space-3xl);
+  width: 100%;
 }
 
-/* Header */
-.profile__header {
+/* ── Ensure bottom nav never covers content on mobile ─────────── */
+@media (max-width: 768px) {
+  .profile-container {
+    padding-bottom: 100px;
+  }
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-xl);
+  align-items: start;
+  width: 100%;
+}
+
+.profile-grid__main {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-xl);
+  min-width: 0;
 }
 
-.profile__header-top {
+.profile-grid__right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: sticky;
+  top: var(--space-lg);
+}
+
+/* ============================================
+   PROFILE HEADER CARD
+   ============================================ */
+
+.profile-header {
+  background: var(--profile-card-bg);
+  border: 2px solid var(--profile-card-border);
+  border-radius: var(--radius-xl);
+  overflow: visible;           /* avatar and stickers can protrude */
+  box-shadow: 5px 5px 0 var(--profile-shadow-offset);
+  position: relative;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+/* Banner — overflow:hidden clips background image but not child popover */
+.profile-header__banner {
+  height: 160px;
+  background: linear-gradient(135deg, #FFBDDA 0%, #FFE8A3 100%);
+  border-bottom: 2px solid var(--profile-card-border);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  overflow: hidden;
+  position: relative;
+  transition: background var(--duration-normal) var(--ease-out);
+}
+
+/* ── Banner decorations (sunflowers + doodles) ──────────────── */
+.profile-banner__deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Large sunflower – right half, slightly outside bottom edge */
+.ph-flower {
+  position: absolute;
+  filter: drop-shadow(1px 2px 0 rgba(0,0,0,0.12));
+}
+
+/* Large primary sunflower – right side, dipping below banner edge */
+.ph-flower--lg-right {
+  bottom: -26px;
+  right: 68px;
+  opacity: 0.95;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.15));
+}
+
+/* Medium secondary sunflower – upper far right */
+.ph-flower--md-right {
+  top: 6px;
+  right: 14px;
+  opacity: 0.75;
+}
+
+/* Small accent sunflower – left corner, light and delicate */
+.ph-flower--sm-left {
+  top: 20px;
+  left: 22px;
+  opacity: 0.65;
+}
+
+/* ── Change Cover button – anchored inside banner top-right ─── */
+.profile-banner__cover-actions {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 10;
+}
+
+.profile-banner__cover-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 13px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-primary);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1.5px solid rgba(0, 0, 0, 0.22);
+  border-radius: var(--radius-pill);
+  color: #111;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.12);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.profile-banner__cover-btn:hover {
+  background: rgba(255,255,255,1);
+}
+
+/* ── Cover picker popover ─────────────────────────────────────
+   Positioned BELOW the banner (outside it) so it never overlaps
+   avatar, name, or edit buttons.
+   ─────────────────────────────────────────────────────────── */
+.profile-cover-picker {
+  position: absolute;
+  top: calc(160px + 8px);   /* banner height + gap */
+  right: 12px;
+  left: auto;
+  background: var(--profile-card-bg);
+  border: 2px solid var(--profile-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: 5px 5px 0 var(--profile-shadow-offset);
+  z-index: 300;
+  min-width: 230px;
+}
+
+.profile-cover-picker__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: var(--space-sm);
 }
 
-.profile__avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--border-light);
-  border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.profile__settings-btn {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  color: var(--muted);
-  transition: color var(--duration-fast);
-}
-
-.profile__settings-btn:hover {
-  color: var(--text);
-}
-
-.profile__name {
-  font-size: var(--text-2xl);
+.profile-cover-picker__label {
+  font-size: var(--text-xs);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.profile__bio {
-  font-size: var(--text-base);
-  line-height: 1.5;
-}
-
-/* Sections */
-.profile__section {
+.profile-cover-picker__close {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-light);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
 }
 
-.profile__section-header {
+.profile-cover-picker__close:hover {
+  background: var(--profile-cream-light);
+}
+
+.profile-cover-picker__swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.profile-cover-picker__swatch {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.profile-cover-picker__swatch--active {
+  border-color: var(--profile-card-border);
+  box-shadow: 2px 2px 0 var(--profile-shadow-offset);
+}
+
+.profile-cover-picker__divider {
+  height: 1.5px;
+  background: var(--border-light);
+  margin-bottom: var(--space-sm);
+}
+
+.profile-cover-picker__upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-family: var(--font-primary);
+  background: var(--profile-cream-light);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--text);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.profile-cover-picker__upload-btn:hover {
+  background: var(--profile-yellow);
+  border-color: var(--profile-card-border);
+}
+
+/* ── Content area ─────────────────────────────────────────────── */
+.profile-header__content {
+  padding: var(--space-lg) var(--space-xl) var(--space-lg);
+  position: relative;
+  background: var(--profile-card-bg);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+/* Avatar deco layer – stickers near avatar, outside the avatar div */
+.profile-header__avatar-deco {
+  position: absolute;
+  top: -46px;
+  left: var(--space-xl);
+  width: 140px;
+  height: 80px;
+  pointer-events: none;
+}
+
+/* Extra sunflower stickers near avatar */
+.ph-avatar-flower--a {
+  position: absolute;
+  bottom: -8px;
+  right: -10px;
+  filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.15));
+  pointer-events: none;
+}
+
+.ph-avatar-flower--b {
+  position: absolute;
+  top: -4px;
+  right: -30px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Avatar */
+.profile-header__avatar-container {
+  position: relative;
+  margin-top: -72px;
+  margin-bottom: var(--space-md);
+  display: inline-block;
+}
+
+.profile-header__avatar-wrapper {
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: var(--profile-card-bg);
+  border: 3px solid var(--profile-card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--profile-shadow-offset);
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.profile-header__avatar-wrapper:active {
+  box-shadow: 2px 2px 0 var(--profile-shadow-offset);
+}
+
+.profile-header__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile-header__avatar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 143, 171, 0.78);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  border-radius: 50%;
+}
+
+.profile-header__avatar-wrapper:hover .profile-header__avatar-overlay {
+  opacity: 1;
+}
+
+/* Action buttons */
+.profile-header__actions {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  z-index: 5;
 }
 
-.profile__section-title {
+.profile-header__settings-btn {
+  width: 38px;
+  height: 38px;
+  border: 2px solid var(--profile-card-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--profile-card-bg);
+  color: var(--text);
+  box-shadow: 3px 3px 0 var(--profile-shadow-offset);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.profile-header__settings-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* Profile details */
+.profile-header__details {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-header__name {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.profile-header__role {
   font-size: var(--text-lg);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  color: var(--profile-pink);
+  margin-bottom: var(--space-sm);
 }
 
-.profile__tags {
+.profile-header__bio {
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin-bottom: var(--space-md);
+}
+
+.profile-header__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  border-top: 1.5px solid var(--border-light);
+  padding-top: var(--space-md);
+}
+
+.profile-header__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-header__meta-icon { color: var(--text-secondary); }
+
+.profile-header__website {
+  font-weight: 600;
+  color: var(--profile-pink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Edit state inputs */
+.profile-header__edit-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
+.profile-header__input   { width: 100%; }
+.profile-header__textarea { width: 100%; font-size: var(--text-sm); }
+
+.profile-header__edit-row {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.profile-header__input--half { flex: 1; }
+
+/* ============================================
+   STATISTICS BAR
+   Each card gets its own accent colour
+   ============================================ */
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.profile-stats__card {
+  background: var(--profile-card-bg);
+  border: 2px solid var(--profile-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 4px 4px 0 var(--profile-shadow-offset);
+  text-align: center;
+  min-height: 90px;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out);
+}
+
+.profile-stats__card:hover {
+  transform: translate(-2px, -3px);
+  box-shadow: 6px 7px 0 var(--profile-shadow-offset);
+}
+
+/* Top accent bar per card – colour set via inline style from ProfileStats.jsx.
+   The card already has overflow: hidden which clips to border-radius — no
+   redundant border-radius needed here. */
+.profile-stats__accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  box-sizing: border-box;
+}
+
+/* Pastel background blob – large soft circle behind number */
+.profile-stats__bg-blob {
+  position: absolute;
+  bottom: -12px;
+  right: -12px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  opacity: 0.35;
+  pointer-events: none;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+/* Pastel wash tint across the whole card — very subtle */
+.profile-stats__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--stat-tint, transparent);
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.profile-stats__value {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 3px;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-stats__label {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  position: relative;
+  z-index: 1;
+}
+
+/* Hand-drawn doodle icon sits at top-left of each stat card */
+.profile-stats__doodle {
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  opacity: 0.72;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   NAVIGATION TABS
+   ============================================ */
+
+.profile-tabs-wrapper {
+  width: 100%;
+  border-bottom: 2px solid var(--profile-card-border);
+  padding-bottom: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.profile-tabs-wrapper::-webkit-scrollbar { display: none; }
+
+.profile-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  min-width: max-content;
+}
+
+.profile-tabs__btn {
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--muted);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  position: relative;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.profile-tabs__btn:hover {
+  color: var(--text);
+  background: rgba(255, 143, 171, 0.08);
+}
+
+.profile-tabs__btn--active {
+  color: var(--text);
+  background: rgba(255, 143, 171, 0.1);
+}
+
+.profile-tabs__active-indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--profile-pink);
+  border-radius: var(--radius-pill);
+}
+
+/* ============================================
+   BASE CARD STYLES
+   ============================================ */
+
+.profile-card {
+  background: var(--profile-card-bg);
+  border: 2px solid var(--profile-card-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: 4px 4px 0 var(--profile-shadow-offset);
+  position: relative;
+  overflow: hidden;      /* clips ::before accent bars to rounded corners */
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+.profile-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--profile-shadow-offset);
+}
+
+.profile-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1.5px solid var(--border-light);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.profile-card__title {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  position: relative;
+}
+
+/* Tiny dot/sparkle decoration after card section headings */
+.profile-card__title::after {
+  content: '✦';
+  font-size: 8px;
+  color: var(--profile-yellow);
+  position: absolute;
+  top: -5px;
+  right: -14px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.profile-card__subtitle {
+  font-size: var(--text-base);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--text-secondary);
+}
+
+/* ── Section doodle decorators ─────────────────────────────────
+   Small stars/hearts placed at corners of main content cards
+   to give a sticker-like, illustrated feel.
+   ──────────────────────────────────────────────────────────── */
+
+/* Star corner on top-right of hobbies card */
+.profile-card--hobbies::after {
+  content: '✦';
+  font-size: 14px;
+  color: var(--profile-yellow);
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  opacity: 0.55;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* Heart corner on top-right of badges card */
+.profile-card--badges::after {
+  content: '♡';
+  font-size: 16px;
+  color: var(--profile-pink);
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  opacity: 0.5;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* Sparkle decoration on activity card top-right */
+.profile-card--activity::after {
+  content: '✦';
+  font-size: 12px;
+  color: var(--profile-peach);
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  opacity: 0.55;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ── Per-card accent strips / corner details ──────────────── */
+
+/* About card — pink left bar */
+.profile-card--about {
+  overflow: hidden;
+  border-left: 5px solid var(--profile-pink);
+}
+
+/* sunflower sticker peeking top-right of About card */
+.profile-card--about::after {
+  content: '';
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 48px;
+  height: 48px;
+  background: var(--profile-yellow);
+  border-radius: 50%;
+  border: 2px solid var(--profile-card-border);
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* Hobbies card — yellow top bar.
+   overflow: hidden on .profile-card clips the strip to rounded corners. */
+.profile-card--hobbies::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--profile-yellow);
+  box-sizing: border-box;
+}
+
+/* Badges card — pink top bar */
+.profile-card--badges::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--profile-pink);
+  box-sizing: border-box;
+}
+
+/* Activity card — gradient top bar */
+.profile-card--activity::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--profile-yellow) 0%, var(--profile-pink) 100%);
+  box-sizing: border-box;
+}
+
+/* Vibe card — pink→yellow top bar */
+.profile-card--vibe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--profile-pink) 0%, var(--profile-yellow) 100%);
+  box-sizing: border-box;
+}
+
+/* Completion card — yellow top bar */
+.profile-card--completion::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--profile-yellow);
+  box-sizing: border-box;
+}
+
+/* Connections card — mint top bar */
+.profile-card--connections::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--profile-mint);
+  box-sizing: border-box;
+}
+
+/* Achievements card — lavender top bar */
+.profile-card--achievements::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--profile-lavender);
+  box-sizing: border-box;
+}
+
+/* Pastel corner blob (decorative) on sidebar cards.
+   The blob deliberately sits partly outside the card for a sticker effect.
+   We clip it to stay within card bounds by not going beyond -4px offset. */
+.profile-card--sidebar::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--profile-yellow);
+  border: 2px solid var(--profile-card-border);
+  opacity: 0.10;
+  pointer-events: none;
+}
+
+/* ============================================
+   ABOUT CARD BODY
+   ============================================ */
+
+.profile-card__text {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.profile-card__subsection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.profile-card__tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
 
-.profile__empty-section {
+.profile-card__tag {
+  padding: 5px 13px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--tag-border, var(--border-light));
+  background: var(--tag-bg, var(--profile-cream-light));
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--tag-text, var(--text-secondary));
+  box-shadow: 2px 2px 0 var(--profile-shadow-offset);
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md);
-  border: 1.5px dashed var(--border);
-  border-radius: var(--radius-lg);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 }
 
-/* Communities */
-.profile__communities {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background: var(--border-light);
+.profile-card__tag:hover {
+  transform: translate(-1px, -1.5px);
+  box-shadow: 3px 3px 0 var(--profile-shadow-offset);
+}
+
+/* ============================================
+   HOBBIES CARD
+   ============================================ */
+
+.profile-hobbies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.profile-hobby-card {
+  border: 2px solid var(--profile-card-border);
   border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  background: var(--profile-card-bg);
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  position: relative;
   overflow: hidden;
-  border: 1px solid var(--border);
+  box-shadow: 3px 3px 0 var(--profile-shadow-offset);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 }
 
-.profile__community-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
-  background: var(--card-bg);
-  cursor: pointer;
-  transition: background var(--duration-fast);
+.profile-hobby-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--profile-shadow-offset);
 }
 
-.profile__community-item:hover {
-  background: var(--border-light);
-}
+/* Alternating hobby card bottom accent colours */
+.profile-hobby-card:nth-child(1) .profile-hobby-card__accent { background: var(--profile-pink); }
+.profile-hobby-card:nth-child(2) .profile-hobby-card__accent { background: var(--profile-yellow); }
+.profile-hobby-card:nth-child(3) .profile-hobby-card__accent { background: var(--profile-mint); }
+.profile-hobby-card:nth-child(4) .profile-hobby-card__accent { background: var(--profile-lavender); }
+.profile-hobby-card:nth-child(5) .profile-hobby-card__accent { background: var(--profile-peach); }
+.profile-hobby-card:nth-child(n+6) .profile-hobby-card__accent { background: var(--profile-pink); }
 
-.profile__community-accent {
-  width: 4px;
-  height: 32px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
+.profile-hobby-card__emoji  { font-size: 2.4rem; line-height: 1; }
 
-.profile__community-info {
+.profile-hobby-card__content {
   display: flex;
   flex-direction: column;
+  gap: 3px;
 }
 
-.profile__community-name {
-  font-size: var(--text-sm);
-  font-weight: 600;
+.profile-hobby-card__name {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text);
 }
 
-.profile__community-members {
+.profile-hobby-card__desc {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* Bottom accent strip on hobby cards.
+   The card has overflow: hidden which clips this to its border-radius. */
+.profile-hobby-card__accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   COMMUNITIES GRID (TAB)
+   ============================================ */
+
+.profile-communities-grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+/* ============================================
+   ACTIVITY CARD
+   ============================================ */
+
+.profile-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.profile-activity-item {
+  padding: var(--space-lg);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--profile-cream-light);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.profile-activity-item:hover {
+  transform: translateX(3px);
+  border-color: var(--profile-pink);
+}
+
+.profile-activity-item__header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
   font-size: var(--text-xs);
 }
 
-/* Posts */
-.profile__posts {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background: var(--border-light);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-
-.profile__post-item {
-  padding: var(--space-md) var(--space-lg);
-  background: var(--card-bg);
-}
-
-.profile__post-type {
-  font-size: var(--text-xs);
-  font-weight: 600;
+.profile-activity-item__badge {
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 9px;
+  border: 1.5px solid var(--profile-card-border);
+}
+
+.profile-activity-item__badge--post  { background: var(--profile-yellow); color: #111; }
+.profile-activity-item__badge--reply { background: var(--profile-pink); color: #fff; }
+.profile-activity-item__badge--discussion { background: var(--profile-yellow); color: #111; }
+.profile-activity-item__badge--question   { background: var(--profile-pink); color: #fff; }
+.profile-activity-item__badge--idea       { background: var(--profile-mint); color: #111; }
+.profile-activity-item__badge--project    { background: var(--profile-lavender); color: #111; }
+
+.profile-activity-item__community { font-weight: 600; color: var(--text-secondary); }
+.profile-activity-item__dot       { color: var(--muted); }
+.profile-activity-item__time      { color: var(--muted); }
+
+.profile-activity-item__title {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.profile-activity-item__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-xs);
+  margin-top: 6px;
+}
+
+.profile-activity-item__icon { color: var(--muted); }
+
+/* ============================================
+   BADGES CARD
+   ============================================ */
+
+.profile-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+  gap: var(--space-md);
+}
+
+.profile-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  border: 2px solid var(--profile-card-border);
+  border-radius: var(--radius-lg);
+  background: var(--profile-card-bg);
+  box-shadow: 3px 3px 0 var(--profile-shadow-offset);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.profile-badge-item:hover {
+  transform: translate(-2px, -2px) scale(1.02);
+  box-shadow: 5px 5px 0 var(--profile-shadow-offset);
+}
+
+/* Pastel icon backgrounds cycle through accent colours */
+.profile-badge-item:nth-child(1) .profile-badge-item__icon-wrap { background: var(--pastel-pink-bg); }
+.profile-badge-item:nth-child(2) .profile-badge-item__icon-wrap { background: var(--pastel-yellow-bg); }
+.profile-badge-item:nth-child(3) .profile-badge-item__icon-wrap { background: var(--pastel-mint-bg); }
+.profile-badge-item:nth-child(4) .profile-badge-item__icon-wrap { background: var(--pastel-purple-bg); }
+.profile-badge-item:nth-child(n+5) .profile-badge-item__icon-wrap { background: var(--pastel-peach-bg); }
+
+.profile-badge-item__icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--profile-card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  box-shadow: 0 3px 0 var(--profile-shadow-offset);
+}
+
+.profile-badge-item__emoji { font-size: 1.7rem; }
+
+.profile-badge-item__name {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.profile-badge-item__desc {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+/* ============================================
+   SIDEBAR CARDS
+   ============================================ */
+
+.profile-card--sidebar {
+  padding: var(--space-lg);
+  /* Lighter feel: softer shadow + slightly thinner effective border */
+  box-shadow: 3px 3px 0 var(--profile-shadow-offset);
+  border-color: rgba(26, 26, 26, 0.7);
+}
+
+[data-theme="dark"] .profile-card--sidebar {
+  border-color: rgba(242, 239, 232, 0.55);
+}
+
+.profile-card--sidebar:hover {
+  box-shadow: 5px 5px 0 var(--profile-shadow-offset);
+}
+
+/* Smaller title in sidebar cards to reduce visual weight */
+.profile-card--sidebar .profile-card__title {
+  font-size: var(--text-lg);
+}
+
+/* Less pronounced header separator in sidebar cards */
+.profile-card--sidebar .profile-card__header {
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.profile-card__sidebar-desc {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.profile-card__sidebar-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Vibe Display */
+.profile-vibe-display {
+  border: 1.5px solid var(--profile-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-md);
+  background: var(--vibe-color, #9B72FF);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.12);
+}
+
+.profile-vibe-display__badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.profile-vibe-display__emoji {
+  font-size: 2rem;
+  background: rgba(255,255,255,0.25);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-vibe-display__title {
+  font-size: var(--text-base);
+  font-weight: 800;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.18);
+}
+
+.profile-vibe-display__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.profile-vibe-display__tag {
+  background: rgba(255,255,255,0.2);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Completion card */
+.profile-card__badge-percent {
+  font-size: var(--text-xs);
+  font-weight: 800;
+  background: var(--profile-yellow);
+  border: 1.5px solid var(--profile-card-border);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  box-shadow: 2px 2px 0 var(--profile-shadow-offset);
+  color: #111;
+}
+
+.profile-progress-bar {
+  width: 100%;
+  height: 13px;
+  border: 1.5px solid var(--profile-card-border);
+  border-radius: var(--radius-pill);
+  background: var(--border-light);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+.profile-progress-bar__inner {
+  height: 100%;
+  background: linear-gradient(90deg, var(--profile-pink) 0%, var(--profile-yellow) 100%);
+  border-right: 1.5px solid var(--profile-card-border);
+  transition: width 0.6s var(--ease-out);
+}
+
+.profile-completion-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.profile-completion-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.profile-completion-item__icon      { flex-shrink: 0; }
+.profile-completion-item__icon--done { color: var(--green); fill: rgba(91,203,119,0.1); }
+.profile-completion-item__icon--todo { color: var(--muted); }
+
+.profile-completion-item__text {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.profile-completion-item__text--done {
+  text-decoration: line-through;
   color: var(--muted);
 }
 
-.profile__post-title {
-  font-size: var(--text-sm);
+/* Connections */
+.profile-connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.profile-connection-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1.2px solid var(--border-light);
+  transition: border-color var(--duration-normal) var(--ease-out);
+}
+
+.profile-connection-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.profile-connection-item__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--profile-card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-base);
+  box-shadow: 2px 2px 0 var(--profile-shadow-offset);
+  flex-shrink: 0;
+}
+
+.profile-connection-item__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profile-connection-item__name {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-connection-item__role {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.profile-connection-item__mutual {
+  font-size: 9px;
   font-weight: 600;
-  margin-top: 2px;
-  margin-bottom: 4px;
-  line-height: 1.4;
+}
+
+.profile-card__view-all-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: 100%;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding-top: var(--space-lg);
+  margin-top: var(--space-md);
+  border-top: 1.5px solid var(--border-light);
+  cursor: pointer;
+  transition:
+    gap var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+}
+
+.profile-card__view-all-btn:hover {
+  color: var(--profile-pink);
+  gap: var(--space-sm);
+}
+
+/* Achievements */
+.profile-achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.profile-achievement-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.profile-achievement-item:hover {
+  background: var(--profile-cream-light);
+}
+
+.profile-achievement-item__icon-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--profile-card-border);
+  background: var(--badge-bg-color, var(--profile-yellow));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0 var(--profile-shadow-offset);
+  flex-shrink: 0;
+  color: #111;
+}
+
+.profile-achievement-item__info { display: flex; flex-direction: column; }
+
+.profile-achievement-item__title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.profile-achievement-item__desc {
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+/* Tab content wrapper */
+.profile-tab-content { width: 100%; }
+
+.profile-tab-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .profile-grid__right {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 820px) {
+  .profile-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profile-grid__right {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  /* On smaller screens, align picker to left edge */
+  .profile-cover-picker {
+    right: auto;
+    left: 0;
+    top: calc(110px + 8px);
+    min-width: 210px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-stats {
+    display: flex;
+    overflow-x: auto;
+    gap: var(--space-sm);
+    padding-bottom: var(--space-sm);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .profile-stats::-webkit-scrollbar { display: none; }
+
+  .profile-stats__card {
+    flex: 0 0 110px;
+    min-height: 78px;
+    padding: var(--space-sm) var(--space-xs);
+  }
+
+  .profile-header__banner { height: 110px; }
+
+  .profile-header__avatar-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  .profile-header__avatar-container {
+    margin-top: -46px;
+  }
+
+  .profile-header__actions {
+    top: var(--space-sm);
+    right: var(--space-sm);
+  }
+
+  .profile-header__name  { font-size: var(--text-2xl); }
+  .profile-header__role  { font-size: var(--text-base); }
+
+  .profile-hobbies-grid  { grid-template-columns: 1fr; }
+  .profile-badges-grid   { grid-template-columns: repeat(2, 1fr); }
+
+  .ph-flower--lg-right { right: 40px; }
+  .ph-flower--md-right { right: 8px; }
+  .ph-flower--sm-left  { display: none; }
+
+  .profile-cover-picker {
+    right: 0;
+    left: 0;
+    min-width: unset;
+    top: calc(110px + 6px);
+  }
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   ============================================ */
+
+[data-theme="dark"] .profile-header__banner {
+  border-bottom-color: var(--profile-card-border);
+}
+
+[data-theme="dark"] .profile-card {
+  background: var(--profile-card-bg);
+}
+
+[data-theme="dark"] .profile-activity-item {
+  background: #1A1810;
+}
+
+[data-theme="dark"] .profile-achievement-item:hover {
+  background: #1A1810;
+}
+
+[data-theme="dark"] .profile-banner__cover-btn {
+  background: rgba(20,20,20,0.88);
+  color: #F2EFE8;
+  border-color: rgba(242,239,232,0.28);
+}
+
+[data-theme="dark"] .profile-banner__cover-btn:hover {
+  background: rgba(35,35,35,0.95);
+}
+
+[data-theme="dark"] .profile-header__role {
+  color: var(--profile-pink);
+}
+
+/* Dark mode: doodle decorators stay visible but slightly dimmed */
+[data-theme="dark"] .profile-card__title::after {
+  color: var(--profile-yellow);
+  opacity: 0.45;
+}
+
+[data-theme="dark"] .profile-card--hobbies::after,
+[data-theme="dark"] .profile-card--activity::after {
+  opacity: 0.35;
+}
+
+[data-theme="dark"] .profile-card--badges::after {
+  color: var(--profile-pink);
+  opacity: 0.35;
+}
+
+/* Dark mode: stat card tint overlay */
+[data-theme="dark"] .profile-stats__card::before {
+  opacity: 0.08;
+}
+
+/* Dark mode: stat doodle icons slightly dimmed */
+[data-theme="dark"] .profile-stats__doodle {
+  opacity: 0.5;
 }
