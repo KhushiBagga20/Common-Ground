@@ -8,6 +8,7 @@ import InterestTag from '../components/common/InterestTag';
 import Sunflower from '../components/common/Sunflower';
 import Smiley from '../components/common/Smiley';
 import ChessPattern from '../components/common/ChessPattern';
+import KineticCheckerboard from '../components/common/KineticCheckerboard';
 import { hobbies, getHobbyById } from '../data/hobbies';
 import { communities, getCommunitiesByHobby } from '../data/communities';
 import { posts, getPostsByInterest } from '../data/posts';
@@ -56,6 +57,7 @@ export default function Ground() {
 
   return (
     <PageCanvas>
+      <KineticCheckerboard />
       <motion.div
         className="ground"
         variants={staggerContainer}

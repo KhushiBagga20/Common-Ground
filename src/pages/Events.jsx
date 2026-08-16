@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import PageCanvas from '../components/layout/PageCanvas';
 import Smiley from '../components/common/Smiley';
+import KineticCheckerboard from '../components/common/KineticCheckerboard';
 import { staggerContainer, staggerItem } from '../animations/variants';
 
 export default function Events() {
   return (
     <PageCanvas>
+      <KineticCheckerboard />
       <motion.div
         className="events-page"
         variants={staggerContainer}

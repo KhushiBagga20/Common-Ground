@@ -6,6 +6,7 @@ import Lenis from 'lenis';
 
 // Layout & Common Components
 import PageCanvas from '../components/layout/PageCanvas';
+import KineticCheckerboard from '../components/common/KineticCheckerboard';
 
 // Profile Sub-components
 import ProfileHeader from '../components/profile/ProfileHeader';
@@ -249,7 +250,7 @@ export default function Profile() {
   return (
     <PageCanvas maxWidth="1320px">
       {/* Background Checkerboard Texture */}
-      <div className="profile-bg-pattern" />
+      <KineticCheckerboard />
 
       <motion.div
         className="profile-container"

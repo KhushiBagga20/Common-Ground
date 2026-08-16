@@ -590,14 +590,17 @@
   box-shadow: 6px 7px 0 var(--profile-shadow-offset);
 }
 
-/* Top accent bar per card – colour set via inline style from ProfileStats.jsx */
+/* Top accent bar per card – colour set via inline style from ProfileStats.jsx.
+   The card already has overflow: hidden which clips to border-radius — no
+   redundant border-radius needed here. */
 .profile-stats__accent {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   height: 5px;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-sizing: border-box;
 }
 
 /* Pastel background blob – large soft circle behind number */
@@ -717,7 +720,7 @@
   padding: var(--space-xl);
   box-shadow: 4px 4px 0 var(--profile-shadow-offset);
   position: relative;
-  overflow: visible;     /* allow sticker overflow on cards */
+  overflow: hidden;      /* clips ::before accent bars to rounded corners */
   transition:
     transform var(--duration-fast) var(--ease-out),
     box-shadow var(--duration-fast) var(--ease-out),
@@ -833,88 +836,112 @@
   pointer-events: none;
 }
 
-/* Hobbies card — yellow top bar */
+/* Hobbies card — yellow top bar.
+   overflow: hidden on .profile-card clips the strip to rounded corners. */
 .profile-card--hobbies::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 5px;
   background: var(--profile-yellow);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-sizing: border-box;
 }
 
 /* Badges card — pink top bar */
 .profile-card--badges::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 5px;
   background: var(--profile-pink);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-sizing: border-box;
 }
 
 /* Activity card — gradient top bar */
 .profile-card--activity::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 5px;
   background: linear-gradient(90deg, var(--profile-yellow) 0%, var(--profile-pink) 100%);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-sizing: border-box;
 }
 
 /* Vibe card — pink→yellow top bar */
 .profile-card--vibe::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 5px;
   background: linear-gradient(90deg, var(--profile-pink) 0%, var(--profile-yellow) 100%);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-sizing: border-box;
 }
 
 /* Completion card — yellow top bar */
 .profile-card--completion::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 5px;
   background: var(--profile-yellow);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-sizing: border-box;
 }
 
 /* Connections card — mint top bar */
 .profile-card--connections::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 5px;
   background: var(--profile-mint);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-sizing: border-box;
 }
 
 /* Achievements card — lavender top bar */
 .profile-card--achievements::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 5px;
   background: var(--profile-lavender);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-sizing: border-box;
 }
 
-/* Pastel corner blob (decorative) on sidebar cards */
+/* Pastel corner blob (decorative) on sidebar cards.
+   The blob deliberately sits partly outside the card for a sticker effect.
+   We clip it to stay within card bounds by not going beyond -4px offset. */
 .profile-card--sidebar::after {
   content: '';
   position: absolute;
-  bottom: -16px;
-  right: -16px;
-  width: 56px;
-  height: 56px;
+  bottom: -4px;
+  right: -4px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--profile-yellow);
   border: 2px solid var(--profile-card-border);
-  opacity: 0.12;
+  opacity: 0.10;
   pointer-events: none;
 }
 
@@ -1021,12 +1048,16 @@
   line-height: 1.45;
 }
 
+/* Bottom accent strip on hobby cards.
+   The card has overflow: hidden which clips this to its border-radius. */
 .profile-hobby-card__accent {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100%;
   height: 4px;
+  box-sizing: border-box;
 }
 
 /* ============================================
