@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
-  padding-bottom: var(--space-3xl);
+  /* Use z-index and position relative to draw above background doodles */
+  position: relative;
+  z-index: 1;
 }
 
 .create-post__back {
@@ -10,7 +12,7 @@
   align-items: center;
   gap: 6px;
   font-size: var(--text-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--muted);
   padding: var(--space-xs) 0;
   transition: color var(--duration-fast);
@@ -41,20 +43,94 @@
   border-radius: var(--radius-md);
   border: 1.5px solid var(--border);
   font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--muted);
+  font-weight: 600;
   transition: all var(--duration-fast) var(--ease-out);
 }
 
-.create-post__type-btn:hover {
-  border-color: var(--text);
-  color: var(--text);
+/* Subtle pastel hover and default states when not active */
+.create-post__type-btn--discussion {
+  background: #FFE8F0;
+  border-color: #FFBDCF;
+  color: #B5005A;
+}
+.create-post__type-btn--discussion:hover {
+  background: #FFD0E0;
+  border-color: #FF8FAB;
 }
 
+.create-post__type-btn--question {
+  background: #FFF8CC;
+  border-color: #F0D95A;
+  color: #7A5F00;
+}
+.create-post__type-btn--question:hover {
+  background: #FFF2A3;
+  border-color: #FFD43B;
+}
+
+.create-post__type-btn--idea {
+  background: #E0FAF0;
+  border-color: #A0E8C8;
+  color: #0A5C3A;
+}
+.create-post__type-btn--idea:hover {
+  background: #C4F5E0;
+  border-color: #6ED8A4;
+}
+
+.create-post__type-btn--project {
+  background: #F0EAFF;
+  border-color: #C9AEFF;
+  color: #5900B3;
+}
+.create-post__type-btn--project:hover {
+  background: #E0D3FF;
+  border-color: #9B72FF;
+}
+
+/* Active state overrides */
 .create-post__type-btn--active {
-  background: var(--text);
-  border-color: var(--text);
-  color: var(--bg);
+  background: var(--text) !important;
+  border-color: var(--text) !important;
+  color: var(--bg) !important;
+  box-shadow: 2px 2px 0 var(--border);
+}
+
+/* In dark mode, make the button colors adapt to stay accessible and low contrast */
+[data-theme="dark"] .create-post__type-btn--discussion {
+  background: #2E1520;
+  border-color: #5C223A;
+  color: #FF8FAB;
+}
+[data-theme="dark"] .create-post__type-btn--discussion:hover {
+  background: #3F1D2C;
+}
+
+[data-theme="dark"] .create-post__type-btn--question {
+  background: #2E2812;
+  border-color: #5C4E1A;
+  color: #FFD43B;
+}
+[data-theme="dark"] .create-post__type-btn--question:hover {
+  background: #3F3718;
+}
+
+[data-theme="dark"] .create-post__type-btn--idea {
+  background: #122E23;
+  border-color: #1A5C43;
+  color: #6ED8A4;
+}
+[data-theme="dark"] .create-post__type-btn--idea:hover {
+  background: #183F30;
+}
+
+[data-theme="dark"] .create-post__type-btn--project {
+  background: #20173A;
+  border-color: #3B2A6B;
+  color: #C9AEFF;
+}
+[data-theme="dark"] .create-post__type-btn--project:hover {
+  background: #2B1F4F;
 }
 
 /* Fields */
@@ -80,6 +156,7 @@
 .create-post__input::placeholder {
   color: var(--border);
   font-weight: 500;
+  opacity: 0.6;
 }
 
 .create-post__textarea {
@@ -91,6 +168,7 @@
 
 .create-post__textarea::placeholder {
   color: var(--border);
+  opacity: 0.6;
 }
 
 .create-post__interest-picker {
@@ -99,13 +177,47 @@
   gap: var(--space-xs);
 }
 
+/* Overrides for interest tags inside the Create page */
+.create-post .interest-tag {
+  background-color: var(--create-tag-bg, #FDFAF5);
+  border-color: var(--border-light);
+  transition: all 0.2s ease;
+}
+
+/* Give them a subtle pastel background depending on their --tag-color */
+.create-post .interest-tag[style*="--tag-color"] {
+  background-color: color-mix(in srgb, var(--tag-color) 10%, #fff);
+  border-color: color-mix(in srgb, var(--tag-color) 35%, var(--border-subtle));
+}
+
+[data-theme="dark"] .create-post .interest-tag[style*="--tag-color"] {
+  background-color: color-mix(in srgb, var(--tag-color) 14%, #141414);
+  border-color: color-mix(in srgb, var(--tag-color) 45%, #2a2a2a);
+}
+
+/* Custom selected state: pop background with original tag color and bold black outlines */
+.create-post .interest-tag--selected {
+  border-color: var(--border) !important;
+  background-color: var(--tag-color) !important;
+  color: #111 !important;
+  font-weight: 700 !important;
+  box-shadow: 2px 2px 0 var(--border) !important;
+}
+
+[data-theme="dark"] .create-post .interest-tag--selected {
+  border-color: var(--border) !important;
+  background-color: var(--tag-color) !important;
+  color: #111 !important;
+  box-shadow: 2px 2px 0 var(--border) !important;
+}
+
 /* Actions */
 .create-post__actions {
   display: flex;
   justify-content: flex-end;
 }
 
-/* Success */
+/* Success Screen */
 .create-post__success {
   display: flex;
   flex-direction: column;
@@ -114,9 +226,201 @@
   text-align: center;
   gap: var(--space-md);
   min-height: 60vh;
+  position: relative;
+  z-index: 1;
 }
 
 .create-post__success h2 {
   font-size: var(--text-2xl);
   font-weight: 800;
 }
+
+/* Layout container for side columns */
+.create-layout-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  /* Bottom padding ensures the Post button is fully visible above bottom nav on mobile/desktop */
+  padding-bottom: 140px; 
+}
+
+/* Side columns for decorations */
+.create-side-decor {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  flex-shrink: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.85;
+}
+
+.create-side-decor--left {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.create-side-decor--right {
+  text-align: left;
+  align-items: flex-start;
+}
+
+/* Handwritten phrase style */
+.share-phrase {
+  font-family: var(--font-accent);
+  font-size: var(--text-2xl);
+  color: var(--muted);
+  transform: rotate(-8deg);
+  margin-bottom: var(--space-md);
+  white-space: nowrap;
+}
+
+.side-doodles {
+  display: flex;
+  gap: var(--space-sm);
+  font-size: var(--text-xl);
+  color: var(--muted);
+  margin-top: var(--space-xs);
+}
+
+.side-star {
+  color: var(--yellow);
+  transform: rotate(15deg);
+}
+
+.side-sparkle {
+  color: var(--purple);
+}
+
+.side-heart {
+  color: var(--pink);
+  transform: rotate(-15deg);
+}
+
+.sunflower-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.12));
+}
+
+.sunflower-stem-doodle {
+  margin-top: -5px;
+  opacity: 0.6;
+}
+
+/* Form container card styling */
+.create-post-card {
+  flex: 1;
+  max-width: 640px;
+  background: var(--surface);
+  border: 2.2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: 6px 6px 0 var(--border);
+  position: relative;
+  overflow: visible;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Card top accent edge */
+.create-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--yellow) 100%);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+/* Hand-drawn doodles inside the card corners (behind the forms) */
+.card-bg-doodles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.12;
+}
+
+.card-bg-star--1 {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  font-size: var(--text-lg);
+  color: var(--yellow);
+}
+
+.card-bg-heart {
+  position: absolute;
+  bottom: 24px;
+  left: 28px;
+  font-size: var(--text-lg);
+  color: var(--pink);
+}
+
+/* Checkerboard Background Pattern with Kinetic Diagonal Motion */
+.create-bg-pattern {
+  position: fixed;
+  inset: 0;
+  background-color: #F7F4EE;
+  background-image: conic-gradient(
+    #EDE9DF 90deg,
+    transparent 90deg 180deg,
+    #EDE9DF 180deg 270deg,
+    transparent 270deg
+  );
+  background-size: 64px 64px;
+  background-position: 0 0;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: -1;
+  animation: create-checker-drift 10s linear infinite; /* Slightly increased speed as requested */
+}
+
+/* Dark mode overrides: charcoal/near-black + dark cream checkerboard with appropriate contrast */
+[data-theme="dark"] .create-bg-pattern {
+  background-color: #0F0E0C;
+  background-image: conic-gradient(
+    #1D1C18 90deg,
+    transparent 90deg 180deg,
+    #1D1C18 180deg 270deg,
+    transparent 270deg
+  );
+}
+
+@keyframes create-checker-drift {
+  0%   { background-position: 0px 0px; }
+  100% { background-position: 64px 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .create-bg-pattern {
+    animation: none;
+  }
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .create-side-decor {
+    display: none;
+  }
+  .create-layout-container {
+    padding-bottom: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .create-post-card {
+    padding: var(--space-lg);
+    box-shadow: 4px 4px 0 var(--border);
+  }
+  .create-layout-container {
+    padding-bottom: 110px; /* Keep safe padding above the bottom navigation bar */
+  }
+}
+
