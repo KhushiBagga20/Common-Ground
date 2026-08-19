@@ -9,6 +9,7 @@ import Events from './pages/Events';
 import Community from './pages/Community';
 import CreatePost from './pages/CreatePost';
 import Profile from './pages/Profile';
+import Discover from './pages/Discover';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/discover" element={<Discover />} />
           <Route path="/ground" element={<Ground />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/events" element={<Events />} />

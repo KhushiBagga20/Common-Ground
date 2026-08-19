@@ -1,0 +1,152 @@
+/* ============================================
+   DISCOVER PAGE — Full-Screen Hobby Tinder
+   ============================================ */
+
+.discover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: var(--space-2xl) var(--space-lg);
+  overflow: hidden;
+}
+
+/* Header area */
+.discover__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  position: relative;
+  z-index: 2;
+}
+
+.discover__title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: var(--space-sm);
+}
+
+.discover__subtitle {
+  font-size: var(--text-base);
+  color: var(--muted);
+  font-weight: 500;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Meta row — counter + feedback */
+.discover__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.discover__progress-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+}
+
+.discover__feedback {
+  font-family: var(--font-accent);
+  font-size: var(--text-lg);
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Deck wrapper — enlarged */
+.discover__deck {
+  position: relative;
+  z-index: 2;
+  transform: scale(1.15);
+  transform-origin: top center;
+}
+
+/* Back button */
+.discover__back {
+  position: fixed;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+
+.discover__back:hover {
+  transform: translateY(-2px);
+  background: var(--bg);
+}
+
+/* Theme toggle */
+.discover__theme-toggle {
+  position: fixed;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: var(--z-nav);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.discover__theme-toggle:hover {
+  color: var(--text);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .discover {
+    padding: var(--space-xl) var(--space-md);
+    justify-content: flex-start;
+    padding-top: 80px;
+  }
+
+  .discover__deck {
+    transform: scale(0.92);
+  }
+
+  .discover__title {
+    font-size: 2rem;
+  }
+
+  .discover__back {
+    top: var(--space-md);
+    left: var(--space-md);
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .discover__deck {
+    transform: scale(1.05);
+  }
+}

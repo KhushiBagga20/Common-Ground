@@ -7,11 +7,11 @@
 .page-canvas--padded .page-canvas__inner {
   max-width: var(--page-max-width, 1200px);
   margin: 0 auto;
-  padding: var(--space-xl) var(--space-lg);
+  padding: var(--space-xl) clamp(16px, 5vw, 64px);
 }
 
 @media (max-width: 768px) {
   .page-canvas--padded .page-canvas__inner {
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-lg) clamp(16px, 5vw, 64px);
   }
 }

@@ -1720,8 +1720,8 @@
 }
 
 .g-greeting {
-  background: var(--g-yellow);
-  border: 1.8px solid var(--border-light);
+  background: var(--surface);
+  border: 2px solid var(--border);
   border-radius: 24px;
   padding: 28px 26px;
   display: flex;
@@ -1731,10 +1731,18 @@
   position: relative;
   overflow: hidden;
   min-height: 148px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 4px 4px 0 var(--border);
   transition: box-shadow 0.22s, transform 0.2s;
 }
-.g-greeting:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.g-greeting::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 32px; right: 32px;
+  height: 5px;
+  background: var(--yellow);
+  border-radius: 0 0 4px 4px;
+}
+.g-greeting:hover { box-shadow: 6px 6px 0 var(--border); transform: translateY(-2px); }
 
 .g-greeting__trail {
   position: absolute;
@@ -1765,8 +1773,8 @@
 .g-greeting__sf { flex-shrink: 0; z-index: 1; }
 
 .g-inspiration {
-  background: var(--g-pink);
-  border: 1.8px solid var(--border-light);
+  background: var(--surface);
+  border: 2px solid var(--border);
   border-radius: 24px;
   padding: 28px 22px;
   display: flex;
@@ -1776,10 +1784,18 @@
   position: relative;
   overflow: hidden;
   min-height: 148px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 4px 4px 0 var(--border);
   transition: box-shadow 0.22s, transform 0.2s;
 }
-.g-inspiration:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.g-inspiration::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 32px; right: 32px;
+  height: 5px;
+  background: var(--pink);
+  border-radius: 0 0 4px 4px;
+}
+.g-inspiration:hover { box-shadow: 6px 6px 0 var(--border); transform: translateY(-2px); }
 
 .g-inspiration__body { flex: 1; z-index: 1; }
 

@@ -157,7 +157,6 @@ export default function Footer() {
           <div className="cg-footer__nav-row">
             {/* Brand Mark */}
             <div className="cg-footer__brand">
-              <span style={{ fontSize: '1.2rem' }}>⬛</span>
               <span>CommonGround</span>
             </div>
 

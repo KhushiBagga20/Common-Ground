@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Plus, User, Sun, Moon, Layers } from 'lucide-react';
+import Sunflower from '../common/Sunflower';
 import { useTheme } from '../../hooks/useTheme';
 import './Navbar.css';
 
@@ -8,8 +9,8 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
-  // Hide navbar on landing and onboarding
-  const hiddenRoutes = ['/', '/onboarding'];
+  // Hide navbar on landing, onboarding, and discover (immersive pages)
+  const hiddenRoutes = ['/', '/onboarding', '/discover'];
   if (hiddenRoutes.includes(location.pathname)) return null;
 
   const links = [
@@ -27,13 +28,6 @@ export default function Navbar() {
       transition={{ type: 'spring', stiffness: 350, damping: 25 }}
     >
       <div className="dock-nav__inner">
-        {/* Brand Mark */}
-        <NavLink to="/" className="dock-nav__logo" title="CommonGround">
-          <span className="dock-nav__logo-mark">⬛</span>
-        </NavLink>
-
-        <div className="dock-nav__divider" />
-
         {/* Navigation Links */}
         <div className="dock-nav__links">
           {links.map(({ to, icon: Icon, label }) => {
@@ -62,6 +56,19 @@ export default function Navbar() {
             );
           })}
         </div>
+
+        <div className="dock-nav__divider" />
+
+        {/* Sunflower — Home Button */}
+        <NavLink to="/" className="dock-nav__sunflower" title="Back to Home">
+          <motion.div
+            whileHover={{ scale: 1.18, rotate: 12 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+          >
+            <Sunflower size={28} animate={false} />
+          </motion.div>
+        </NavLink>
 
         <div className="dock-nav__divider" />
 

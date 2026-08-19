@@ -225,6 +225,7 @@ import Smiley from '../components/common/Smiley';
 import Sunflower from '../components/common/Sunflower';
 import ChessPattern from '../components/common/ChessPattern';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
+import AccordionGallery from '../components/common/AccordionGallery/AccordionGallery';
 import { hobbies, hobbyCategories, getHobbyById } from '../data/hobbies';
 import { communities, getCommunitiesByHobby } from '../data/communities';
 import { posts as defaultPosts, getPostsByInterest } from '../data/posts';
@@ -1025,6 +1026,31 @@ export default function Ground({ initialTab }) {
     return items;
   }, [userInterests]);
 
+  // Map hobby images for AccordionGallery
+  const HOBBY_IMAGES = {
+    photography: '/hobbies/photography.jpg',
+    guitar: '/hobbies/guitar.jpg',
+    gaming: '/hobbies/gaming.jpg',
+    woodworking: '/hobbies/woodworking.jpg',
+    pottery: '/hobbies/pottery.jpg',
+  };
+
+  const FALLBACK_IMAGES = [
+    'https://picsum.photos/id/1015/900/1200',
+    'https://picsum.photos/id/1018/900/1200',
+    'https://picsum.photos/id/1039/900/1200',
+    'https://picsum.photos/id/1043/900/1200',
+    'https://picsum.photos/id/1044/900/1200',
+  ];
+
+  const accordionItems = useMemo(() => {
+    return displayShelfItems.slice(0, 6).map((hobby, i) => ({
+      image: HOBBY_IMAGES[hobby.id] || FALLBACK_IMAGES[i % FALLBACK_IMAGES.length],
+      label: `${hobby.emoji} ${hobby.name}`,
+      alt: hobby.name,
+    }));
+  }, [displayShelfItems]);
+
   useEffect(() => {
     if (location.pathname === '/explore' || location.search.includes('tab=discover')) {
       setActiveTab('discover');
@@ -1273,113 +1299,43 @@ export default function Ground({ initialTab }) {
                       Your personalized ground is tailored around these passions
                     </p>
                   </div>
-                  <button
-                    className="g-edit-interests-btn font-rounded"
-                    onClick={() => navigate('/onboarding')}
-                    title="Customize your interests"
-                  >
-                    <Edit3 size={14} />
-                    <span>Edit Interests</span>
-                  </button>
-                </div>
-
-                <div className="g-interests-hub-layout">
-                  {/* Left Column: Personality & Compass Card */}
-                  <motion.div
-                    className="g-interest-dna-card"
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    whileHover={{ y: -3 }}
-                  >
-                    <div className="g-interest-dna-badge font-rounded">
-                      <Sparkles size={13} className="g-dna-sparkle" />
-                      <span>Curated For You</span>
-                    </div>
-
-                    <h3 className="g-interest-dna-title font-rounded">
-                      {userInterests.length} Passions Active ✨
-                    </h3>
-
-                    <p className="g-interest-dna-sub">
-                      Discover new discussions, explore student projects, and connect with people who share your vibe.
-                    </p>
-
-                    <div className="g-interest-dna-stats">
-                      <div className="g-dna-stat-chip">
-                        <span className="g-dna-stat-num font-rounded">12+</span>
-                        <span className="g-dna-stat-lbl">Active clubs</span>
-                      </div>
-                      <div className="g-dna-stat-chip">
-                        <span className="g-dna-stat-num font-rounded">48</span>
-                        <span className="g-dna-stat-lbl">Live talks</span>
-                      </div>
-                    </div>
-
-                    <div className="g-interest-dna-footer">
-                      <span className="g-dna-note font-rounded">💡 Tap any interest on the right to jump in!</span>
-                    </div>
-                  </motion.div>
-
-                  {/* Right Column: 3D Tactile Interest Shelf */}
-                  <div className="g-interest-shelf-grid">
-                    {displayShelfItems.map((hobby, i) => (
-                      <motion.div
-                        key={hobby.id}
-                        className={`g-interest-3d-tile ${hobby.isUserSelected ? 'g-interest-3d-tile--selected' : 'g-interest-3d-tile--suggested'}`}
-                        style={{
-                          '--tile-accent': hobby.color || '#FF72B6',
-                        }}
-                        initial={{ opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.05 + i * 0.035, duration: 0.25 }}
-                        whileHover={{ y: -4, x: -2 }}
-                        whileTap={{ scale: 0.97 }}
-                        onClick={() => scrollToHobby(hobby.id)}
-                      >
-                        <div className="g-interest-3d-tile__top">
-                          <span className="g-interest-3d-tile__emoji">{hobby.emoji}</span>
-                          <span
-                            className={`g-interest-3d-tile__status-pill font-rounded ${hobby.isUserSelected ? '' : 'g-interest-3d-tile__status-pill--rec'}`}
-                          >
-                            {hobby.isUserSelected ? 'Active' : 'Suggested'}
-                          </span>
-                        </div>
-                        <h4 className="g-interest-3d-tile__name font-rounded">{hobby.name}</h4>
-                        <div className="g-interest-3d-tile__footer">
-                          <span className="g-interest-3d-tile__badge font-rounded">
-                            {hobby.isUserSelected ? 'Your Passion' : 'Explore'}
-                          </span>
-                          <ArrowUpRight size={13} className="g-interest-3d-tile__arrow" />
-                        </div>
-                      </motion.div>
-                    ))}
-
-                    {/* Add More Passions Tile */}
-                    <motion.div
-                      className="g-interest-3d-tile g-interest-3d-tile--add"
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.25, duration: 0.25 }}
-                      whileHover={{ y: -4, x: -2 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => navigate('/onboarding')}
-                      title="Discover and pick more hobbies"
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                    <button
+                      className="g-edit-interests-btn font-rounded"
+                      onClick={() => navigate('/discover')}
+                      title="Discover more hobbies"
                     >
-                      <div className="g-interest-3d-tile__top">
-                        <div className="g-interest-add-icon font-rounded">
-                          <Plus size={18} />
-                        </div>
-                        <span className="g-interest-3d-tile__status-pill g-interest-3d-tile__status-pill--add font-rounded">More</span>
-                      </div>
-                      <h4 className="g-interest-3d-tile__name font-rounded">Discover More</h4>
-                      <div className="g-interest-3d-tile__footer">
-                        <span className="g-interest-3d-tile__badge font-rounded">Browse</span>
-                        <ArrowRight size={13} className="g-interest-3d-tile__arrow" />
-                      </div>
-                    </motion.div>
+                      <Plus size={14} />
+                      <span>Discover More</span>
+                    </button>
+                    <button
+                      className="g-edit-interests-btn font-rounded"
+                      onClick={() => navigate('/onboarding')}
+                      title="Customize your interests"
+                    >
+                      <Edit3 size={14} />
+                      <span>Edit Interests</span>
+                    </button>
                   </div>
                 </div>
+
+                <AccordionGallery
+                  items={accordionItems}
+                  defaultIndex={1}
+                  expandRatio={0.48}
+                  trigger="hover"
+                  height={380}
+                  gap={8}
+                  radius={20}
+                  accentColor="#FFD43B"
+                  overlayColor="#111111"
+                  textColor="#ffffff"
+                  grayscale={true}
+                  showLabels={true}
+                  duration={0.5}
+                  tilt={6}
+                  parallax={0.4}
+                />
               </section>
 
               {/* CUTE STICKY NOTE DOODLES */}

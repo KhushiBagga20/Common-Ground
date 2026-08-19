@@ -4,32 +4,32 @@
   inset: 0;
   background-color: #F7F4EE;
   background-image: conic-gradient(
-    #EDE9DF 90deg,
+    #D4CFBF 90deg,
     transparent 90deg 180deg,
-    #EDE9DF 180deg 270deg,
+    #D4CFBF 180deg 270deg,
     transparent 270deg
   );
-  background-size: 64px 64px;
+  background-size: 80px 80px;
   background-position: 0 0;
   opacity: 0.65;
   pointer-events: none;
   z-index: -1;
-  animation: kinetic-checker-drift 12s linear infinite;
+  animation: kinetic-checker-drift 8s linear infinite;
 }
 
 [data-theme="dark"] .kinetic-checkerboard {
   background-color: #0F0E0C;
   background-image: conic-gradient(
-    #1D1C18 90deg,
+    #322F26 90deg,
     transparent 90deg 180deg,
-    #1D1C18 180deg 270deg,
+    #322F26 180deg 270deg,
     transparent 270deg
   );
 }
 
 @keyframes kinetic-checker-drift {
   0%   { background-position: 0px 0px; }
-  100% { background-position: 64px 64px; }
+  100% { background-position: 80px 80px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

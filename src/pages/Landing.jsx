@@ -127,7 +127,7 @@ export default function Landing() {
             >
               <Button
                 size="lg"
-                onClick={() => handleCtaClick('/onboarding')}
+                onClick={() => handleCtaClick('/discover')}
                 iconRight={<ArrowRight size={20} />}
               >
                 Discover Hobbies
