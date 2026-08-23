@@ -1,214 +1,3 @@
-// import { useMemo } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { motion } from 'framer-motion';
-// import { ArrowRight, Sparkles } from 'lucide-react';
-// import PageCanvas from '../components/layout/PageCanvas';
-// import Button from '../components/common/Button';
-// import InterestTag from '../components/common/InterestTag';
-// import Sunflower from '../components/common/Sunflower';
-// import Smiley from '../components/common/Smiley';
-// import ChessPattern from '../components/common/ChessPattern';
-// import KineticCheckerboard from '../components/common/KineticCheckerboard';
-// import { hobbies, getHobbyById } from '../data/hobbies';
-// import { communities, getCommunitiesByHobby } from '../data/communities';
-// import { posts, getPostsByInterest } from '../data/posts';
-// import { staggerContainer, staggerItem } from '../animations/variants';
-// import './Ground.css';
-
-// export default function Ground() {
-//   const navigate = useNavigate();
-
-//   // Get user interests from localStorage
-//   const userInterests = useMemo(() => {
-//     try {
-//       const stored = JSON.parse(localStorage.getItem('cg-interests') || '[]');
-//       return stored.map(id => getHobbyById(id)).filter(Boolean);
-//     } catch {
-//       return [];
-//     }
-//   }, []);
-
-//   const hasInterests = userInterests.length > 0;
-
-//   // Get relevant communities and posts
-//   const relevantCommunities = useMemo(() => {
-//     if (!hasInterests) return communities.slice(0, 4);
-//     const comms = [];
-//     userInterests.forEach(hobby => {
-//       comms.push(...getCommunitiesByHobby(hobby.id));
-//     });
-//     return comms.length > 0 ? comms.slice(0, 6) : communities.slice(0, 4);
-//   }, [userInterests, hasInterests]);
-
-//   const relevantPosts = useMemo(() => {
-//     if (!hasInterests) return posts.slice(0, 3);
-//     const p = [];
-//     userInterests.forEach(hobby => {
-//       p.push(...getPostsByInterest(hobby.id));
-//     });
-//     return p.length > 0 ? p.slice(0, 4) : posts.slice(0, 3);
-//   }, [userInterests, hasInterests]);
-
-//   // Suggestions: hobbies NOT in user's interests
-//   const suggestions = useMemo(() => {
-//     const ids = new Set(userInterests.map(h => h.id));
-//     return hobbies.filter(h => !ids.has(h.id)).slice(0, 6);
-//   }, [userInterests]);
-
-//   return (
-//     <PageCanvas>
-//       <KineticCheckerboard />
-//       <motion.div
-//         className="ground"
-//         variants={staggerContainer}
-//         initial="initial"
-//         animate="animate"
-//       >
-//         {/* Header */}
-//         <motion.div className="ground__header" variants={staggerItem}>
-//           <div className="ground__header-row">
-//             <div>
-//               <h1 className="ground__title">Your Ground</h1>
-//               <p className="ground__subtitle text-muted">
-//                 {hasInterests
-//                   ? `${userInterests.length} interest${userInterests.length !== 1 ? 's' : ''} · your corner of CommonGround`
-//                   : 'Discover something new today'
-//                 }
-//               </p>
-//             </div>
-//             <Sunflower size={40} animate={false} />
-//           </div>
-//         </motion.div>
-
-//         {/* User interests */}
-//         {hasInterests && (
-//           <motion.section className="ground__section" variants={staggerItem}>
-//             <h2 className="ground__section-title">Your interests</h2>
-//             <div className="ground__interest-tags">
-//               {userInterests.map(hobby => (
-//                 <InterestTag
-//                   key={hobby.id}
-//                   label={hobby.name}
-//                   emoji={hobby.emoji}
-//                   color={hobby.color}
-//                   selected
-//                 />
-//               ))}
-//             </div>
-//           </motion.section>
-//         )}
-
-//         {/* No interests empty state */}
-//         {!hasInterests && (
-//           <motion.section className="ground__empty" variants={staggerItem}>
-//             <div className="ground__empty-inner">
-//               <Smiley size={56} mood="wink" />
-//               <h2 className="ground__empty-title">Let's get started</h2>
-//               <p className="text-muted">Tell us what you're into and we'll build your ground.</p>
-//               <Button
-//                 onClick={() => navigate('/onboarding')}
-//                 iconRight={<ArrowRight size={18} />}
-//               >
-//                 Discover Hobbies
-//               </Button>
-//             </div>
-//           </motion.section>
-//         )}
-
-//         {/* Communities for you */}
-//         {hasInterests && (
-//           <motion.section className="ground__section" variants={staggerItem}>
-//             <div className="ground__section-header">
-//               <h2 className="ground__section-title">
-//                 Because you liked {userInterests[0]?.name}
-//               </h2>
-//               <span className="font-accent text-muted">communities for you</span>
-//             </div>
-//             <div className="ground__community-grid">
-//               {relevantCommunities.map((community, i) => (
-//                 <motion.div
-//                   key={community.id}
-//                   className="ground__community-card"
-//                   initial={{ opacity: 0, y: 16 }}
-//                   animate={{ opacity: 1, y: 0 }}
-//                   transition={{ delay: 0.1 + i * 0.06, duration: 0.4 }}
-//                   whileHover={{ y: -3, transition: { duration: 0.2 } }}
-//                   onClick={() => navigate(`/community/${community.id}`)}
-//                 >
-//                   <div className="ground__community-accent" style={{ backgroundColor: community.color }} />
-//                   <h3 className="ground__community-name">{community.name}</h3>
-//                   <p className="ground__community-desc text-muted">{community.description}</p>
-//                   <div className="ground__community-meta text-muted">
-//                     <span>{community.memberCount} people</span>
-//                     <span>·</span>
-//                     <span>{community.postCount} posts</span>
-//                   </div>
-//                 </motion.div>
-//               ))}
-//             </div>
-//           </motion.section>
-//         )}
-
-//         {/* Discussions */}
-//         <motion.section className="ground__section" variants={staggerItem}>
-//           <div className="ground__section-header">
-//             <h2 className="ground__section-title">
-//               {hasInterests ? 'Interesting discussions' : 'People are talking about'}
-//             </h2>
-//           </div>
-//           <div className="ground__posts">
-//             {relevantPosts.map((post, i) => (
-//               <motion.div
-//                 key={post.id}
-//                 className="ground__post-card"
-//                 initial={{ opacity: 0, y: 16 }}
-//                 animate={{ opacity: 1, y: 0 }}
-//                 transition={{ delay: 0.15 + i * 0.06, duration: 0.4 }}
-//                 whileHover={{ x: 4, transition: { duration: 0.2 } }}
-//               >
-//                 <div className="ground__post-type">{post.type}</div>
-//                 <h3 className="ground__post-title">{post.title}</h3>
-//                 <div className="ground__post-meta text-muted">
-//                   <span>{post.replyCount} replies</span>
-//                   <span>·</span>
-//                   <span>{post.interests.map(id => getHobbyById(id)?.name).filter(Boolean).join(', ')}</span>
-//                 </div>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </motion.section>
-
-//         {/* Discover something new */}
-//         <motion.section className="ground__section ground__discover" variants={staggerItem}>
-//           <div className="ground__discover-header">
-//             <ChessPattern rows={2} cols={3} cellSize={12} opacity={0.06} />
-//             <div>
-//               <h2 className="ground__section-title">
-//                 <Sparkles size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />
-//                 Discover something new
-//               </h2>
-//               <p className="text-muted" style={{ fontSize: 'var(--text-sm)', marginTop: 4 }}>
-//                 You might also like
-//               </p>
-//             </div>
-//           </div>
-//           <div className="ground__discover-tags">
-//             {suggestions.map(hobby => (
-//               <InterestTag
-//                 key={hobby.id}
-//                 label={hobby.name}
-//                 emoji={hobby.emoji}
-//                 color={hobby.color}
-//                 onClick={() => navigate(`/explore`)}
-//               />
-//             ))}
-//           </div>
-//         </motion.section>
-//       </motion.div>
-//     </PageCanvas>
-//   );
-// }
-
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
@@ -233,7 +22,7 @@ import { users } from '../data/users';
 import { staggerContainer, staggerItem } from '../animations/variants';
 import './Ground.css';
 
-// Import generated cute 2D sticker illustrations
+// Import generated cute 2D sticker illustrations for hobbies
 import imgPhoto from '../assets/hobbies/hobby_photography_1786871191346.jpg';
 import imgGuitar from '../assets/hobbies/hobby_guitar_1786871505903.jpg';
 import imgPottery from '../assets/hobbies/hobby_pottery_1786871778302.jpg';
@@ -242,12 +31,36 @@ import imgFilm from '../assets/hobbies/hobby_film_1786871879712.jpg';
 import imgAiml from '../assets/hobbies/hobby_aiml_1786872114650.jpg';
 import imgDrawing from '../assets/hobbies/hobby_drawing_1786872318655.jpg';
 import imgCooking from '../assets/hobbies/hobby_cooking_1786872493583.jpg';
+import imgWriting from '../assets/hobbies/hobby_writing_1787487280393.jpg';
+import imgBouldering from '../assets/hobbies/hobby_bouldering_1787487296150.jpg';
+import imgDance from '../assets/hobbies/hobby_dance_1787487312624.jpg';
+import imgChess from '../assets/hobbies/hobby_chess_1787487328552.png';
+import imgGardening from '../assets/hobbies/hobby_gardening_1787487360591.jpg';
+import imgGaming from '../assets/hobbies/hobby_gaming_1787487377877.jpg';
+import imgFashion from '../assets/hobbies/hobby_fashion_1787487394290.jpg';
+import imgWoodworking from '../assets/hobbies/hobby_woodworking_1787487410811.jpg';
+import imgCycling from '../assets/hobbies/hobby_cycling_1787487427933.jpg';
+import imgAstronomy from '../assets/hobbies/hobby_astronomy_1787487444421.jpg';
+import imgCalligraphy from '../assets/hobbies/hobby_calligraphy_1787487461997.jpg';
+import imgSkateboarding from '../assets/hobbies/hobby_skateboarding_1787487479158.jpg';
 
-// Import generated 16:9 header illustrations
+// Import generated 16:9 header illustrations for communities
 import commPhotoImg from '../assets/communities/comm_street_photo_1786874778448.jpg';
 import commAcousticImg from '../assets/communities/comm_acoustic_1786874991573.jpg';
 import commRunningImg from '../assets/communities/comm_running_1786875006787.jpg';
 import commCinemaImg from '../assets/communities/comm_cinema_1786875039282.jpg';
+import commBookNookImg from '../assets/communities/book_nook.png';
+import commBoulderingImg from '../assets/communities/bouldering.png';
+import commHomeBakersImg from '../assets/communities/home_bakers.png';
+import commUrbanSketchersImg from '../assets/communities/urban_sketchers.png';
+
+// Import generated illustrations for vibes
+import vibeChillImg from '../assets/vibes/vibe_chill.svg';
+import vibeCreativeImg from '../assets/vibes/vibe_creative.svg';
+import vibeSocialImg from '../assets/vibes/vibe_social.svg';
+import vibeActiveImg from '../assets/vibes/vibe_active.svg';
+import vibeLearnImg from '../assets/vibes/vibe_learn.svg';
+import vibeOutdoorsImg from '../assets/vibes/vibe_outdoors.svg';
 
 // ─────────────────────────────────────────────────────
 // HELPER SVG COMPONENTS FOR DECORATIVE DOODLES & ICONS
@@ -269,69 +82,6 @@ const DTrophy = ({ size = 18 }) => (
   </svg>
 );
 
-// ─────────────────────────────────────────────────────
-// VECTOR ICONS FOR 6 VIBES (PICK YOUR VIBE)
-// ─────────────────────────────────────────────────────
-const VibeSVGIcon = ({ id, size = 28 }) => {
-  switch (id) {
-    case 'chill':
-      return (
-        <svg viewBox="0 0 32 32" width={size} height={size} fill="none">
-          <circle cx="16" cy="16" r="7" fill="#FFD43B" stroke="#111" strokeWidth="2" />
-          <path d="M16 3V6M16 26V29M3 16H6M26 16H29M6.8 6.8L9 9M23 23L25.2 25.2M6.8 25.2L9 23M23 9L25.2 6.8" stroke="#111" strokeWidth="2" strokeLinecap="round" />
-          <circle cx="14" cy="15" r="1" fill="#111" />
-          <circle cx="18" cy="15" r="1" fill="#111" />
-          <path d="M14 18Q16 20 18 18" stroke="#111" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      );
-    case 'creative':
-      return (
-        <svg viewBox="0 0 32 32" width={size} height={size} fill="none">
-          <path d="M16 4C9.37 4 4 9.37 4 16C4 22.63 9.37 28 16 28C18.2 28 20 26.2 20 24C20 22.9 19.55 21.9 18.82 21.18C18.1 20.45 17.65 19.45 17.65 18.35C17.65 16.15 19.45 14.35 21.65 14.35H24C26.2 14.35 28 12.55 28 10.35C28 6.85 22.63 4 16 4Z" fill="#FFE8F3" stroke="#111" strokeWidth="2" strokeLinejoin="round" />
-          <circle cx="10" cy="12" r="2" fill="#FF72B6" />
-          <circle cx="15" cy="9" r="2" fill="#FFD43B" />
-          <circle cx="21" cy="10" r="2" fill="#4D7CFE" />
-          <circle cx="11" cy="18" r="2" fill="#5BCB77" />
-        </svg>
-      );
-    case 'social':
-      return (
-        <svg viewBox="0 0 32 32" width={size} height={size} fill="none">
-          <circle cx="10" cy="22" r="4" fill="#9B72FF" stroke="#111" strokeWidth="2" />
-          <circle cx="22" cy="19" r="4" fill="#FF72B6" stroke="#111" strokeWidth="2" />
-          <path d="M14 22V8L26 5V19" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M14 13L26 10" stroke="#111" strokeWidth="2" />
-          <circle cx="25" cy="4" r="1.5" fill="#FFD43B" />
-        </svg>
-      );
-    case 'active':
-      return (
-        <svg viewBox="0 0 32 32" width={size} height={size} fill="none">
-          <path d="M6 24L10 18L15 20L21 11L26 13L28 9" stroke="#FF914D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="21" cy="7" r="3" fill="#FF5C5C" stroke="#111" strokeWidth="2" />
-          <path d="M7 26H25" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 3" />
-        </svg>
-      );
-    case 'learn':
-      return (
-        <svg viewBox="0 0 32 32" width={size} height={size} fill="none">
-          <path d="M16 5C11.58 5 8 8.58 8 13C8 16.08 9.74 18.75 12.28 20.08L12.5 23H19.5L19.72 20.08C22.26 18.75 24 16.08 24 13C24 8.58 20.42 5 16 5Z" fill="#EBF3FF" stroke="#111" strokeWidth="2" strokeLinejoin="round" />
-          <path d="M13 26H19" stroke="#111" strokeWidth="2" strokeLinecap="round" />
-          <path d="M16 11V15M14 13H18" stroke="#4D7CFE" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-      );
-    case 'outdoors':
-      return (
-        <svg viewBox="0 0 32 32" width={size} height={size} fill="none">
-          <path d="M16 28C16 28 6 22 6 13C6 8 10.5 4 16 4C21.5 4 26 8 26 13C26 22 16 28 16 28Z" fill="#EFFCF4" stroke="#111" strokeWidth="2" strokeLinejoin="round" />
-          <path d="M16 28V10M16 14L10 18M16 18L22 21" stroke="#5BCB77" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-      );
-    default:
-      return <span>✨</span>;
-  }
-};
-
 const VIBES = [
   {
     id: 'chill',
@@ -340,6 +90,7 @@ const VIBES = [
     color: '#FFD43B',
     bgLight: '#FFF8D0',
     bgDark: '#2B250E',
+    image: vibeChillImg,
     description: 'Slow-paced, cozy, relaxing vibes',
     hobbies: ['photography', 'writing', 'gardening', 'cooking']
   },
@@ -350,6 +101,7 @@ const VIBES = [
     color: '#FF72B6',
     bgLight: '#FFE8F3',
     bgDark: '#2C1021',
+    image: vibeCreativeImg,
     description: 'Express yourself through art & music',
     hobbies: ['photography', 'guitar', 'drawing', 'film']
   },
@@ -360,6 +112,7 @@ const VIBES = [
     color: '#9B72FF',
     bgLight: '#EDE8FF',
     bgDark: '#1E1633',
+    image: vibeSocialImg,
     description: 'Meet fellow enthusiasts and connect',
     hobbies: ['guitar', 'film', 'photography', 'dance']
   },
@@ -370,6 +123,7 @@ const VIBES = [
     color: '#FF914D',
     bgLight: '#FFE8D6',
     bgDark: '#2B1B10',
+    image: vibeActiveImg,
     description: 'Get moving, sweat, and energize',
     hobbies: ['running', 'cycling', 'dance', 'bouldering']
   },
@@ -380,6 +134,7 @@ const VIBES = [
     color: '#4D7CFE',
     bgLight: '#EBF3FF',
     bgDark: '#101E35',
+    image: vibeLearnImg,
     description: 'Expand your mind, skills & ideas',
     hobbies: ['ai-ml', 'writing', 'chess', 'astronomy']
   },
@@ -390,166 +145,13 @@ const VIBES = [
     color: '#5BCB77',
     bgLight: '#EFFCF4',
     bgDark: '#102B1B',
+    image: vibeOutdoorsImg,
     description: 'Fresh air, nature, and adventure',
     hobbies: ['running', 'cycling', 'gardening', 'photography']
   }
 ];
 
-// ─────────────────────────────────────────────────────
-// VECTOR ILLUSTRATIONS FOR ALL LEFTOVER HOBBIES
-// ─────────────────────────────────────────────────────
-const HobbySVGIllustrations = {
-  writing: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M18 50L14 52L16 48L44 12L50 18L22 50H18Z" fill="#FFE4F2" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M38 18L44 24" stroke="#111" strokeWidth="2.5" />
-      <path d="M12 54 Q24 50 36 56" stroke="#FF72B6" strokeWidth="3" strokeLinecap="round" fill="none" />
-    </svg>
-  ),
-  bouldering: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M12 52L26 24L38 38L52 14L60 52H12Z" fill="#FFE8D6" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <circle cx="26" cy="24" r="3.5" fill="#FF914D" />
-      <circle cx="52" cy="14" r="3.5" fill="#FF5C5C" />
-      <path d="M30 42L44 24" stroke="#FF72B6" strokeWidth="2.5" strokeDasharray="3 3" />
-    </svg>
-  ),
-  dance: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M20 48C20 48 16 30 26 22C36 14 44 26 44 26" stroke="#111" strokeWidth="3" strokeLinecap="round" />
-      <ellipse cx="26" cy="18" rx="8" ry="10" fill="#FF72B6" stroke="#111" strokeWidth="2.5" />
-      <path d="M22 48L32 56L46 44" fill="#FFEBF3" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-    </svg>
-  ),
-  chess: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M20 52H44V46H20V52Z" fill="#111" stroke="#111" strokeWidth="2" />
-      <path d="M24 46L26 30L22 26L26 18H38L42 26L38 30L40 46H24Z" fill="#F4F4F0" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M28 14H36V18H28V14Z" fill="#FFD43B" stroke="#111" strokeWidth="2" />
-      <path d="M32 8V14" stroke="#111" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  ),
-  gardening: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M20 52L24 34H40L44 52H20Z" fill="#FF914D" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M32 34V18M32 18 Q20 10 16 22 Q28 26 32 18ZM32 18 Q44 10 48 22 Q36 26 32 18Z" fill="#5BCB77" stroke="#111" strokeWidth="2.5" strokeLinejoin="round" />
-    </svg>
-  ),
-  gaming: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <rect x="10" y="20" width="44" height="28" rx="12" fill="#F0E8FF" stroke="#111" strokeWidth="3" />
-      <path d="M20 34H28M24 30V38" stroke="#111" strokeWidth="3" strokeLinecap="round" />
-      <circle cx="40" cy="31" r="2.5" fill="#FF5C5C" />
-      <circle cx="46" cy="37" r="2.5" fill="#4D7CFE" />
-      <circle cx="46" cy="31" r="2.5" fill="#FFD43B" />
-      <circle cx="40" cy="37" r="2.5" fill="#5BCB77" />
-    </svg>
-  ),
-  fashion: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M32 14 Q38 8 32 6 Q26 8 32 14 V20 L14 30 V54 H50 V30 L32 20 Z" fill="#FFEBF3" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M14 30 L32 20 L50 30" stroke="#FF72B6" strokeWidth="2.5" />
-    </svg>
-  ),
-  woodworking: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <rect x="12" y="36" width="40" height="18" rx="4" fill="#FAF0E6" stroke="#111" strokeWidth="3" />
-      <path d="M18 36 L30 14 L42 20 L30 42" fill="#FF914D" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <circle cx="24" cy="22" r="3" fill="#FFD43B" />
-    </svg>
-  ),
-  cycling: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <circle cx="20" cy="40" r="12" stroke="#111" strokeWidth="3" fill="#E8F8F0" />
-      <circle cx="44" cy="40" r="12" stroke="#111" strokeWidth="3" fill="#E8F8F0" />
-      <path d="M20 40 L30 26 L40 26 L44 40 M30 26 L20 18" stroke="#111" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    </svg>
-  ),
-  astronomy: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M14 42 L42 14 L50 22 L22 50 Z" fill="#EBF3FF" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M18 52 L26 38 M26 52 L34 42" stroke="#111" strokeWidth="3" strokeLinecap="round" />
-      <path d="M48 10 L52 14" stroke="#4D7CFE" strokeWidth="3" strokeLinecap="round" />
-      <circle cx="54" cy="8" r="3" fill="#FFD43B" />
-    </svg>
-  ),
-  calligraphy: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M16 52 L46 14 L52 20 L22 58 L14 56 Z" fill="#FFFCEB" stroke="#111" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M16 52 L20 44" stroke="#111" strokeWidth="2.5" />
-      <circle cx="48" cy="18" r="2.5" fill="#FF72B6" />
-    </svg>
-  ),
-  skateboarding: ({ size = 48 }) => (
-    <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-      <path d="M10 34 Q32 28 54 34" stroke="#111" strokeWidth="4" strokeLinecap="round" fill="none" />
-      <path d="M12 34 L8 28 M52 34 L56 28" stroke="#FF5C5C" strokeWidth="3.5" strokeLinecap="round" />
-      <circle cx="20" cy="42" r="5" fill="#FFD43B" stroke="#111" strokeWidth="2.5" />
-      <circle cx="44" cy="42" r="5" fill="#FFD43B" stroke="#111" strokeWidth="2.5" />
-    </svg>
-  )
-};
-
-// ─────────────────────────────────────────────────────
-// VECTOR HEADERS FOR LEFTOVER COMMUNITIES
-// ─────────────────────────────────────────────────────
-const CommunitySVGHeaders = {
-  'book-nook': () => (
-    <svg viewBox="0 0 400 200" className="g-comm-header-img" fill="none">
-      <rect width="400" height="200" fill="#FFF5EE" />
-      <rect x="30" y="140" width="340" height="12" fill="#D98A5B" rx="3" stroke="#111" strokeWidth="2.5" />
-      <rect x="50" y="60" width="22" height="80" fill="#FF72B6" rx="4" stroke="#111" strokeWidth="2.5" />
-      <rect x="76" y="70" width="28" height="70" fill="#FFD43B" rx="4" stroke="#111" strokeWidth="2.5" />
-      <rect x="108" y="50" width="20" height="90" fill="#4D7CFE" rx="4" stroke="#111" strokeWidth="2.5" />
-      <rect x="132" y="80" width="25" height="60" fill="#5BCB77" rx="4" stroke="#111" strokeWidth="2.5" />
-      <rect x="161" y="65" width="22" height="75" fill="#9B72FF" rx="4" stroke="#111" strokeWidth="2.5" />
-      <path d="M240 110 H270 V135 C270 138 266 140 255 140 C244 140 240 138 240 135 V110 Z" fill="#FF5C5C" stroke="#111" strokeWidth="2.5" />
-      <path d="M270 115 Q282 115 282 125 Q282 135 270 135" stroke="#111" strokeWidth="2.5" fill="none" />
-      <path d="M248 100 Q252 90 248 82" stroke="#FF914D" strokeWidth="2" strokeLinecap="round" fill="none" />
-      <path d="M260 102 Q264 92 260 84" stroke="#FF914D" strokeWidth="2" strokeLinecap="round" fill="none" />
-      <path d="M320 140 L330 40 L300 60" stroke="#111" strokeWidth="3" strokeLinecap="round" fill="none" />
-      <path d="M285 55 L315 65 L295 80 Z" fill="#FFD43B" stroke="#111" strokeWidth="2.5" />
-    </svg>
-  ),
-  'bouldering-crew': () => (
-    <svg viewBox="0 0 400 200" className="g-comm-header-img" fill="none">
-      <rect width="400" height="200" fill="#FFF4EB" />
-      <path d="M0 200 L120 40 L260 110 L400 20 Z" fill="#FFE0C2" stroke="#111" strokeWidth="3" />
-      <circle cx="80" cy="130" r="10" fill="#FF5C5C" stroke="#111" strokeWidth="2.5" />
-      <polygon points="140,90 155,75 160,95" fill="#4D7CFE" stroke="#111" strokeWidth="2.5" />
-      <ellipse cx="210" cy="120" rx="14" ry="8" fill="#FFD43B" stroke="#111" strokeWidth="2.5" />
-      <circle cx="280" cy="60" r="12" fill="#5BCB77" stroke="#111" strokeWidth="2.5" />
-      <polygon points="320,40 335,25 345,45" fill="#FF72B6" stroke="#111" strokeWidth="2.5" />
-      <path d="M40 180 Q100 120 160 160 Q220 200 300 130" stroke="#FF914D" strokeWidth="4" strokeDasharray="6 6" fill="none" />
-    </svg>
-  ),
-  'home-bakers': () => (
-    <svg viewBox="0 0 400 200" className="g-comm-header-img" fill="none">
-      <rect width="400" height="200" fill="#FFF0ED" />
-      <path d="M160 90 C140 70 140 40 170 35 C180 20 220 20 230 35 C260 35 260 70 240 90 Z" fill="#FFFFFF" stroke="#111" strokeWidth="3" />
-      <rect x="165" y="85" width="70" height="25" fill="#FFFFFF" stroke="#111" strokeWidth="3" rx="4" />
-      <ellipse cx="100" cy="130" rx="45" ry="25" fill="#FF914D" stroke="#111" strokeWidth="3" />
-      <path d="M75 125 Q85 115 95 125" stroke="#FFE0C2" strokeWidth="3" strokeLinecap="round" />
-      <path d="M95 125 Q105 115 115 125" stroke="#FFE0C2" strokeWidth="3" strokeLinecap="round" />
-      <rect x="260" y="125" width="90" height="18" fill="#D98A5B" stroke="#111" strokeWidth="2.5" rx="4" transform="rotate(-15 260 125)" />
-      <path d="M30 160 Q60 110 80 80" stroke="#FFD43B" strokeWidth="3" strokeLinecap="round" fill="none" />
-      <circle cx="70" cy="95" r="5" fill="#FFD43B" />
-      <circle cx="60" cy="110" r="5" fill="#FFD43B" />
-    </svg>
-  ),
-  'urban-sketchers': () => (
-    <svg viewBox="0 0 400 200" className="g-comm-header-img" fill="none">
-      <rect width="400" height="200" fill="#F3EFFF" />
-      <circle cx="100" cy="100" r="65" fill="#E8D8FF" opacity="0.6" />
-      <circle cx="280" cy="110" r="55" fill="#FFD8E8" opacity="0.6" />
-      <path d="M40 160 V90 H80 V120 H120 V70 H160 V160 H200 V100 H240 V160 H290 V80 H330 V160 H370" stroke="#111" strokeWidth="3" strokeLinejoin="round" fill="none" />
-      <path d="M310 40 L340 70 L250 160 L230 150 Z" fill="#9B72FF" stroke="#111" strokeWidth="2.5" />
-      <path d="M330 60 L350 80" stroke="#FF72B6" strokeWidth="4" strokeLinecap="round" />
-    </svg>
-  )
-};
-
-// FULL HOBBY DATA WITH UNIQUE PASTEL LIGHT AND DARK MODE COLORS
+// FULL HOBBY DATA WITH UNIQUE PASTEL LIGHT AND DARK MODE COLORS & GENERATED STICKER IMAGES
 const ALL_HOBBIES_DATA = [
   { id: 'photography', name: 'Photography', count: '1.2K people', bgLight: '#FFF0ED', bgDark: '#2D1612', img: imgPhoto, description: 'Capturing moments, light & streets' },
   { id: 'guitar',      name: 'Guitar',      count: '987 people',  bgLight: '#FFFCEB', bgDark: '#2B250E', img: imgGuitar, description: 'Chords, fingerpicking & jam sessions' },
@@ -559,21 +161,21 @@ const ALL_HOBBIES_DATA = [
   { id: 'ai-ml',       name: 'AI & ML',     count: '2.3K people', bgLight: '#EBF3FF', bgDark: '#101E35', img: imgAiml, description: 'Building neural nets & creative tech' },
   { id: 'drawing',     name: 'Drawing',     count: '1.4K people', bgLight: '#FFF7E6', bgDark: '#2B220C', img: imgDrawing, description: 'Sketching, ink, comics & watercolors' },
   { id: 'cooking',     name: 'Cooking',     count: '1.6K people', bgLight: '#FFF0F0', bgDark: '#2D1212', img: imgCooking, description: 'Baking sourdough, pastas & pastries' },
-  { id: 'writing',     name: 'Writing',     count: '890 people',  bgLight: '#FFF0F7', bgDark: '#2C1021', iconKey: 'writing', description: 'Poetry, fiction & personal essays' },
-  { id: 'bouldering',  name: 'Bouldering',  count: '740 people',  bgLight: '#FFF4EB', bgDark: '#2C1B10', iconKey: 'bouldering', description: 'Problem solving on rock faces' },
-  { id: 'dance',       name: 'Dance',       count: '1.2K people', bgLight: '#FFEBF3', bgDark: '#2C1021', iconKey: 'dance', description: 'Hip-hop, contemporary & choreo' },
-  { id: 'chess',       name: 'Chess',       count: '1.5K people', bgLight: '#F4F4EE', bgDark: '#202020', iconKey: 'chess', description: 'Tactics, openings & friendly matches' },
-  { id: 'gardening',   name: 'Gardening',   count: '620 people',  bgLight: '#EFFCF4', bgDark: '#102B1B', iconKey: 'gardening', description: 'Urban balcons, plants & flowers' },
-  { id: 'gaming',      name: 'Gaming',      count: '3.1K people', bgLight: '#F3EFFF', bgDark: '#1E1633', iconKey: 'gaming', description: 'Co-op indie adventures & tournaments' },
-  { id: 'fashion',     name: 'Fashion',     count: '950 people',  bgLight: '#FFEBF3', bgDark: '#2C1021', iconKey: 'fashion', description: 'Thrifting, styling & upcycling' },
-  { id: 'woodworking', name: 'Woodworking', count: '480 people',  bgLight: '#FAF0E6', bgDark: '#2A180E', iconKey: 'woodworking', description: 'Crafting wooden goods by hand' },
-  { id: 'cycling',     name: 'Cycling',     count: '1.3K people', bgLight: '#EFFCF4', bgDark: '#102B1B', iconKey: 'cycling', description: 'Weekend road rides & city cruising' },
-  { id: 'astronomy',   name: 'Astronomy',   count: '710 people',  bgLight: '#EBF3FF', bgDark: '#101E35', iconKey: 'astronomy', description: 'Stargazing, telescopes & cosmology' },
-  { id: 'calligraphy', name: 'Calligraphy', count: '540 people',  bgLight: '#FFFCEB', bgDark: '#2B250E', iconKey: 'calligraphy', description: 'Hand-lettering & ink typography' },
-  { id: 'skateboarding', name: 'Skateboarding', count: '1.1K people', bgLight: '#FFF0ED', bgDark: '#2D1612', iconKey: 'skateboarding', description: 'Street skating & park tricks' },
+  { id: 'writing',     name: 'Writing',     count: '890 people',  bgLight: '#FFF0F7', bgDark: '#2C1021', img: imgWriting, description: 'Poetry, fiction & personal essays' },
+  { id: 'bouldering',  name: 'Bouldering',  count: '740 people',  bgLight: '#FFF4EB', bgDark: '#2C1B10', img: imgBouldering, description: 'Problem solving on rock faces' },
+  { id: 'dance',       name: 'Dance',       count: '1.2K people', bgLight: '#FFEBF3', bgDark: '#2C1021', img: imgDance, description: 'Hip-hop, contemporary & choreo' },
+  { id: 'chess',       name: 'Chess',       count: '1.5K people', bgLight: '#F4F4EE', bgDark: '#202020', img: imgChess, description: 'Tactics, openings & friendly matches' },
+  { id: 'gardening',   name: 'Gardening',   count: '620 people',  bgLight: '#EFFCF4', bgDark: '#102B1B', img: imgGardening, description: 'Urban balcons, plants & flowers' },
+  { id: 'gaming',      name: 'Gaming',      count: '3.1K people', bgLight: '#F3EFFF', bgDark: '#1E1633', img: imgGaming, description: 'Co-op indie adventures & tournaments' },
+  { id: 'fashion',     name: 'Fashion',     count: '950 people',  bgLight: '#FFEBF3', bgDark: '#2C1021', img: imgFashion, description: 'Thrifting, styling & upcycling' },
+  { id: 'woodworking', name: 'Woodworking', count: '480 people',  bgLight: '#FAF0E6', bgDark: '#2A180E', img: imgWoodworking, description: 'Crafting wooden goods by hand' },
+  { id: 'cycling',     name: 'Cycling',     count: '1.3K people', bgLight: '#EFFCF4', bgDark: '#102B1B', img: imgCycling, description: 'Weekend road rides & city cruising' },
+  { id: 'astronomy',   name: 'Astronomy',   count: '710 people',  bgLight: '#EBF3FF', bgDark: '#101E35', img: imgAstronomy, description: 'Stargazing, telescopes & cosmology' },
+  { id: 'calligraphy', name: 'Calligraphy', count: '540 people',  bgLight: '#FFFCEB', bgDark: '#2B250E', img: imgCalligraphy, description: 'Hand-lettering & ink typography' },
+  { id: 'skateboarding', name: 'Skateboarding', count: '1.1K people', bgLight: '#FFF0ED', bgDark: '#2D1612', img: imgSkateboarding, description: 'Street skating & park tricks' },
 ];
 
-// Rich Community Cards Data
+// Rich Community Cards Data with Generated Header Images
 const RICH_COMMUNITIES = [
   {
     id: 'street-photography',
@@ -632,6 +234,7 @@ const RICH_COMMUNITIES = [
     peopleCount: '96 people',
     postCount: '52 posts',
     bgColor: '#FFF5EE',
+    image: commBookNookImg,
     avatars: [
       'https://images.unsplash.com/photo-1494790108755-2616b612b5c4?auto=format&fit=crop&w=80&q=80',
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&q=80'
@@ -643,6 +246,7 @@ const RICH_COMMUNITIES = [
     peopleCount: '124 people',
     postCount: '78 posts',
     bgColor: '#FFFCEB',
+    image: commBoulderingImg,
     avatars: [
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80',
       'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=80'
@@ -654,6 +258,7 @@ const RICH_COMMUNITIES = [
     peopleCount: '189 people',
     postCount: '112 posts',
     bgColor: '#FFF0ED',
+    image: commHomeBakersImg,
     avatars: [
       'https://images.unsplash.com/photo-1494790108755-2616b612b5c4?auto=format&fit=crop&w=80&q=80',
       'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80'
@@ -665,6 +270,7 @@ const RICH_COMMUNITIES = [
     peopleCount: '215 people',
     postCount: '143 posts',
     bgColor: '#F3EFFF',
+    image: commUrbanSketchersImg,
     avatars: [
       'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=80&q=80',
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80'
@@ -672,13 +278,9 @@ const RICH_COMMUNITIES = [
   }
 ];
 
-function RenderHobbyIllustration({ hobby, size = 48 }) {
+function RenderHobbyIllustration({ hobby }) {
   if (hobby.img) {
     return <img src={hobby.img} alt={hobby.name} className="g-hobby-ref-img" />;
-  }
-  const SVGComp = HobbySVGIllustrations[hobby.iconKey || hobby.id];
-  if (SVGComp) {
-    return <SVGComp size={size} />;
   }
   return <span className="g-hobby-emoji-fallback">{hobby.emoji || '✨'}</span>;
 }
@@ -686,10 +288,6 @@ function RenderHobbyIllustration({ hobby, size = 48 }) {
 function RenderCommunityHeaderImage({ community }) {
   if (community.image) {
     return <img src={community.image} alt={community.name} className="g-comm-header-img" />;
-  }
-  const HeaderSVG = CommunitySVGHeaders[community.id];
-  if (HeaderSVG) {
-    return <HeaderSVG />;
   }
   return null;
 }
@@ -918,7 +516,7 @@ function ProfileModal({ person, onClose, followed, onFollow }) {
           onClick={() => onFollow(person.id)}
         >
           <Users size={14} />
-          {followed ? 'Following ✓' : 'Follow'}
+          {followed ? 'Connected ✓' : 'Connect'}
         </button>
       </motion.div>
     </motion.div>
@@ -1026,36 +624,36 @@ export default function Ground({ initialTab }) {
     return items;
   }, [userInterests]);
 
-  // Map hobby images for AccordionGallery — hand-drawn SVG clipart
+  // Map hobby images for AccordionGallery — real photographic images of people engaged in each hobby
   const HOBBY_IMAGES = {
-    photography: '/hobbies/photography.svg',
-    guitar: '/hobbies/guitar.svg',
-    gaming: '/hobbies/gaming.svg',
-    woodworking: '/hobbies/woodworking.svg',
-    pottery: '/hobbies/pottery.svg',
-    running: '/hobbies/running.svg',
-    film: '/hobbies/film.svg',
-    drawing: '/hobbies/drawing.svg',
-    writing: '/hobbies/writing.svg',
-    cooking: '/hobbies/cooking.svg',
-    chess: '/hobbies/chess.svg',
-    'ai-ml': '/hobbies/ai-ml.svg',
-    gardening: '/hobbies/gardening.svg',
-    fashion: '/hobbies/fashion.svg',
-    cycling: '/hobbies/cycling.svg',
-    astronomy: '/hobbies/astronomy.svg',
-    calligraphy: '/hobbies/calligraphy.svg',
-    skateboarding: '/hobbies/skateboarding.svg',
-    bouldering: '/hobbies/bouldering.svg',
-    dance: '/hobbies/dance.svg',
+    photography: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
+    guitar: 'https://tse1.mm.bing.net/th/id/OIP.Er4GdXe4rKz6eOZ9_jwqqAHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
+    pottery: 'https://th.bing.com/th/id/OIP.m0hkLeKnpTZbdDyTZRCXtQHaE7?w=277&h=185&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
+    running: 'https://th.bing.com/th/id/OIP.0OMUeUBy8T23DYb2obsoTAHaEK?w=239&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
+    film: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
+    'ai-ml': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
+    drawing: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
+    cooking: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
+    writing: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80',
+    bouldering: 'https://images.unsplash.com/photo-1564769662533-4f00a87b4056?auto=format&fit=crop&w=800&q=80',
+    dance: 'https://th.bing.com/th/id/OIP.p04t-NRA0PJ4SBXUG1Dd9wHaEJ?w=303&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
+    chess: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=80',
+    gardening: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80',
+    gaming: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
+    fashion: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80',
+    woodworking: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    cycling: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80',
+    astronomy: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80',
+    calligraphy: 'https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&w=800&q=80',
+    skateboarding: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=800&q=80',
   };
 
   const FALLBACK_IMAGES = [
-    '/hobbies/photography.svg',
-    '/hobbies/guitar.svg',
-    '/hobbies/drawing.svg',
-    '/hobbies/cooking.svg',
-    '/hobbies/dance.svg',
+    'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80',
   ];
 
   const accordionItems = useMemo(() => {
@@ -1147,13 +745,13 @@ export default function Ground({ initialTab }) {
   };
 
   const POSTS = [
-    { id: 'p1', cls: 'g-av--photo',    emoji: '📸', community: 'Street Photography Club', time: '2h ago',  text: "Sunsets hit different when you're behind the lens 🌇 Here's my click from today's walk.", img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80', alt: 'Sunset cityscape',    comments: 24, shares: 12 },
+    { id: 'p1', cls: 'g-av--photo',    emoji: '🎮', community: 'Gaming Club', time: '2h ago',  text: "Where every game becomes a shared adventure.", img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80', alt: 'Sunset cityscape',    comments: 24, shares: 12 },
     { id: 'p2', cls: 'g-av--acoustic', emoji: '🎸', community: 'Acoustic Sessions',        time: '4h ago',  text: 'Jam session this Saturday! Open for everyone 🎸 DM to join!',                               img: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1200&q=80', alt: 'Guitar players',      comments: 18, shares: 5  },
     { id: 'p3', cls: 'g-av--sketch',   emoji: '✏️', community: 'Sketch Squad',             time: '6h ago',  text: 'Quick sketch from class today ✏️',                                                         img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80', alt: 'Pencil sketch art',  comments: 11, shares: 3  },
   ];
   const EXTRA_POSTS = [
     { id: 'p4', cls: 'g-av--sketch',   emoji: '✏️', community: 'Sketch Squad',             time: '8h ago',  text: 'Experimenting with charcoal today! What do you think?',                                    img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1200&q=80', alt: 'Charcoal art',       comments: 14, shares: 8  },
-    { id: 'p5', cls: 'g-av--photo',    emoji: '📸', community: 'Street Photography Club', time: '10h ago', text: 'Rainy days are perfect for reflections. Taken near the library.',                          img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80', alt: 'Rainy reflections',  comments: 32, shares: 21 },
+    { id: 'p5', cls: 'g-av--photo',    emoji: '📸', community: 'Street Photography Club', time: '10h ago', text: 'Every great story starts with a single frame.',                          img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80', alt: 'Rainy reflections',  comments: 32, shares: 21 },
     { id: 'p6', cls: 'g-av--acoustic', emoji: '🎸', community: 'Acoustic Sessions',        time: '12h ago', text: 'Folk music nights are back! Wednesday 7 PM in the common hall.',                          img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80', alt: 'Folk music night',   comments: 20, shares: 15 },
   ];
 
@@ -1844,7 +1442,7 @@ export default function Ground({ initialTab }) {
                         whileTap={{ scale: 0.96 }}
                       >
                         <div className="g-vibe-card__icon-wrap">
-                          <VibeSVGIcon id={vibe.id} size={28} />
+                          <img src={vibe.image} alt={vibe.label} className="g-vibe-img" />
                         </div>
                         <span className="g-vibe-card__label">{vibe.label}</span>
                         {isSelected && (

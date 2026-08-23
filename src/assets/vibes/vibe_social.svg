@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <!-- Speech Bubbles with Heart and Music Note (Social Vibe) -->
+  <!-- Left Speech Bubble -->
+  <path d="M18 25 C18 16 38 16 52 16 C66 16 72 24 72 35 C72 46 62 52 48 52 L36 52 L26 62 L28 52 C20 50 18 42 18 35 Z" fill="#EDE8FF" stroke="#191919" stroke-width="3" stroke-linejoin="round"/>
+  
+  <!-- Right Pink Bubble -->
+  <path d="M48 45 C48 38 60 38 70 38 C80 38 88 44 88 52 C88 60 80 66 70 66 L68 76 L58 66 C50 66 48 60 48 52 Z" fill="#FFE8F3" stroke="#191919" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- Cheerful Icons inside bubbles -->
+  <!-- Smiling Face inside purple bubble -->
+  <circle cx="36" cy="32" r="2" fill="#191919"/>
+  <circle cx="48" cy="32" r="2" fill="#191919"/>
+  <path d="M38 38 Q42 43 46 38" stroke="#191919" stroke-width="2" stroke-linecap="round" fill="none"/>
+  
+  <!-- Heart inside pink bubble -->
+  <path d="M68 50 C66 47 62 48 65 52 L68 56 L71 52 C74 48 70 47 68 50 Z" fill="#FF72B6" stroke="#191919" stroke-width="1.2"/>
+
+  <!-- Musical Notes in the air -->
+  <g transform="translate(18, 65)">
+    <circle cx="6" cy="18" r="3.5" fill="#9B72FF" stroke="#191919" stroke-width="1.8"/>
+    <circle cx="18" cy="15" r="3.5" fill="#FF72B6" stroke="#191919" stroke-width="1.8"/>
+    <path d="M9.5 18 V6 L21.5 3 V15" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9.5 10 L21.5 7" stroke="#191919" stroke-width="1.8"/>
+  </g>
+
+  <!-- Sparkle Stars -->
+  <path d="M78 16 L80 20 L84 22 L80 24 L78 28 L76 24 L72 22 L76 20 Z" fill="#FFD43B" stroke="#191919" stroke-width="1.2"/>
+</svg>
