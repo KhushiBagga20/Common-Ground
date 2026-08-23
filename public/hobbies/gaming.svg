@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Controller body -->
+  <path d="M100 260 Q100 220, 140 220 L170 220 Q180 220, 180 210 L180 200 Q180 190, 190 190 L210 190 Q220 190, 220 200 L220 210 Q220 220, 230 220 L260 220 Q300 220, 300 260 L300 310 Q300 340, 270 340 L240 340 Q230 340, 225 350 L215 370 Q210 380, 200 380 Q190 380, 185 370 L175 350 Q170 340, 160 340 L130 340 Q100 340, 100 310Z" fill="#9B72FF" stroke="#111" stroke-width="5"/>
+  
+  <!-- D-pad -->
+  <rect x="128" y="255" width="18" height="50" rx="4" fill="#111"/>
+  <rect x="120" y="263" width="34" height="18" rx="4" fill="#111"/>
+  <circle cx="137" cy="280" r="4" fill="#9B72FF"/>
+  
+  <!-- Buttons -->
+  <circle cx="255" cy="260" r="11" fill="#FF5C5C" stroke="#111" stroke-width="3"/>
+  <circle cx="280" cy="275" r="11" fill="#4D7CFE" stroke="#111" stroke-width="3"/>
+  <circle cx="255" cy="290" r="11" fill="#5BCB77" stroke="#111" stroke-width="3"/>
+  <circle cx="230" cy="275" r="11" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+  
+  <!-- Joysticks -->
+  <circle cx="160" cy="310" r="14" fill="#111" stroke="#111" stroke-width="2"/>
+  <circle cx="160" cy="310" r="8" fill="#9B72FF"/>
+  <circle cx="240" cy="310" r="14" fill="#111" stroke="#111" stroke-width="2"/>
+  <circle cx="240" cy="310" r="8" fill="#9B72FF"/>
+  
+  <!-- Menu buttons -->
+  <rect x="185" y="248" width="14" height="6" rx="3" fill="#111"/>
+  <rect x="205" y="248" width="14" height="6" rx="3" fill="#111"/>
+  
+  <!-- Sparkles and stars -->
+  <path d="M80 170 L85 185 L100 185 L88 195 L92 210 L80 202 L68 210 L72 195 L60 185 L75 185Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M320 170 L324 182 L336 182 L327 190 L330 202 L320 195 L310 202 L313 190 L304 182 L316 182Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M340 380 L343 390 L353 390 L345 396 L348 406 L340 400 L332 406 L335 396 L327 390 L337 390Z" fill="#4D7CFE" stroke="#111" stroke-width="2"/>
+  <path d="M65 400 L68 408 L76 408 L70 413 L72 421 L65 416 L58 421 L60 413 L54 408 L62 408Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  
+  <!-- Lightning bolts -->
+  <path d="M310 120 L318 135 L312 135 L320 155 L308 140 L314 140Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M85 130 L91 142 L86 142 L92 158 L83 145 L88 145Z" fill="#FF914D" stroke="#111" stroke-width="2"/>
+  
+  <!-- Doodle circles -->
+  <circle cx="60" cy="300" r="10" fill="none" stroke="#9B72FF" stroke-width="3" stroke-dasharray="4 4"/>
+  <circle cx="345" cy="290" r="7" fill="none" stroke="#FFD43B" stroke-width="3" stroke-dasharray="3 3"/>
+  
+  <!-- Pixel hearts -->
+  <g transform="translate(160, 420) scale(0.8)">
+    <rect x="4" y="0" width="8" height="8" fill="#FF5C5C"/>
+    <rect x="16" y="0" width="8" height="8" fill="#FF5C5C"/>
+    <rect x="0" y="4" width="28" height="8" fill="#FF5C5C"/>
+    <rect x="4" y="12" width="20" height="8" fill="#FF5C5C"/>
+    <rect x="8" y="20" width="12" height="8" fill="#FF5C5C"/>
+    <rect x="12" y="28" width="4" height="4" fill="#FF5C5C"/>
+  </g>
+</svg>

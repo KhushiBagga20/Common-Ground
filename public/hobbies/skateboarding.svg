@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Skateboard deck -->
+  <g transform="translate(200, 350) rotate(-15)">
+    <path d="M-120 -15 Q-135 -15, -140 0 Q-135 15, -120 15 L120 15 Q135 15, 140 0 Q135 -15, 120 -15Z" fill="#FF5C5C" stroke="#111" stroke-width="5"/>
+    
+    <!-- Deck design stripe -->
+    <line x1="-100" y1="0" x2="100" y2="0" stroke="#FFD43B" stroke-width="4"/>
+    
+    <!-- Wheels -->
+    <circle cx="-90" cy="22" r="14" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+    <circle cx="-90" cy="22" r="5" fill="#111"/>
+    <circle cx="90" cy="22" r="14" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+    <circle cx="90" cy="22" r="5" fill="#111"/>
+    
+    <!-- Trucks -->
+    <rect x="-100" y="14" width="20" height="6" rx="2" fill="#6F6F6A" stroke="#111" stroke-width="2"/>
+    <rect x="80" y="14" width="20" height="6" rx="2" fill="#6F6F6A" stroke="#111" stroke-width="2"/>
+  </g>
+  
+  <!-- Skater figure (stylized stick figure doing a trick) -->
+  <circle cx="180" cy="170" r="20" fill="#4D7CFE" stroke="#111" stroke-width="4"/>
+  <!-- Eyes -->
+  <circle cx="174" cy="167" r="3" fill="#111"/>
+  <circle cx="186" cy="167" r="3" fill="#111"/>
+  <!-- Grin -->
+  <path d="M174 178 Q180 184 186 178" stroke="#111" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Body -->
+  <line x1="180" y1="190" x2="185" y2="260" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <!-- Arms up (trick pose) -->
+  <line x1="183" y1="210" x2="140" y2="190" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <line x1="183" y1="210" x2="230" y2="185" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <!-- Legs bent -->
+  <line x1="185" y1="260" x2="160" y2="310" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <line x1="185" y1="260" x2="210" y2="310" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Sneakers -->
+  <path d="M155 308 Q145 315, 148 320 Q152 325, 165 318Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+  <path d="M207 308 Q218 312, 220 318 Q218 323, 205 318Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+  
+  <!-- Motion / air lines -->
+  <line x1="120" y1="230" x2="140" y2="230" stroke="#FF5C5C" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <line x1="115" y1="250" x2="135" y2="250" stroke="#FF5C5C" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <line x1="120" y1="270" x2="130" y2="270" stroke="#FF5C5C" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+  
+  <!-- Sparkles -->
+  <path d="M310 140 L315 155 L330 155 L318 165 L322 180 L310 172 L298 180 L302 165 L290 155 L305 155Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M70 140 L74 152 L86 152 L77 160 L80 172 L70 165 L60 172 L63 160 L54 152 L66 152Z" fill="#9B72FF" stroke="#111" stroke-width="2"/>
+  <path d="M330 420 L333 428 L341 428 L335 433 L337 441 L330 436 L323 441 L325 433 L319 428 L327 428Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  <path d="M70 420 L73 428 L81 428 L75 433 L77 441 L70 436 L63 441 L65 433 L59 428 L67 428Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  
+  <!-- Doodle circle -->
+  <circle cx="300" cy="280" r="8" fill="none" stroke="#FFD43B" stroke-width="3" stroke-dasharray="4 4"/>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Pottery wheel base -->
+  <ellipse cx="200" cy="420" rx="110" ry="25" fill="#111" stroke="#111" stroke-width="3"/>
+  <rect x="185" y="380" width="30" height="45" rx="4" fill="#6F6F6A" stroke="#111" stroke-width="3"/>
+  
+  <!-- Wheel top -->
+  <ellipse cx="200" cy="380" rx="90" ry="20" fill="#FF914D" stroke="#111" stroke-width="4"/>
+  <ellipse cx="200" cy="378" rx="70" ry="15" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  
+  <!-- Vase being shaped -->
+  <path d="M170 370 Q165 340, 168 310 Q170 280, 155 250 Q150 235, 160 220 Q170 205, 200 200 Q230 205, 240 220 Q250 235, 245 250 Q230 280, 232 310 Q235 340, 230 370" fill="#FF914D" stroke="#111" stroke-width="4" fill-opacity="0.9"/>
+  
+  <!-- Vase details -->
+  <path d="M168 310 Q200 300, 232 310" stroke="#111" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+  <path d="M163 270 Q200 260, 237 270" stroke="#111" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+  
+  <!-- Vase opening -->
+  <ellipse cx="200" cy="200" rx="40" ry="10" fill="#FF5C5C" stroke="#111" stroke-width="3"/>
+  
+  <!-- Hands shaping -->
+  <path d="M135 290 Q140 280, 155 285 Q160 290, 165 300" stroke="#FFD43B" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M265 290 Q260 280, 245 285 Q240 290, 235 300" stroke="#FFD43B" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Splatter dots -->
+  <circle cx="120" cy="350" r="5" fill="#FF914D" opacity="0.6"/>
+  <circle cx="280" cy="340" r="4" fill="#FF914D" opacity="0.5"/>
+  <circle cx="140" cy="370" r="3" fill="#FF914D" opacity="0.4"/>
+  <circle cx="260" cy="360" r="6" fill="#FF914D" opacity="0.5"/>
+  <circle cx="100" cy="320" r="3" fill="#FFD43B" opacity="0.5"/>
+  <circle cx="300" cy="310" r="4" fill="#FFD43B" opacity="0.4"/>
+  
+  <!-- Sparkles -->
+  <path d="M310 160 L315 175 L330 175 L318 185 L322 200 L310 192 L298 200 L302 185 L290 175 L305 175Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M80 170 L84 182 L96 182 L87 190 L90 202 L80 195 L70 202 L73 190 L64 182 L76 182Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  <path d="M330 380 L333 388 L341 388 L335 393 L337 401 L330 396 L323 401 L325 393 L319 388 L327 388Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  
+  <!-- Swirl decoration -->
+  <path d="M70 250 Q80 240, 90 250 Q100 260, 90 270 Q80 280, 70 270" stroke="#FF914D" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+  
+  <!-- Heart -->
+  <path d="M320 280 C320 275, 328 275, 328 280 C328 285, 320 290, 320 290 C320 290, 312 285, 312 280 C312 275, 320 275, 320 280Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+</svg>

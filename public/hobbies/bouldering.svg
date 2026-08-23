@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Climbing wall -->
+  <rect x="100" y="80" width="200" height="380" rx="12" fill="#FF914D" stroke="#111" stroke-width="5" opacity="0.2"/>
+  <rect x="100" y="80" width="200" height="380" rx="12" fill="none" stroke="#111" stroke-width="5"/>
+  
+  <!-- Climbing holds -->
+  <ellipse cx="150" cy="140" rx="18" ry="14" fill="#FF5C5C" stroke="#111" stroke-width="3" transform="rotate(-15, 150, 140)"/>
+  <ellipse cx="250" cy="180" rx="20" ry="12" fill="#4D7CFE" stroke="#111" stroke-width="3" transform="rotate(20, 250, 180)"/>
+  <ellipse cx="170" cy="240" rx="16" ry="18" fill="#5BCB77" stroke="#111" stroke-width="3" transform="rotate(-10, 170, 240)"/>
+  <ellipse cx="260" cy="290" rx="22" ry="14" fill="#FFD43B" stroke="#111" stroke-width="3" transform="rotate(15, 260, 290)"/>
+  <ellipse cx="140" cy="340" rx="18" ry="12" fill="#9B72FF" stroke="#111" stroke-width="3" transform="rotate(-20, 140, 340)"/>
+  <ellipse cx="230" cy="380" rx="16" ry="16" fill="#FF72B6" stroke="#111" stroke-width="3"/>
+  <ellipse cx="180" cy="420" rx="20" ry="14" fill="#FF914D" stroke="#111" stroke-width="3" transform="rotate(10, 180, 420)"/>
+  
+  <!-- Climber figure (stick figure) -->
+  <circle cx="195" cy="200" r="15" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+  <!-- Eyes -->
+  <circle cx="190" cy="197" r="2" fill="#111"/>
+  <circle cx="200" cy="197" r="2" fill="#111"/>
+  <path d="M190 206 Q195 210 200 206" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Body -->
+  <line x1="195" y1="215" x2="195" y2="280" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <!-- Arms reaching for holds -->
+  <line x1="195" y1="235" x2="155" y2="245" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <line x1="195" y1="235" x2="245" y2="215" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <!-- Legs on holds -->
+  <line x1="195" y1="280" x2="225" y2="310" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <line x1="195" y1="280" x2="165" y2="320" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Chalk bag -->
+  <rect x="200" y="260" width="12" height="16" rx="3" fill="#FFFFFF" stroke="#111" stroke-width="2"/>
+  
+  <!-- Sparkles -->
+  <path d="M60 140 L65 155 L80 155 L68 165 L72 180 L60 172 L48 180 L52 165 L40 155 L55 155Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M340 120 L344 132 L356 132 L347 140 L350 152 L340 145 L330 152 L333 140 L324 132 L336 132Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M340 400 L343 408 L351 408 L345 413 L347 421 L340 416 L333 421 L335 413 L329 408 L337 408Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  
+  <!-- Doodle -->
+  <circle cx="60" cy="400" r="8" fill="none" stroke="#FF914D" stroke-width="3" stroke-dasharray="4 4"/>
+</svg>

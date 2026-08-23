@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Running figure -->
+  <circle cx="210" cy="155" r="30" fill="#5BCB77" stroke="#111" stroke-width="5"/>
+  <!-- Head smiley -->
+  <circle cx="200" cy="150" r="3" fill="#111"/>
+  <circle cx="220" cy="150" r="3" fill="#111"/>
+  <path d="M200 162 Q210 170 220 162" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Body -->
+  <line x1="210" y1="185" x2="210" y2="290" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Arms swinging -->
+  <line x1="210" y1="220" x2="155" y2="260" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+  <line x1="210" y1="220" x2="280" y2="200" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Legs running -->
+  <line x1="210" y1="290" x2="160" y2="380" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+  <line x1="210" y1="290" x2="280" y2="360" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- Sneakers -->
+  <path d="M155 378 Q140 385, 135 380 Q130 375, 140 370 L160 375Z" fill="#FF5C5C" stroke="#111" stroke-width="3"/>
+  <path d="M278 358 Q295 360, 300 355 Q305 348, 295 345 L275 352Z" fill="#4D7CFE" stroke="#111" stroke-width="3"/>
+  
+  <!-- Speed lines -->
+  <line x1="100" y1="210" x2="140" y2="210" stroke="#5BCB77" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <line x1="90" y1="240" x2="130" y2="240" stroke="#5BCB77" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <line x1="95" y1="270" x2="125" y2="270" stroke="#5BCB77" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Road / path -->
+  <path d="M50 430 Q200 400, 350 430" stroke="#111" stroke-width="3" fill="none" stroke-dasharray="8 6"/>
+  
+  <!-- Sparkles -->
+  <path d="M310 130 L315 145 L330 145 L318 155 L322 170 L310 162 L298 170 L302 155 L290 145 L305 145Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M80 150 L84 162 L96 162 L87 170 L90 182 L80 175 L70 182 L73 170 L64 162 L76 162Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M320 380 L323 388 L331 388 L325 393 L327 401 L320 396 L313 401 L315 393 L309 388 L317 388Z" fill="#FF914D" stroke="#111" stroke-width="2"/>
+  
+  <!-- Sweat drops -->
+  <path d="M240 170 Q245 165, 248 175 Q250 182, 245 180 Q240 178, 240 170Z" fill="#4D7CFE" stroke="#111" stroke-width="1.5"/>
+  
+  <!-- Heart -->
+  <path d="M80 400 C80 395, 88 395, 88 400 C88 405, 80 410, 80 410 C80 410, 72 405, 72 400 C72 395, 80 395, 80 400Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+</svg>

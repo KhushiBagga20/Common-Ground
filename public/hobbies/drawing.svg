@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Sketchbook -->
+  <rect x="80" y="140" width="240" height="300" rx="10" fill="#FFFFFF" stroke="#111" stroke-width="5"/>
+  <rect x="80" y="140" width="25" height="300" rx="4" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+  
+  <!-- Spiral binding -->
+  <circle cx="105" cy="170" r="8" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="105" cy="210" r="8" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="105" cy="250" r="8" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="105" cy="290" r="8" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="105" cy="330" r="8" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="105" cy="370" r="8" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="105" cy="410" r="8" fill="none" stroke="#111" stroke-width="3"/>
+  
+  <!-- Sketch on page - simple doodle face -->
+  <circle cx="220" cy="260" r="50" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="205" cy="248" r="5" fill="#111"/>
+  <circle cx="235" cy="248" r="5" fill="#111"/>
+  <path d="M205 280 Q220 295 235 280" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Doodle stars on page -->
+  <path d="M160 200 L163 208 L171 208 L165 213 L167 221 L160 216 L153 221 L155 213 L149 208 L157 208Z" fill="#FFD43B" stroke="#111" stroke-width="1.5"/>
+  <path d="M270 340 L273 348 L281 348 L275 353 L277 361 L270 356 L263 361 L265 353 L259 348 L267 348Z" fill="#FF72B6" stroke="#111" stroke-width="1.5"/>
+  
+  <!-- Pencil -->
+  <g transform="rotate(-45, 310, 380)">
+    <rect x="285" y="300" width="16" height="120" rx="2" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+    <polygon points="285,420 301,420 293,445" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+    <polygon points="290,435 296,435 293,445" fill="#111"/>
+    <rect x="285" y="300" width="16" height="20" rx="2" fill="#FF72B6" stroke="#111" stroke-width="3"/>
+  </g>
+  
+  <!-- Eraser shavings -->
+  <circle cx="140" cy="460" r="3" fill="#FF72B6" opacity="0.5"/>
+  <circle cx="160" cy="470" r="2" fill="#FF72B6" opacity="0.4"/>
+  <circle cx="175" cy="462" r="4" fill="#FF72B6" opacity="0.3"/>
+  
+  <!-- Sparkles -->
+  <path d="M60 120 L65 135 L80 135 L68 145 L72 160 L60 152 L48 160 L52 145 L40 135 L55 135Z" fill="#4D7CFE" stroke="#111" stroke-width="2"/>
+  <path d="M340 120 L343 130 L353 130 L345 136 L348 146 L340 140 L332 146 L335 136 L327 130 L337 130Z" fill="#FF914D" stroke="#111" stroke-width="2"/>
+  
+  <!-- Doodle circle -->
+  <circle cx="60" cy="350" r="10" fill="none" stroke="#FFD43B" stroke-width="3" stroke-dasharray="4 4"/>
+</svg>

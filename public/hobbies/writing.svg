@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Open book -->
+  <path d="M200 200 L200 420 Q140 400, 70 420 L70 200 Q140 180, 200 200Z" fill="#FFFFFF" stroke="#111" stroke-width="4"/>
+  <path d="M200 200 L200 420 Q260 400, 330 420 L330 200 Q260 180, 200 200Z" fill="#FFFFFF" stroke="#111" stroke-width="4"/>
+  
+  <!-- Book spine -->
+  <line x1="200" y1="200" x2="200" y2="420" stroke="#111" stroke-width="3"/>
+  
+  <!-- Text lines on left page -->
+  <line x1="90" y1="230" x2="180" y2="225" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="90" y1="250" x2="175" y2="245" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="90" y1="270" x2="170" y2="265" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="90" y1="290" x2="165" y2="285" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="90" y1="310" x2="170" y2="308" stroke="#FF72B6" stroke-width="2.5" opacity="0.6"/>
+  <line x1="90" y1="330" x2="160" y2="328" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="90" y1="350" x2="155" y2="348" stroke="#111" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Text lines on right page -->
+  <line x1="220" y1="225" x2="310" y2="230" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="220" y1="245" x2="310" y2="250" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="220" y1="265" x2="310" y2="270" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="220" y1="285" x2="310" y2="290" stroke="#111" stroke-width="2" opacity="0.3"/>
+  <line x1="220" y1="305" x2="310" y2="310" stroke="#111" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Pen -->
+  <g transform="rotate(-30, 320, 350)">
+    <rect x="310" y="280" width="10" height="100" rx="2" fill="#4D7CFE" stroke="#111" stroke-width="2.5"/>
+    <polygon points="310,380 320,380 315,400" fill="#4D7CFE" stroke="#111" stroke-width="2.5"/>
+    <polygon points="313,393 317,393 315,400" fill="#111"/>
+    <rect x="310" y="280" width="10" height="15" rx="2" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  </g>
+  
+  <!-- Ink splatter -->
+  <circle cx="335" cy="420" r="6" fill="#4D7CFE" opacity="0.4"/>
+  <circle cx="345" cy="415" r="3" fill="#4D7CFE" opacity="0.3"/>
+  <circle cx="328" cy="425" r="4" fill="#4D7CFE" opacity="0.3"/>
+  
+  <!-- Quill feather decorative -->
+  <path d="M100 130 Q120 100, 160 90 Q130 120, 120 160" fill="#FF72B6" stroke="#111" stroke-width="2.5" opacity="0.7"/>
+  <line x1="100" y1="130" x2="160" y2="90" stroke="#111" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Sparkles -->
+  <path d="M310 120 L315 135 L330 135 L318 145 L322 160 L310 152 L298 160 L302 145 L290 135 L305 135Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M60 150 L64 162 L76 162 L67 170 L70 182 L60 175 L50 182 L53 170 L44 162 L56 162Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  
+  <!-- Hearts -->
+  <path d="M80 420 C80 415, 88 415, 88 420 C88 425, 80 430, 80 430 C80 430, 72 425, 72 420 C72 415, 80 415, 80 420Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+</svg>

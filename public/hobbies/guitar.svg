@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Guitar body -->
+  <ellipse cx="200" cy="330" rx="85" ry="100" fill="#FF914D" stroke="#111" stroke-width="5"/>
+  <ellipse cx="200" cy="250" rx="65" ry="75" fill="#FF914D" stroke="#111" stroke-width="5"/>
+  
+  <!-- Sound hole -->
+  <circle cx="200" cy="340" r="30" fill="#111" stroke="#111" stroke-width="3"/>
+  <circle cx="200" cy="340" r="26" fill="#F7F6F2" stroke="#111" stroke-width="2"/>
+  <circle cx="200" cy="340" r="20" fill="#111"/>
+  
+  <!-- Neck -->
+  <rect x="185" y="100" width="30" height="165" rx="4" fill="#FFD43B" stroke="#111" stroke-width="4"/>
+  
+  <!-- Headstock -->
+  <rect x="178" y="70" width="44" height="40" rx="8" fill="#FF914D" stroke="#111" stroke-width="4"/>
+  
+  <!-- Tuning pegs -->
+  <circle cx="188" cy="80" r="5" fill="#111"/>
+  <circle cx="212" cy="80" r="5" fill="#111"/>
+  <circle cx="188" cy="98" r="5" fill="#111"/>
+  <circle cx="212" cy="98" r="5" fill="#111"/>
+  
+  <!-- Strings -->
+  <line x1="192" y1="110" x2="192" y2="420" stroke="#111" stroke-width="1.5"/>
+  <line x1="200" y1="110" x2="200" y2="420" stroke="#111" stroke-width="1.5"/>
+  <line x1="208" y1="110" x2="208" y2="420" stroke="#111" stroke-width="1.5"/>
+  
+  <!-- Frets -->
+  <line x1="186" y1="140" x2="214" y2="140" stroke="#111" stroke-width="2"/>
+  <line x1="186" y1="170" x2="214" y2="170" stroke="#111" stroke-width="2"/>
+  <line x1="186" y1="200" x2="214" y2="200" stroke="#111" stroke-width="2"/>
+  <line x1="186" y1="230" x2="214" y2="230" stroke="#111" stroke-width="2"/>
+  
+  <!-- Bridge -->
+  <rect x="185" y="395" width="30" height="8" rx="2" fill="#111"/>
+  
+  <!-- Musical notes -->
+  <g transform="translate(310, 120)">
+    <circle cx="0" cy="0" r="8" fill="#FF72B6" stroke="#111" stroke-width="2.5"/>
+    <line x1="8" y1="0" x2="8" y2="-35" stroke="#111" stroke-width="3"/>
+    <path d="M8 -35 Q20 -30, 18 -20" stroke="#111" stroke-width="2.5" fill="none"/>
+  </g>
+  <g transform="translate(80, 180)">
+    <circle cx="0" cy="0" r="7" fill="#4D7CFE" stroke="#111" stroke-width="2.5"/>
+    <line x1="7" y1="0" x2="7" y2="-30" stroke="#111" stroke-width="3"/>
+    <path d="M7 -30 Q18 -25, 16 -16" stroke="#111" stroke-width="2.5" fill="none"/>
+  </g>
+  <g transform="translate(330, 300)">
+    <circle cx="0" cy="0" r="6" fill="#9B72FF" stroke="#111" stroke-width="2"/>
+    <line x1="6" y1="0" x2="6" y2="-25" stroke="#111" stroke-width="2.5"/>
+  </g>
+  
+  <!-- Sparkles -->
+  <path d="M60 100 L65 115 L80 115 L68 125 L72 140 L60 132 L48 140 L52 125 L40 115 L55 115Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M340 420 L344 432 L356 432 L347 440 L350 452 L340 445 L330 452 L333 440 L324 432 L336 432Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  
+  <!-- Doodle swirls -->
+  <path d="M60 380 Q70 360, 80 380 Q90 400, 100 380" stroke="#FF72B6" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+</svg>

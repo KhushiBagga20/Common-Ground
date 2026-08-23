@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Calligraphy pen -->
+  <g transform="rotate(-35, 200, 250)">
+    <rect x="185" y="120" width="14" height="200" rx="3" fill="#111" stroke="#111" stroke-width="2"/>
+    <polygon points="185,320 199,320 192,360" fill="#6F6F6A" stroke="#111" stroke-width="2"/>
+    <polygon points="189,350 195,350 192,360" fill="#111"/>
+    <!-- Gold band -->
+    <rect x="183" y="310" width="18" height="12" rx="2" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  </g>
+  
+  <!-- Calligraphy strokes -->
+  <path d="M120 200 Q140 180, 170 195 Q200 210, 220 185 Q235 165, 260 175" stroke="#111" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M130 250 Q160 235, 180 250 Q200 265, 230 245" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M150 290 Q180 275, 200 290 Q220 305, 250 285" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Ink bottle -->
+  <rect x="80" y="380" width="50" height="55" rx="8" fill="#111" stroke="#111" stroke-width="3"/>
+  <rect x="90" y="370" width="30" height="15" rx="4" fill="#6F6F6A" stroke="#111" stroke-width="2"/>
+  <rect x="85" y="372" width="40" height="8" rx="3" fill="#111" stroke="#111" stroke-width="2"/>
+  
+  <!-- Ink splatter -->
+  <circle cx="140" cy="420" r="5" fill="#111" opacity="0.4"/>
+  <circle cx="155" cy="425" r="3" fill="#111" opacity="0.3"/>
+  <circle cx="148" cy="435" r="4" fill="#111" opacity="0.3"/>
+  
+  <!-- Decorative swirl -->
+  <path d="M250 350 Q270 340, 290 355 Q310 370, 300 390 Q290 410, 270 400 Q250 390, 260 370" stroke="#FFD43B" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Paper sheet -->
+  <rect x="200" y="380" width="120" height="80" rx="4" fill="#FFFFFF" stroke="#111" stroke-width="2" transform="rotate(-5, 260, 420)"/>
+  <line x1="215" y1="400" x2="305" y2="395" stroke="#111" stroke-width="1.5" opacity="0.3"/>
+  <line x1="218" y1="415" x2="300" y2="410" stroke="#111" stroke-width="1.5" opacity="0.3"/>
+  <line x1="220" y1="430" x2="290" y2="425" stroke="#111" stroke-width="1.5" opacity="0.3"/>
+  
+  <!-- Sparkles -->
+  <path d="M310 150 L315 165 L330 165 L318 175 L322 190 L310 182 L298 190 L302 175 L290 165 L305 165Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M70 150 L74 162 L86 162 L77 170 L80 182 L70 175 L60 182 L63 170 L54 162 L66 162Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M330 310 L333 318 L341 318 L335 323 L337 331 L330 326 L323 331 L325 323 L319 318 L327 318Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+</svg>

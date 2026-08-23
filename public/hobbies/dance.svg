@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Dancer figure -->
+  <!-- Head -->
+  <circle cx="200" cy="140" r="25" fill="#FF72B6" stroke="#111" stroke-width="4"/>
+  <circle cx="193" cy="136" r="3" fill="#111"/>
+  <circle cx="207" cy="136" r="3" fill="#111"/>
+  <path d="M193 148 Q200 155 207 148" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Hair -->
+  <path d="M175 130 Q175 110, 200 105 Q225 110, 225 130" fill="#111" stroke="#111" stroke-width="2"/>
+  <path d="M225 125 Q240 115, 245 130 Q250 145, 240 140" fill="#111" stroke="#111" stroke-width="1"/>
+  
+  <!-- Body -->
+  <line x1="200" y1="165" x2="200" y2="280" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Arms gracefully extended -->
+  <path d="M200 200 Q160 170, 120 150" stroke="#111" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M200 200 Q250 160, 290 180" stroke="#111" stroke-width="5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Hands -->
+  <circle cx="120" cy="150" r="6" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <circle cx="290" cy="180" r="6" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  
+  <!-- Tutu / Skirt -->
+  <path d="M170 270 Q200 290, 230 270" fill="#9B72FF" stroke="#111" stroke-width="3"/>
+  <path d="M165 275 Q200 300, 235 275" fill="#9B72FF" stroke="#111" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Legs - one on pointe, one extended -->
+  <line x1="200" y1="280" x2="190" y2="380" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  <line x1="200" y1="280" x2="280" y2="340" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Ballet shoes -->
+  <ellipse cx="190" cy="385" rx="10" ry="6" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <ellipse cx="285" cy="343" rx="10" ry="6" fill="#FF72B6" stroke="#111" stroke-width="2" transform="rotate(30, 285, 343)"/>
+  
+  <!-- Music notes floating -->
+  <g transform="translate(310, 120)">
+    <circle cx="0" cy="0" r="7" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+    <line x1="7" y1="0" x2="7" y2="-28" stroke="#111" stroke-width="2.5"/>
+    <path d="M7 -28 Q18 -22, 16 -14" stroke="#111" stroke-width="2" fill="none"/>
+  </g>
+  <g transform="translate(80, 200)">
+    <circle cx="0" cy="0" r="6" fill="#4D7CFE" stroke="#111" stroke-width="2"/>
+    <line x1="6" y1="0" x2="6" y2="-22" stroke="#111" stroke-width="2"/>
+  </g>
+  
+  <!-- Sparkles -->
+  <path d="M330 260 L335 275 L350 275 L338 285 L342 300 L330 292 L318 300 L322 285 L310 275 L325 275Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M65 320 L69 332 L81 332 L72 340 L75 352 L65 345 L55 352 L58 340 L49 332 L61 332Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  
+  <!-- Motion lines -->
+  <path d="M140 310 Q150 300, 160 310" stroke="#9B72FF" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <path d="M130 330 Q140 320, 150 330" stroke="#9B72FF" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Hearts -->
+  <path d="M80 420 C80 415, 88 415, 88 420 C88 425, 80 430, 80 430 C80 430, 72 425, 72 420 C72 415, 80 415, 80 420Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+  <path d="M320 400 C320 395, 328 395, 328 400 C328 405, 320 410, 320 410 C320 410, 312 405, 312 400 C312 395, 320 395, 320 400Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+</svg>

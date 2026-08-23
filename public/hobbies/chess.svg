@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Chess board pattern (small) -->
+  <g transform="translate(100, 340)">
+    <rect width="200" height="120" rx="8" fill="#FFFFFF" stroke="#111" stroke-width="3"/>
+    <rect x="0" y="0" width="25" height="20" fill="#111"/>
+    <rect x="50" y="0" width="25" height="20" fill="#111"/>
+    <rect x="100" y="0" width="25" height="20" fill="#111"/>
+    <rect x="150" y="0" width="25" height="20" fill="#111"/>
+    <rect x="25" y="20" width="25" height="20" fill="#111"/>
+    <rect x="75" y="20" width="25" height="20" fill="#111"/>
+    <rect x="125" y="20" width="25" height="20" fill="#111"/>
+    <rect x="175" y="20" width="25" height="20" fill="#111"/>
+    <rect x="0" y="40" width="25" height="20" fill="#111"/>
+    <rect x="50" y="40" width="25" height="20" fill="#111"/>
+    <rect x="100" y="40" width="25" height="20" fill="#111"/>
+    <rect x="150" y="40" width="25" height="20" fill="#111"/>
+    <rect x="25" y="60" width="25" height="20" fill="#111"/>
+    <rect x="75" y="60" width="25" height="20" fill="#111"/>
+    <rect x="125" y="60" width="25" height="20" fill="#111"/>
+    <rect x="175" y="60" width="25" height="20" fill="#111"/>
+    <rect x="0" y="80" width="25" height="20" fill="#111"/>
+    <rect x="50" y="80" width="25" height="20" fill="#111"/>
+    <rect x="100" y="80" width="25" height="20" fill="#111"/>
+    <rect x="150" y="80" width="25" height="20" fill="#111"/>
+    <rect x="25" y="100" width="25" height="20" fill="#111"/>
+    <rect x="75" y="100" width="25" height="20" fill="#111"/>
+    <rect x="125" y="100" width="25" height="20" fill="#111"/>
+    <rect x="175" y="100" width="25" height="20" fill="#111"/>
+  </g>
+  
+  <!-- King piece -->
+  <g transform="translate(160, 100)">
+    <ellipse cx="40" cy="220" rx="35" ry="10" fill="#111" stroke="#111" stroke-width="2"/>
+    <path d="M15 220 Q10 180, 15 160 Q20 140, 25 130 L55 130 Q60 140, 65 160 Q70 180, 65 220Z" fill="#FFD43B" stroke="#111" stroke-width="4"/>
+    <rect x="25" y="115" width="30" height="20" rx="4" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+    <!-- Cross on top -->
+    <rect x="36" y="90" width="8" height="30" rx="2" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+    <rect x="28" y="98" width="24" height="8" rx="2" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+  </g>
+  
+  <!-- Pawn piece -->
+  <g transform="translate(270, 190)">
+    <ellipse cx="30" cy="130" rx="25" ry="8" fill="#111" stroke="#111" stroke-width="2"/>
+    <path d="M12 130 Q8 110, 12 95 Q16 80, 18 75 L42 75 Q44 80, 48 95 Q52 110, 48 130Z" fill="#FFFFFF" stroke="#111" stroke-width="3"/>
+    <circle cx="30" cy="60" r="18" fill="#FFFFFF" stroke="#111" stroke-width="3"/>
+  </g>
+  
+  <!-- Sparkles -->
+  <path d="M80 140 L85 155 L100 155 L88 165 L92 180 L80 172 L68 180 L72 165 L60 155 L75 155Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M330 120 L334 132 L346 132 L337 140 L340 152 L330 145 L320 152 L323 140 L314 132 L326 132Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M60 400 L63 408 L71 408 L65 413 L67 421 L60 416 L53 421 L55 413 L49 408 L57 408Z" fill="#4D7CFE" stroke="#111" stroke-width="2"/>
+  <path d="M340 420 L343 428 L351 428 L345 433 L347 441 L340 436 L333 441 L335 433 L329 428 L337 428Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  
+  <!-- Think bubble -->
+  <circle cx="90" cy="250" r="8" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="3 3"/>
+  <circle cx="75" cy="270" r="5" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="2 2"/>
+  <circle cx="65" cy="285" r="3" fill="none" stroke="#111" stroke-width="2"/>
+</svg>

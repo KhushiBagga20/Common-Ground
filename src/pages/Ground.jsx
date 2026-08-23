@@ -215,7 +215,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import {
   Search, Bell, Heart, MessageCircle, Share2, Bookmark,
   ArrowRight, MoreHorizontal, RefreshCw, X, MapPin, Users,
-  Music, Camera, Sparkles, BookOpen, PenTool, Edit3, ArrowUpRight,
+  Music, Camera, Sparkles, BookOpen, PenTool, ArrowUpRight,
   Plus, Compass, Star
 } from 'lucide-react';
 import PageCanvas from '../components/layout/PageCanvas';
@@ -1026,21 +1026,36 @@ export default function Ground({ initialTab }) {
     return items;
   }, [userInterests]);
 
-  // Map hobby images for AccordionGallery
+  // Map hobby images for AccordionGallery — hand-drawn SVG clipart
   const HOBBY_IMAGES = {
-    photography: '/hobbies/photography.jpg',
-    guitar: '/hobbies/guitar.jpg',
-    gaming: '/hobbies/gaming.jpg',
-    woodworking: '/hobbies/woodworking.jpg',
-    pottery: '/hobbies/pottery.jpg',
+    photography: '/hobbies/photography.svg',
+    guitar: '/hobbies/guitar.svg',
+    gaming: '/hobbies/gaming.svg',
+    woodworking: '/hobbies/woodworking.svg',
+    pottery: '/hobbies/pottery.svg',
+    running: '/hobbies/running.svg',
+    film: '/hobbies/film.svg',
+    drawing: '/hobbies/drawing.svg',
+    writing: '/hobbies/writing.svg',
+    cooking: '/hobbies/cooking.svg',
+    chess: '/hobbies/chess.svg',
+    'ai-ml': '/hobbies/ai-ml.svg',
+    gardening: '/hobbies/gardening.svg',
+    fashion: '/hobbies/fashion.svg',
+    cycling: '/hobbies/cycling.svg',
+    astronomy: '/hobbies/astronomy.svg',
+    calligraphy: '/hobbies/calligraphy.svg',
+    skateboarding: '/hobbies/skateboarding.svg',
+    bouldering: '/hobbies/bouldering.svg',
+    dance: '/hobbies/dance.svg',
   };
 
   const FALLBACK_IMAGES = [
-    'https://picsum.photos/id/1015/900/1200',
-    'https://picsum.photos/id/1018/900/1200',
-    'https://picsum.photos/id/1039/900/1200',
-    'https://picsum.photos/id/1043/900/1200',
-    'https://picsum.photos/id/1044/900/1200',
+    '/hobbies/photography.svg',
+    '/hobbies/guitar.svg',
+    '/hobbies/drawing.svg',
+    '/hobbies/cooking.svg',
+    '/hobbies/dance.svg',
   ];
 
   const accordionItems = useMemo(() => {
@@ -1307,14 +1322,6 @@ export default function Ground({ initialTab }) {
                     >
                       <Plus size={14} />
                       <span>Discover More</span>
-                    </button>
-                    <button
-                      className="g-edit-interests-btn font-rounded"
-                      onClick={() => navigate('/onboarding')}
-                      title="Customize your interests"
-                    >
-                      <Edit3 size={14} />
-                      <span>Edit Interests</span>
                     </button>
                   </div>
                 </div>

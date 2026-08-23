@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Frying pan -->
+  <ellipse cx="200" cy="280" rx="110" ry="100" fill="#6F6F6A" stroke="#111" stroke-width="5"/>
+  <ellipse cx="200" cy="275" rx="90" ry="82" fill="#111" stroke="#111" stroke-width="3"/>
+  
+  <!-- Handle -->
+  <rect x="290" y="255" width="90" height="22" rx="6" fill="#FF914D" stroke="#111" stroke-width="4"/>
+  <circle cx="370" cy="266" r="6" fill="#111"/>
+  
+  <!-- Egg in pan -->
+  <ellipse cx="185" cy="270" rx="40" ry="35" fill="#FFFFFF" stroke="#111" stroke-width="2"/>
+  <circle cx="185" cy="265" r="16" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  
+  <!-- Sizzle lines -->
+  <path d="M140 240 Q145 230, 150 240" stroke="#FF5C5C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M220 235 Q225 225, 230 235" stroke="#FF5C5C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M260 250 Q265 240, 270 250" stroke="#FF5C5C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Steam -->
+  <path d="M160 180 Q165 160, 170 180 Q175 200, 180 180" stroke="#6F6F6A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4"/>
+  <path d="M200 170 Q205 150, 210 170 Q215 190, 220 170" stroke="#6F6F6A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.3"/>
+  <path d="M240 185 Q245 165, 250 185" stroke="#6F6F6A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Chef hat -->
+  <path d="M140 100 Q140 60, 170 60 Q180 40, 200 40 Q220 40, 230 60 Q260 60, 260 100" fill="#FFFFFF" stroke="#111" stroke-width="4"/>
+  <rect x="140" y="95" width="120" height="25" rx="4" fill="#FFFFFF" stroke="#111" stroke-width="3"/>
+  
+  <!-- Sparkles -->
+  <path d="M60 200 L65 215 L80 215 L68 225 L72 240 L60 232 L48 240 L52 225 L40 215 L55 215Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M340 150 L344 162 L356 162 L347 170 L350 182 L340 175 L330 182 L333 170 L324 162 L336 162Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M70 420 L73 428 L81 428 L75 433 L77 441 L70 436 L63 441 L65 433 L59 428 L67 428Z" fill="#5BCB77" stroke="#111" stroke-width="2"/>
+  <path d="M330 400 L333 408 L341 408 L335 413 L337 421 L330 416 L323 421 L325 413 L319 408 L327 408Z" fill="#FF914D" stroke="#111" stroke-width="2"/>
+  
+  <!-- Heart -->
+  <path d="M320 310 C320 305, 328 305, 328 310 C328 315, 320 320, 320 320 C320 320, 312 315, 312 310 C312 305, 320 305, 320 310Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+</svg>

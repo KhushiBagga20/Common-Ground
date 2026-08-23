@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Night sky backdrop -->
+  <circle cx="200" cy="200" r="140" fill="#111" stroke="#111" stroke-width="4"/>
+  
+  <!-- Stars in sky -->
+  <circle cx="150" cy="150" r="3" fill="#FFD43B"/>
+  <circle cx="230" cy="130" r="2" fill="#FFD43B"/>
+  <circle cx="180" cy="170" r="2" fill="#FFFFFF"/>
+  <circle cx="260" cy="160" r="3" fill="#FFD43B"/>
+  <circle cx="130" cy="200" r="2" fill="#FFFFFF"/>
+  <circle cx="280" cy="200" r="2" fill="#FFD43B"/>
+  <circle cx="200" cy="120" r="2.5" fill="#FFFFFF"/>
+  <circle cx="170" cy="250" r="2" fill="#FFD43B"/>
+  <circle cx="240" cy="240" r="2" fill="#FFFFFF"/>
+  
+  <!-- Saturn-like planet -->
+  <circle cx="220" cy="190" r="25" fill="#9B72FF" stroke="#F7F6F2" stroke-width="2"/>
+  <ellipse cx="220" cy="190" rx="45" ry="8" fill="none" stroke="#F7F6F2" stroke-width="2" transform="rotate(-20, 220, 190)"/>
+  
+  <!-- Moon -->
+  <circle cx="150" cy="230" r="18" fill="#FFD43B" stroke="#F7F6F2" stroke-width="2"/>
+  <circle cx="155" cy="225" r="14" fill="#111"/>
+  
+  <!-- Telescope -->
+  <g transform="translate(200, 380) rotate(-30)">
+    <rect x="-8" y="-100" width="16" height="100" rx="4" fill="#4D7CFE" stroke="#111" stroke-width="4"/>
+    <rect x="-14" y="-110" width="28" height="20" rx="4" fill="#4D7CFE" stroke="#111" stroke-width="3"/>
+    <!-- Lens -->
+    <ellipse cx="0" cy="-115" rx="16" ry="8" fill="#9B72FF" stroke="#111" stroke-width="3"/>
+  </g>
+  
+  <!-- Tripod legs -->
+  <line x1="200" y1="380" x2="160" y2="460" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <line x1="200" y1="380" x2="240" y2="460" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <line x1="200" y1="380" x2="200" y2="465" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Sparkles -->
+  <path d="M60 120 L65 135 L80 135 L68 145 L72 160 L60 152 L48 160 L52 145 L40 135 L55 135Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M340 320 L343 328 L351 328 L345 333 L347 341 L340 336 L333 341 L335 333 L329 328 L337 328Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M60 380 L63 388 L71 388 L65 393 L67 401 L60 396 L53 401 L55 393 L49 388 L57 388Z" fill="#4D7CFE" stroke="#111" stroke-width="2"/>
+  
+  <!-- Shooting star -->
+  <line x1="310" y1="100" x2="340" y2="130" stroke="#FFD43B" stroke-width="3" stroke-linecap="round"/>
+  <line x1="335" y1="125" x2="350" y2="120" stroke="#FFD43B" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <line x1="340" y1="130" x2="345" y2="140" stroke="#FFD43B" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 533" fill="none">
+  <rect width="400" height="533" rx="20" fill="#F7F6F2"/>
+  
+  <!-- Workbench -->
+  <rect x="60" y="330" width="280" height="20" rx="4" fill="#FF914D" stroke="#111" stroke-width="4"/>
+  <rect x="80" y="350" width="16" height="90" rx="2" fill="#FF914D" stroke="#111" stroke-width="3"/>
+  <rect x="304" y="350" width="16" height="90" rx="2" fill="#FF914D" stroke="#111" stroke-width="3"/>
+  
+  <!-- Saw -->
+  <rect x="100" y="180" width="10" height="100" rx="2" fill="#FFD43B" stroke="#111" stroke-width="3"/>
+  <path d="M110 185 L180 185 L180 240 L170 235 L165 245 L155 238 L150 248 L140 240 L135 250 L125 242 L120 252 L110 245Z" fill="#6F6F6A" stroke="#111" stroke-width="3"/>
+  
+  <!-- Hammer -->
+  <rect x="240" y="140" width="12" height="140" rx="3" fill="#FFD43B" stroke="#111" stroke-width="3" transform="rotate(25, 246, 210)"/>
+  <rect x="215" y="120" width="70" height="35" rx="6" fill="#5BCB77" stroke="#111" stroke-width="4" transform="rotate(25, 250, 137)"/>
+  
+  <!-- Wood plank -->
+  <rect x="120" y="290" width="160" height="35" rx="4" fill="#FF914D" stroke="#111" stroke-width="3"/>
+  <line x1="130" y1="300" x2="270" y2="300" stroke="#111" stroke-width="1.5" opacity="0.3"/>
+  <line x1="130" y1="310" x2="270" y2="310" stroke="#111" stroke-width="1.5" opacity="0.3"/>
+  
+  <!-- Nails -->
+  <circle cx="150" cy="305" r="3" fill="#6F6F6A" stroke="#111" stroke-width="2"/>
+  <circle cx="250" cy="305" r="3" fill="#6F6F6A" stroke="#111" stroke-width="2"/>
+  
+  <!-- Wood shavings -->
+  <path d="M130 360 Q140 355, 150 360 Q160 365, 170 360" stroke="#FFD43B" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M200 370 Q210 365, 220 370 Q230 375, 240 370" stroke="#FF914D" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <path d="M260 365 Q270 360, 280 365" stroke="#FFD43B" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Sparkles -->
+  <path d="M60 140 L65 155 L80 155 L68 165 L72 180 L60 172 L48 180 L52 165 L40 155 L55 155Z" fill="#FFD43B" stroke="#111" stroke-width="2"/>
+  <path d="M340 260 L344 272 L356 272 L347 280 L350 292 L340 285 L330 292 L333 280 L324 272 L336 272Z" fill="#FF72B6" stroke="#111" stroke-width="2"/>
+  <path d="M310 420 L313 428 L321 428 L315 433 L317 441 L310 436 L303 441 L305 433 L299 428 L307 428Z" fill="#4D7CFE" stroke="#111" stroke-width="2"/>
+  
+  <!-- Doodle circle -->
+  <circle cx="55" cy="400" r="10" fill="none" stroke="#5BCB77" stroke-width="3" stroke-dasharray="4 4"/>
+  
+  <!-- Small heart -->
+  <path d="M340 160 C340 155, 348 155, 348 160 C348 165, 340 170, 340 170 C340 170, 332 165, 332 160 C332 155, 340 155, 340 160Z" fill="#FF5C5C" stroke="#111" stroke-width="2"/>
+</svg>
