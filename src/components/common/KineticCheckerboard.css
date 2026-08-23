@@ -2,11 +2,11 @@
 .kinetic-checkerboard {
   position: fixed;
   inset: 0;
-  background-color: #F7F4EE;
+  background-color: #f1f1ef;
   background-image: conic-gradient(
-    #D4CFBF 90deg,
+    #dbd9d4 90deg,
     transparent 90deg 180deg,
-    #D4CFBF 180deg 270deg,
+    #dad9d7 180deg 270deg,
     transparent 270deg
   );
   background-size: 80px 80px;
@@ -14,7 +14,7 @@
   opacity: 0.65;
   pointer-events: none;
   z-index: -1;
-  animation: kinetic-checker-drift 8s linear infinite;
+  animation: kinetic-checker-drift 10s linear infinite;
 }
 
 [data-theme="dark"] .kinetic-checkerboard {

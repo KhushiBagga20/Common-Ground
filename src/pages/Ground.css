@@ -1760,7 +1760,7 @@
   color: var(--text);
   line-height: 1.15;
   margin-bottom: 8px;
-  white-space: nowrap;
+  white-space: normal;
   font-family: 'Fredoka', system-ui, sans-serif;
 }
 
@@ -2182,8 +2182,8 @@
 }
 
 @media (max-width: 768px) {
-  .ground { gap: 22px; padding-bottom: 80px; }
-  .g-header { padding: 12px 14px; margin: 0 -14px; border-radius: 0 0 18px 18px; }
+  .ground { gap: 22px; padding: 0 16px 80px; }
+  .g-header { padding: 12px 14px; margin: 0 -16px; border-radius: 0 0 12px 12px; }
   .g-toggle-btn { padding: 6px 16px; font-size: 0.82rem; }
   .g-greeting { flex-direction: column-reverse; align-items: flex-start; padding: 22px 18px; }
   .g-greeting__sf { align-self: flex-end; }
@@ -2196,10 +2196,12 @@
   .g-vibe-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .g-disc-3d-grid { grid-template-columns: 1fr; }
   .g-interest-shelf-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .g-view > svg, .g-discover > svg { display: none !important; }
+  .g-surp-sticker, .g-surp-plane { display: none; }
 }
 
 @media (max-width: 576px) {
-  .g-header { padding: 10px 12px; margin: 0 -10px; gap: 8px; }
+  .g-header { padding: 10px 12px; margin: 0 -16px; gap: 8px; }
   .g-header__brand .g-header__logo { font-size: 1.1rem; }
   .g-toggle-pill { padding: 3px; }
   .g-toggle-btn { padding: 6px 12px; font-size: 0.78rem; }
@@ -2213,10 +2215,30 @@
   .g-vibe-card { padding: 16px 10px 14px; }
   .g-vibe-rec-grid { grid-template-columns: 1fr; gap: 12px; }
   .g-interest-shelf-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .g-notes-row { flex-direction: column; }
+  .g-notes-row { display: flex; flex-direction: column; }
   .g-cute-note { max-width: 100%; width: 100%; min-width: unset; }
   .g-modal-overlay { align-items: flex-end; padding: 0; }
   .g-modal { border-radius: 22px 22px 0 0; max-height: 88vh; max-width: 100%; width: 100%; }
+  .g-inspiration { flex-direction: column-reverse; align-items: center; text-align: center; padding: 20px; }
+  .g-inspiration__plant { margin-bottom: 10px; }
+  .g-community-banner { padding: 32px 20px; }
+  .g-community-banner__illo { min-height: 140px; }
+  .g-surprise-banner { padding: 32px 16px; min-height: auto; }
+  .g-post { padding: 16px 14px; gap: 10px; }
+  .g-post__header { gap: 8px; }
+  .g-sec-hdr { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .g-sec-hdr > div[style*="display: flex"] { width: 100%; flex-wrap: wrap; }
+  .g-cta__title { font-size: 1.45rem; }
+}
+
+@media (max-width: 480px) {
+  .g-header__brand .g-header__logo { display: none; }
+  .g-disc-card__top { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .g-disc-type-pill { align-self: flex-start; }
+}
+
+@media (max-width: 400px) {
+  .g-header__actions button[aria-label="Search"] { display: none; }
 }
 
 @media (max-width: 380px) {
@@ -2224,4 +2246,10 @@
   .g-people-grid { grid-template-columns: 1fr; }
   .g-vibe-grid { grid-template-columns: repeat(2, 1fr); }
   .g-interest-shelf-grid { grid-template-columns: 1fr; }
+  .g-modal__stats { padding: 10px 12px; }
+  .g-modal__stat-sep { margin-right: 10px; }
+}
+
+@media (max-width: 360px) {
+  .g-toggle-btn { padding: 6px 8px; font-size: 0.74rem; }
 }
