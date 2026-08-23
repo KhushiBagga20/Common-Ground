@@ -1,6 +1,6 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Compass, Sun, Moon } from 'lucide-react';
 import Button from '../components/common/Button';
 import InteractiveCheckerboard from '../components/common/InteractiveCheckerboard';
@@ -18,7 +18,7 @@ import './Landing.css';
 /* ================================================================
    INTERACTIVE TITLE WORD — hover reveals underline + shift
    ================================================================ */
-function TitleWord({ children, color = 'var(--yellow)', delay = 0 }) {
+function TitleWord({ children, color = 'var(--yellow)' }) {
   const [hovered, setHovered] = useState(false);
   return (
     <motion.span

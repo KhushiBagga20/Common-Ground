@@ -134,18 +134,100 @@
   box-shadow: 3px 3px 0 rgba(247, 246, 242, 0.15);
 }
 
+.hobbypath__stack-container {
+  height: 620px;
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Card Header */
+.hobbypath__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.hobbypath__card-badge {
+  color: #111111;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hobbypath__card-step-num {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.hobbypath__card-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.hobbypath__card-subtitle {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.hobbypath__card-desc {
+  line-height: 1.5;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  color: var(--text);
+}
+
 /* Responsive */
+@media (max-width: 900px) {
+  .hobbypath {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+}
+
 @media (max-width: 640px) {
-  .hobbypath__step--left {
-    margin-left: 0;
+  .hobbypath {
+    padding: var(--space-xl) var(--space-md);
   }
 
-  .hobbypath__step--right {
-    margin-right: 0;
+  .hobbypath__stack-container {
+    height: 480px;
   }
 
-  .hobbypath__connector {
-    width: 150px;
-    height: 45px;
+  .hobbypath__card-title {
+    font-size: 1.25rem;
+    margin-bottom: 4px;
+  }
+
+  .hobbypath__card-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .hobbypath__card-desc {
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .hobbypath__card-header {
+    margin-bottom: 8px;
+  }
+
+  .hobbypath__card-badge {
+    padding: 3px 10px;
+    font-size: 0.7rem;
+  }
+
+  .hobbypath__card-step-num {
+    font-size: 0.85rem;
   }
 }

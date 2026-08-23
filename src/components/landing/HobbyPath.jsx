@@ -66,7 +66,7 @@ export default function HobbyPath() {
         </motion.div>
 
         {/* ScrollStack Component */}
-        <div style={{ height: '620px', position: 'relative', width: '100%', borderRadius: '24px', overflow: 'hidden' }}>
+        <div className="hobbypath__stack-container">
           <ScrollStack
             itemDistance={50}
             itemScale={0.035}
@@ -79,31 +79,22 @@ export default function HobbyPath() {
           >
             {PATH_CARDS.map((card, i) => (
               <ScrollStackItem key={i}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <span style={{
-                    background: card.color,
-                    color: '#111111',
-                    padding: '4px 14px',
-                    borderRadius: '999px',
-                    fontWeight: 700,
-                    fontSize: '0.8rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em'
-                  }}>
+                <div className="hobbypath__card-header">
+                  <span className="hobbypath__card-badge" style={{ background: card.color }}>
                     {card.badge}
                   </span>
-                  <span className="font-accent" style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
+                  <span className="hobbypath__card-step-num font-accent">
                     0{i + 1} / 05
                   </span>
                 </div>
 
-                <h3 style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '6px', letterSpacing: '-0.02em', color: 'var(--text)' }}>
+                <h3 className="hobbypath__card-title">
                   {card.title}
                 </h3>
-                <p style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--muted)', marginBottom: '12px' }}>
+                <p className="hobbypath__card-subtitle">
                   {card.subtitle}
                 </p>
-                <p style={{ lineHeight: 1.5, fontSize: '0.95rem', opacity: 0.9, color: 'var(--text)' }}>
+                <p className="hobbypath__card-desc">
                   {card.description}
                 </p>
               </ScrollStackItem>

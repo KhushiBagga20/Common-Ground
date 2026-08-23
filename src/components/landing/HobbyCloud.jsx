@@ -37,7 +37,7 @@ export default function HobbyCloud() {
         </motion.div>
 
         {/* Flowing Menu Component */}
-        <div style={{ height: '520px', position: 'relative', borderRadius: '24px', overflow: 'hidden', border: '2.5px solid var(--border)' }}>
+        <div className="hobbycloud__menu-container">
           <FlowingMenu
             items={HOBBY_MENU_ITEMS}
             speed={14}

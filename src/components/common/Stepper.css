@@ -198,3 +198,32 @@
     font-size: 1.4rem;
   }
 }
+
+@media (max-width: 480px) {
+  .step-indicator-row {
+    padding: 16px 12px 10px;
+  }
+  .step-indicator-inner {
+    height: 2rem;
+    width: 2rem;
+  }
+  .step-connector {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+  .footer-nav {
+    flex-direction: column-reverse;
+    gap: 10px;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .back-button,
+  .next-button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+  }
+}

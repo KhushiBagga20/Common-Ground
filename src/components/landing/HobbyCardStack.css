@@ -91,3 +91,74 @@
   justify-content: center;
   width: 100%;
 }
+
+@media (max-width: 900px) {
+  .cardstack {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 640px) {
+  .cardstack {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .cardstack__clean-title {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    padding: 8px 24px;
+    box-shadow: 4px 4px 0 #111111;
+  }
+
+  .cardstack__header-meta {
+    gap: 12px;
+    flex-wrap: wrap;
+    min-height: auto;
+  }
+
+  .cardstack__feedback-note {
+    font-size: 0.95rem;
+    padding: 3px 10px;
+  }
+
+  /* Responsive overrides for CardSwap nested inside Landing cardstack */
+  .cardstack .cardswap__stage,
+  .cardstack .cardswap__completion {
+    width: 100%;
+    max-width: 310px;
+    height: 480px;
+  }
+
+  .cardstack .cardswap__card {
+    padding: 24px 20px;
+  }
+
+  .cardstack .cardswap__card-emoji {
+    font-size: 3rem;
+  }
+
+  .cardstack .cardswap__card-title {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+
+  .cardstack .cardswap__card-desc {
+    font-size: 0.95rem;
+  }
+
+  .cardstack .cardswap__btn {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .cardstack .cardswap__controls {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .cardstack .cardswap__btn {
+    width: 100%;
+  }
+}

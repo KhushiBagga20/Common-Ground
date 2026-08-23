@@ -274,15 +274,20 @@
     width: 100%;
   }
 
-  .cg-footer__doodle--cam { top: 12px; left: 12px; }
-  .cg-footer__doodle--guitar { top: 12px; right: 12px; }
-  .cg-footer__doodle--paint { bottom: 12px; left: 12px; }
-  .cg-footer__doodle--book { bottom: 12px; right: 12px; }
+  .cg-footer__doodle {
+    display: none;
+  }
 
   .cg-footer__nav-row {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 16px;
+  }
+
+  .cg-footer__links {
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 16px;
   }
 }

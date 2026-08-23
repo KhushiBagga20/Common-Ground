@@ -985,3 +985,126 @@
   font-style: italic;
 }
 
+/* ── Mobile ≤ 580px ─────────────────────────────────────────── */
+@media (max-width: 580px) {
+  /* Reduce bottom padding — nav is shorter on mobile */
+  .cp-two-col {
+    padding-bottom: 90px;
+    gap: var(--space-lg);
+  }
+
+  /* Left card: tighter padding */
+  .cp-left-card {
+    padding: var(--space-md) var(--space-md) var(--space-md) calc(var(--space-md) + 6px);
+    box-shadow: 3px 3px 0 var(--border);
+  }
+
+  /* Right card: tighter */
+  .cp-right-card {
+    padding: var(--space-md);
+    box-shadow: 3px 3px 0 var(--border);
+  }
+
+  /* Heading: scale down */
+  .cp-heading {
+    font-size: var(--text-xl);
+  }
+
+  /* Title input: smaller font so it doesn't feel oversized on phone */
+  .cp-input {
+    font-size: var(--text-base);
+    padding: 12px var(--space-md);
+  }
+
+  /* Textarea: a bit shorter on mobile to not swamp the screen */
+  .cp-textarea {
+    min-height: 110px;
+  }
+
+  /* Post type buttons: smaller padding so all four fit in one row */
+  .cp-type-btn {
+    padding: 7px 11px;
+    font-size: var(--text-xs);
+    gap: 4px;
+  }
+
+  /* Post button: full-width on mobile */
+  .cp-actions {
+    justify-content: stretch;
+  }
+
+  .cp-post-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Event panel row: stack date + time vertically */
+  .cp-panel__row {
+    flex-direction: column;
+  }
+
+  /* Reduce all doodles — keep only bottom pair, dimmed */
+  .cp-doodle--star-tl,
+  .cp-doodle--heart-tl,
+  .cp-doodle--star-tr,
+  .cp-doodle--sunflower-tr,
+  .cp-doodle--heart-bl,
+  .cp-doodle--arrow-bl {
+    display: none;
+  }
+
+  .cp-doodle--sparkle-br,
+  .cp-doodle--sunflower-br {
+    opacity: 0.3;
+  }
+}
+
+/* ── Mobile ≤ 430px: Narrowest phones ───────────────────────── */
+@media (max-width: 430px) {
+  /* Collapse type buttons to 2×2 grid so labels fit */
+  .cp-type-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
+  }
+
+  .cp-type-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Left card: minimal padding on 320px */
+  .cp-left-card {
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) calc(var(--space-sm) + 6px);
+  }
+
+  /* Input: ensure it doesn't cause horizontal overflow */
+  .cp-input,
+  .cp-textarea,
+  .cp-panel__input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Tool grid: keep 2-col but smaller padding */
+  .cp-tool-btn {
+    padding: 8px 8px;
+    font-size: 10px;
+    gap: 5px;
+  }
+
+  /* Interest picker tags: allow wrapping, no overflow */
+  .cp-interest-picker {
+    overflow: hidden;
+  }
+
+  /* Custom tag input: slightly narrower width */
+  .cp-custom-input {
+    width: 80px;
+  }
+
+  /* Hide all decorative doodles on the smallest screens */
+  .cp-doodle {
+    display: none;
+  }
+}

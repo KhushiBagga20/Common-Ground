@@ -1525,7 +1525,6 @@
     gap: var(--space-md);
   }
 
-  /* On smaller screens, align picker to left edge */
   .profile-cover-picker {
     right: auto;
     left: 0;
@@ -1574,15 +1573,244 @@
   .profile-hobbies-grid  { grid-template-columns: 1fr; }
   .profile-badges-grid   { grid-template-columns: repeat(2, 1fr); }
 
+  .profile-communities-grid-wrapper {
+    grid-template-columns: 1fr;
+  }
+
   .ph-flower--lg-right { right: 40px; }
   .ph-flower--md-right { right: 8px; }
   .ph-flower--sm-left  { display: none; }
 
   .profile-cover-picker {
-    right: 0;
     left: 0;
     min-width: unset;
     top: calc(110px + 6px);
+  }
+}
+
+/* ── Mobile ≤ 580px: Centered header + relative action bar ──── */
+@media (max-width: 580px) {
+  /* Card padding: tighter to give text room */
+  .profile-card {
+    padding: var(--space-md);
+  }
+
+  .profile-card__header {
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  /* Header content: center everything */
+  .profile-header__content {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Avatar deco layer: hidden on mobile to avoid overlap */
+  .profile-header__avatar-deco {
+    display: none;
+  }
+
+  /* Avatar: center it, reduce negative-margin */
+  .profile-header__avatar-container {
+    margin-top: -40px;
+    margin-bottom: var(--space-sm);
+    align-self: center;
+  }
+
+  .profile-header__avatar-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Actions: flow into document below avatar — no absolute overlay */
+  .profile-header__actions {
+    position: static;
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Details: center-aligned */
+  .profile-header__details {
+    align-items: center;
+    width: 100%;
+  }
+
+  .profile-header__name {
+    font-size: var(--text-xl);
+    text-align: center;
+  }
+
+  .profile-header__role {
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+
+  .profile-header__bio {
+    text-align: center;
+    font-size: var(--text-xs);
+    max-width: 100%;
+  }
+
+  .profile-header__meta {
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  /* Edit fields: stack location + website vertically */
+  .profile-header__edit-row {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .profile-header__input--half {
+    flex: unset;
+    width: 100%;
+  }
+
+  /* Stats bar: smaller flex cards */
+  .profile-stats__card {
+    flex: 0 0 90px;
+    min-height: 70px;
+  }
+
+  .profile-stats__value { font-size: var(--text-xl); }
+
+  /* Badges grid: tighter padding */
+  .profile-badges-grid {
+    gap: var(--space-sm);
+  }
+
+  .profile-badge-item {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  /* Cover picker: inset from screen edges */
+  .profile-cover-picker {
+    left: var(--space-sm);
+    right: var(--space-sm);
+  }
+
+  /* Sidebar cards: tighter */
+  .profile-card--sidebar {
+    padding: var(--space-md);
+  }
+
+  /* Connection items: prevent overflow */
+  .profile-connection-item__info {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .profile-connection-item__name,
+  .profile-connection-item__role {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Activity items */
+  .profile-activity-item {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  /* Tab buttons: compact */
+  .profile-tabs__btn {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--text-xs);
+  }
+
+  /* Banner flowers: reduce crowding */
+  .ph-flower--lg-right {
+    right: 12px;
+    bottom: -20px;
+  }
+  .ph-flower--md-right { display: none; }
+}
+
+/* ── Mobile ≤ 430px: Narrowest practical phones ─────────────── */
+@media (max-width: 430px) {
+  .profile-card {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .profile-card--sidebar {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .profile-header__name {
+    font-size: var(--text-lg);
+  }
+
+  .profile-header__avatar-wrapper {
+    width: 72px;
+    height: 72px;
+  }
+
+  /* Stats: even narrower cards */
+  .profile-stats__card {
+    flex: 0 0 80px;
+    min-height: 64px;
+  }
+
+  .profile-stats__value { font-size: var(--text-lg); }
+  .profile-stats__label { font-size: 8px; }
+
+  /* Badges: tighter gaps */
+  .profile-badges-grid {
+    gap: var(--space-xs);
+  }
+
+  .profile-badge-item__icon-wrap {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Hobby cards: tighter padding */
+  .profile-hobby-card {
+    padding: var(--space-md) var(--space-sm);
+    gap: var(--space-sm);
+  }
+
+  .profile-hobby-card__emoji { font-size: 1.8rem; }
+
+  /* Activity items: compress */
+  .profile-activity-item {
+    padding: var(--space-sm);
+  }
+
+  /* Tabs: allow horizontal scroll on very small screens */
+  .profile-tabs-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .profile-tabs {
+    min-width: max-content;
+  }
+
+  /* Cover picker: full edge-to-edge */
+  .profile-cover-picker {
+    left: 0;
+    right: 0;
+    border-radius: var(--radius-md);
+  }
+
+  /* Vibe tags wrap cleanly */
+  .profile-vibe-display__tags {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  /* Connection item avatar flex-shrink */
+  .profile-connection-item__avatar {
+    flex-shrink: 0;
   }
 }
 

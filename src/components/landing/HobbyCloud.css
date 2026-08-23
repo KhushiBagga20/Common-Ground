@@ -87,35 +87,41 @@
   box-shadow: 4px 4px 0 rgba(247, 246, 242, 0.15);
 }
 
+.hobbycloud__menu-container {
+  height: 520px;
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 2.5px solid var(--border);
+}
+
 /* Responsive */
 @media (max-width: 900px) {
-  .hobbycloud__field {
-    height: 450px;
+  .hobbycloud {
+    padding: var(--space-2xl) var(--space-lg);
   }
 
-  .hobbycloud__block {
-    padding: var(--space-md) var(--space-lg);
+  .hobbycloud__menu-container {
+    height: 460px;
   }
 
-  .hobbycloud__block-emoji {
-    font-size: 1.5rem;
-  }
-
-  .hobbycloud__block-name {
-    font-size: var(--text-sm);
-  }
-
-  .hobbycloud__annotation {
-    display: none;
+  .hobbycloud__menu-container .menu__item-link,
+  .hobbycloud__menu-container .marquee span {
+    font-size: clamp(1.4rem, 4vh, 2.2rem);
   }
 }
 
 @media (max-width: 640px) {
-  .hobbycloud__field {
-    height: 400px;
+  .hobbycloud {
+    padding: var(--space-xl) var(--space-md);
   }
 
-  .hobbycloud__block {
-    padding: var(--space-sm) var(--space-md);
+  .hobbycloud__menu-container {
+    height: 380px;
+  }
+
+  .hobbycloud__menu-container .menu__item-link,
+  .hobbycloud__menu-container .marquee span {
+    font-size: clamp(1.1rem, 3.5vh, 1.6rem);
   }
 }

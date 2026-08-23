@@ -66,9 +66,20 @@
 }
 
 /* Responsive */
+@media (max-width: 900px) {
+  .ljourney {
+    padding: var(--space-3xl) var(--space-lg);
+  }
+}
+
 @media (max-width: 640px) {
+  .ljourney {
+    padding: var(--space-xl) var(--space-md);
+  }
+
   .ljourney__label {
     font-size: 1.5rem;
     padding: 6px 20px;
+    box-shadow: 3px 3px 0 #111111;
   }
 }
