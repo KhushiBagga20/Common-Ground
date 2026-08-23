@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Plus, Heart, Calendar, Clock, MapPin, Wifi, ChevronDown } from 'lucide-react';
+import { Search, Plus, Heart, Calendar, Clock, MapPin, Wifi, ChevronDown, X, Users, CheckCircle } from 'lucide-react';
 import PageCanvas from '../components/layout/PageCanvas';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
 import { staggerContainer, staggerItem } from '../animations/variants';
@@ -27,16 +27,148 @@ const CATEGORY_COLOR = {
   Craft: 'var(--green)',
 };
 
+/* ── Event detail copy ───────────────────────── */
+const EVENT_DESCRIPTIONS = {
+  'evt-1': 'Join us for a relaxed pottery workshop where you can learn basic hand-building and wheel-throwing techniques, meet other creative people, and go home with something you made yourself. All materials provided. No experience needed.',
+  'evt-2': 'Start from absolute zero and play your first real song by the end of this session. Our instructor will walk you through chords, strumming patterns, and how to read tabs. Just bring yourself.',
+  'evt-3': 'An energetic, beginner-friendly K-Pop dance class covering popular choreography. No dance experience required. Great for meeting people and having a genuinely fun evening.',
+  'evt-4': 'A casual meetup for anyone who loves watercolor painting or wants to try it for the first time. Bring your paints if you have them, or borrow ours. Good music, good company, great vibes.',
+  'evt-5': 'Start your Sunday with a guided yoga session by the lake. Suitable for all levels. Bring a mat, arrive five minutes early, and be ready to feel fantastic for the rest of the day.',
+  'evt-6': 'A slow, exploratory walk through the city with film cameras in hand. We will stop at interesting spots, chat about technique, and share rolls afterward. Bring any film camera.',
+  'evt-7': 'Learn to cook three simple, delicious meals you will actually want to make again. Online session with live Q&A. All you need is basic kitchen equipment and a willingness to get your hands dirty.',
+  'evt-8': 'An evening exploring the overlap between AI-generated visuals and human creativity. Part discussion, part live demo, part collaborative experiment. Open to everyone curious.',
+};
+
+const EVENT_HOSTS = {
+  'evt-1': 'Priya S. · CommonGround Member',
+  'evt-2': 'Rohan K. · Music Enthusiast',
+  'evt-3': 'Anika L. · Dance Community Lead',
+  'evt-4': 'Meera T. · Watercolor Circle',
+  'evt-5': 'Yoga with Dev · Sukhna Circle',
+  'evt-6': 'Film Collective CHD',
+  'evt-7': 'Cook with Nisha · Online Kitchen',
+  'evt-8': 'Aarav M. · AI and Art Community',
+};
+
+/* ── EventDetailModal ─────────────────────────── */
+function EventDetailModal({ event, isInterested, onToggleInterest, isJoined, onJoin, onClose }) {
+  const interestedCount = isInterested ? event.interested + 1 : event.interested;
+  const avatars = getAvatars(interestedCount);
+
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  return (
+    <>
+      <motion.div
+        className="ed-backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.22 }}
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <motion.div
+        className="ed-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={event.title}
+        initial={{ opacity: 0, y: 28, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 18, scale: 0.97 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button className="ed-close" onClick={onClose} aria-label="Close event details">
+          <X size={18} strokeWidth={2} />
+        </button>
+        <div className="ed-image-wrap">
+          <img src={event.image} alt={event.title} className="ed-image" />
+        </div>
+        <div className="ed-content">
+          <span className="ed-category" style={{ color: CATEGORY_COLOR[event.category] ?? 'var(--muted)' }}>
+            {event.category}
+          </span>
+          <h2 className="ed-title">{event.title}</h2>
+          <div className="ed-meta">
+            <span className="ed-meta-item"><Calendar size={14} />{event.date}</span>
+            <span className="ed-meta-item"><Clock size={14} />{event.time}</span>
+            {event.locationType === 'online' ? (
+              <span className="event-card__online-badge"><Wifi size={11} />Online</span>
+            ) : (
+              <span className="ed-meta-item"><MapPin size={14} />{event.location}</span>
+            )}
+          </div>
+          <p className="ed-tagline">&ldquo;{event.description}&rdquo;</p>
+          <div className="ed-section">
+            <h3 className="ed-section-title">About this event</h3>
+            <p className="ed-about">{EVENT_DESCRIPTIONS[event.id] ?? event.description}</p>
+          </div>
+          <div className="ed-host-row">
+            <span className="ed-host-label">Hosted by</span>
+            <span className="ed-host-name">{EVENT_HOSTS[event.id] ?? 'CommonGround Community'}</span>
+          </div>
+          <div className="ed-footer">
+            <div className="ed-interested">
+              <div className="event-card__avatars">
+                {avatars.map((g, i) => <span key={i} className="event-card__avatar">{g}</span>)}
+              </div>
+              <Users size={13} style={{ color: 'var(--muted)' }} />
+              <span className="ed-interested-count">{interestedCount} interested</span>
+              <motion.button
+                className={`event-card__interested-btn${isInterested ? ' event-card__interested-btn--active' : ''}`}
+                onClick={onToggleInterest}
+                whileTap={{ scale: 0.94 }}
+                whileHover={{ scale: 1.04 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                aria-label={isInterested ? 'Remove interest' : 'Mark as interested'}
+                aria-pressed={isInterested}
+              >
+                <Heart size={13} fill={isInterested ? 'currentColor' : 'none'} strokeWidth={isInterested ? 0 : 2} />
+                {isInterested ? 'Interested ✓' : 'Interested'}
+              </motion.button>
+            </div>
+            <motion.button
+              className={`ed-join-btn${isJoined ? ' ed-join-btn--joined' : ''}`}
+              onClick={onJoin}
+              disabled={isJoined}
+              whileTap={isJoined ? {} : { scale: 0.96 }}
+              whileHover={isJoined ? {} : { scale: 1.03 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              aria-label={isJoined ? 'Already joined' : 'Join this event'}
+            >
+              {isJoined ? (<><CheckCircle size={16} strokeWidth={2} style={{ marginRight: 6 }} />Joined</>) : 'Join Event'}
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    </>
+  );
+}
+
 /* ── EventCard ────────────────────────────────── */
-function EventCard({ event, isInterested, onToggle }) {
+function EventCard({ event, isInterested, onToggle, onOpen }) {
   const avatars = getAvatars(event.interested);
   const count = isInterested ? event.interested + 1 : event.interested;
 
   return (
     <motion.article
-      className="event-card"
+      className="event-card event-card--clickable"
       variants={staggerItem}
       layout
+      onClick={onOpen}
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${event.title}`}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpen(); }}
     >
       {/* Image */}
       <div className="event-card__image-wrap">
@@ -99,10 +231,10 @@ function EventCard({ event, isInterested, onToggle }) {
             <span>{count} interested</span>
           </div>
 
-          {/* Interested button */}
+          {/* Interested button — stopPropagation prevents opening modal */}
           <motion.button
             className={`event-card__interested-btn${isInterested ? ' event-card__interested-btn--active' : ''}`}
-            onClick={() => onToggle(event.id)}
+            onClick={(e) => { e.stopPropagation(); onToggle(event.id); }}
             whileTap={{ scale: 0.94 }}
             whileHover={{ scale: 1.04 }}
             transition={{ type: 'spring', stiffness: 400, damping: 20 }}
@@ -126,20 +258,30 @@ function EventCard({ event, isInterested, onToggle }) {
 const INITIAL_VISIBLE = 5;
 
 export default function Events() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery]       = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeTab, setActiveTab] = useState('all');
-  const [interestedSet, setInterestedSet] = useState(new Set());
-  const [showAll, setShowAll] = useState(false);
+  const [activeTab, setActiveTab]           = useState('all');
+  const [interestedSet, setInterestedSet]   = useState(new Set());
+  const [showAll, setShowAll]               = useState(false);
+  const [selectedEvent, setSelectedEvent]   = useState(null);
+  const [joinedSet, setJoinedSet]           = useState(new Set());
 
   /* Toggle interested state */
-  const handleToggleInterest = (id) => {
+  const handleToggleInterest = useCallback((id) => {
     setInterestedSet(prev => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
-  };
+  }, []);
+
+  /* Join event (local state only) */
+  const handleJoin = useCallback((id) => {
+    setJoinedSet(prev => new Set([...prev, id]));
+  }, []);
+
+  /* Close modal */
+  const handleClose = useCallback(() => setSelectedEvent(null), []);
 
   /* Filter events */
   const filteredEvents = useMemo(() => {
@@ -176,6 +318,21 @@ export default function Events() {
   return (
     <PageCanvas>
       <KineticCheckerboard />
+
+      {/* ── Event Detail Modal ── */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <EventDetailModal
+            key={selectedEvent.id}
+            event={selectedEvent}
+            isInterested={interestedSet.has(selectedEvent.id)}
+            onToggleInterest={() => handleToggleInterest(selectedEvent.id)}
+            isJoined={joinedSet.has(selectedEvent.id)}
+            onJoin={() => handleJoin(selectedEvent.id)}
+            onClose={handleClose}
+          />
+        )}
+      </AnimatePresence>
 
       <motion.div
         className="events-page"
@@ -315,6 +472,7 @@ export default function Events() {
                     event={event}
                     isInterested={interestedSet.has(event.id)}
                     onToggle={handleToggleInterest}
+                    onOpen={() => setSelectedEvent(event)}
                   />
                 ))}
               </motion.div>
