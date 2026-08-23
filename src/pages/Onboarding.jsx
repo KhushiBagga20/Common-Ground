@@ -1,195 +1,108 @@
 import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import HobbyDeck from '../components/hobby/HobbyDeck';
-import SwipeControls from '../components/hobby/SwipeControls';
-import Sunflower from '../components/common/Sunflower';
-import Smiley from '../components/common/Smiley';
-import Button from '../components/common/Button';
-import InterestTag from '../components/common/InterestTag';
-import { hobbies } from '../data/hobbies';
+import { ArrowLeft, Sun, Moon } from 'lucide-react';
+import CardSwap, { HOBBIES_DECK } from '../components/CardSwap/CardSwap';
+import KineticCheckerboard from '../components/common/KineticCheckerboard';
+import { useTheme } from '../hooks/useTheme';
 import { staggerContainer, staggerItem } from '../animations/variants';
-import './Onboarding.css';
+import './Discover.css';
 
-export default function Onboarding() {
+/* ================================================================
+   DISCOVER PAGE — Full-screen "Hobby Tinder" experience
+   ================================================================ */
+export default function Discover() {
   const navigate = useNavigate();
-  const [phase, setPhase] = useState('intro'); // intro | swiping | complete
+  const { theme, toggleTheme } = useTheme();
+  const [feedback, setFeedback] = useState('');
   const [selectedHobbies, setSelectedHobbies] = useState([]);
-  const deckRef = useRef(null);
 
-  const handleSelect = useCallback((hobby, allSelected) => {
-    setSelectedHobbies(allSelected);
-  }, []);
+  const progressCount = Math.min(selectedHobbies.length, HOBBIES_DECK.length);
 
-  const handleComplete = useCallback((finalSelected) => {
-    setSelectedHobbies(finalSelected);
-    // Store in localStorage for the prototype
-    localStorage.setItem('cg-interests', JSON.stringify(finalSelected.map(h => h.id)));
-    localStorage.setItem('cg-onboarded', 'true');
-    setPhase('complete');
-  }, []);
-
-  const handleSkipToGround = () => {
-    if (selectedHobbies.length > 0) {
-      localStorage.setItem('cg-interests', JSON.stringify(selectedHobbies.map(h => h.id)));
+  const handleSelectionChange = useCallback((hobbies) => {
+    setSelectedHobbies(hobbies);
+    // Persist to localStorage so Ground page picks up the selections
+    if (hobbies.length > 0) {
+      localStorage.setItem('cg-interests', JSON.stringify(hobbies.map(h => h.id)));
       localStorage.setItem('cg-onboarded', 'true');
     }
-    navigate('/ground');
-  };
-
-  // Shuffle hobbies for variety
-  const shuffledHobbies = useRef(
-    [...hobbies].sort(() => Math.random() - 0.5).slice(0, 12)
-  ).current;
+  }, []);
 
   return (
-    <div className="onboarding">
-      <AnimatePresence mode="wait">
-        {/* --- INTRO PHASE --- */}
-        {phase === 'intro' && (
-          <motion.div
-            key="intro"
-            className="onboarding__intro"
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
-          >
-            <motion.div variants={staggerItem}>
-              <Smiley size={48} mood="happy" />
-            </motion.div>
-            <motion.h1 className="onboarding__title" variants={staggerItem}>
-              What are you into?
-            </motion.h1>
-            <motion.p className="onboarding__subtitle text-muted" variants={staggerItem}>
-              Swipe right on things you like. Left on things you don't.<br />
-              No pressure — you can always change this later.
-            </motion.p>
-            <motion.div variants={staggerItem}>
-              <Button
-                size="lg"
-                onClick={() => setPhase('swiping')}
-                iconRight={<ArrowRight size={20} />}
+    <div className="discover">
+      {/* Animated checkered background */}
+      <KineticCheckerboard />
+
+      {/* Back button */}
+      <motion.button
+        className="discover__back"
+        onClick={() => navigate(-1)}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        <ArrowLeft size={16} />
+        Back
+      </motion.button>
+
+      {/* Theme toggle */}
+      <motion.button
+        className="discover__theme-toggle"
+        onClick={toggleTheme}
+        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+      >
+        {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+      </motion.button>
+
+      {/* Header */}
+      <motion.div
+        className="discover__header"
+        variants={staggerContainer}
+        initial="initial"
+        animate="animate"
+      >
+        <motion.h1 className="discover__title" variants={staggerItem}>
+          What Are You Into?
+        </motion.h1>
+        <motion.p className="discover__subtitle" variants={staggerItem}>
+          Swipe right on things you like. Left on things you don't.
+        </motion.p>
+
+        {/* Counter & Feedback */}
+        <motion.div className="discover__meta" variants={staggerItem}>
+          <div className="discover__progress-badge">
+            <span style={{ fontSize: '10px' }}>⬛</span>
+            <span>
+              {String(progressCount + 1).padStart(2, '0')} / {String(HOBBIES_DECK.length).padStart(2, '0')} hobbies
+            </span>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {feedback && (
+              <motion.span
+                key={feedback}
+                className="discover__feedback"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
               >
-                Let's go
-              </Button>
-            </motion.div>
-          </motion.div>
-        )}
-
-        {/* --- SWIPING PHASE --- */}
-        {phase === 'swiping' && (
-          <motion.div
-            key="swiping"
-            className="onboarding__swiping"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <HobbyDeck
-              ref={deckRef}
-              hobbies={shuffledHobbies}
-              onSelect={handleSelect}
-              onComplete={handleComplete}
-            />
-
-            <SwipeControls
-              onSkip={() => {
-                // Programmatic swipe left
-                const event = new CustomEvent('hobby-swipe', { detail: 'left' });
-                window.dispatchEvent(event);
-                // Fallback: simulate via deck
-                deckRef.current?.handleSwipe?.('left');
-              }}
-              onLike={() => {
-                const event = new CustomEvent('hobby-swipe', { detail: 'right' });
-                window.dispatchEvent(event);
-                deckRef.current?.handleSwipe?.('right');
-              }}
-            />
-
-            {/* Selected count */}
-            {selectedHobbies.length > 0 && (
-              <motion.div
-                className="onboarding__selected-count"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <span className="font-accent">
-                  {selectedHobbies.length} interest{selectedHobbies.length !== 1 ? 's' : ''} selected
-                </span>
-              </motion.div>
+                {feedback}
+              </motion.span>
             )}
+          </AnimatePresence>
+        </motion.div>
+      </motion.div>
 
-            {/* Skip link */}
-            <button
-              className="onboarding__skip-link text-muted"
-              onClick={handleSkipToGround}
-            >
-              Skip for now →
-            </button>
-          </motion.div>
-        )}
-
-        {/* --- COMPLETE PHASE --- */}
-        {phase === 'complete' && (
-          <motion.div
-            key="complete"
-            className="onboarding__complete"
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={staggerItem}>
-              <Sunflower size={72} />
-            </motion.div>
-
-            <motion.h1 className="onboarding__title" variants={staggerItem}>
-              {selectedHobbies.length > 0
-                ? "We know a little more about you."
-                : "That's okay!"
-              }
-            </motion.h1>
-
-            {selectedHobbies.length > 0 ? (
-              <>
-                <motion.p className="onboarding__subtitle text-muted" variants={staggerItem}>
-                  You're into {selectedHobbies.length} thing{selectedHobbies.length !== 1 ? 's' : ''}. Let's find your CommonGround.
-                </motion.p>
-
-                <motion.div className="onboarding__selected-tags" variants={staggerItem}>
-                  {selectedHobbies.map(h => (
-                    <InterestTag
-                      key={h.id}
-                      label={h.name}
-                      emoji={h.emoji}
-                      color={h.color}
-                      selected
-                    />
-                  ))}
-                </motion.div>
-              </>
-            ) : (
-              <motion.p className="onboarding__subtitle text-muted" variants={staggerItem}>
-                You can always explore interests later.
-              </motion.p>
-            )}
-
-            <motion.div variants={staggerItem}>
-              <Button
-                size="lg"
-                onClick={() => navigate('/ground')}
-                iconRight={<ArrowRight size={20} />}
-              >
-                Find your CommonGround
-              </Button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Enlarged Card Deck */}
+      <div className="discover__deck">
+        <CardSwap
+          items={HOBBIES_DECK}
+          onFeedbackChange={setFeedback}
+          onSelectionChange={handleSelectionChange}
+        />
+      </div>
     </div>
   );
 }
