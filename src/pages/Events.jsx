@@ -1,4 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Plus, Heart, Calendar, Clock, MapPin, Wifi, ChevronDown, X, Users, CheckCircle } from 'lucide-react';
 import PageCanvas from '../components/layout/PageCanvas';
@@ -65,26 +67,26 @@ function EventDetailModal({ event, isInterested, onToggleInterest, isJoined, onJ
     };
   }, [onClose]);
 
-  return (
-    <>
-      <motion.div
-        className="ed-backdrop"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.22 }}
-        onClick={onClose}
-        aria-hidden="true"
-      />
+
+  return createPortal(
+    <motion.div
+      className="ed-backdrop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.22 }}
+      onClick={onClose}
+      aria-hidden="true"
+    >
       <motion.div
         className="ed-modal"
         role="dialog"
         aria-modal="true"
         aria-label={event.title}
-        initial={{ opacity: 0, y: 28, scale: 0.97 }}
+        initial={{ opacity: 0, y: 20, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 18, scale: 0.97 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        exit={{ opacity: 0, y: 12, scale: 0.97 }}
+        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
       >
         <button className="ed-close" onClick={onClose} aria-label="Close event details">
@@ -150,7 +152,8 @@ function EventDetailModal({ event, isInterested, onToggleInterest, isJoined, onJ
           </div>
         </div>
       </motion.div>
-    </>
+    </motion.div>,
+    document.body
   );
 }
 
@@ -258,6 +261,7 @@ function EventCard({ event, isInterested, onToggle, onOpen }) {
 const INITIAL_VISIBLE = 5;
 
 export default function Events() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery]       = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeTab, setActiveTab]           = useState('all');
@@ -307,6 +311,10 @@ export default function Events() {
         const bi = interestedSet.has(b.id) ? b.interested + 1 : b.interested;
         return bi - ai;
       });
+    }
+
+    if (activeTab === 'interested') {
+      list = list.filter(e => interestedSet.has(e.id));
     }
 
     return list;
@@ -378,6 +386,7 @@ export default function Events() {
 
             <motion.button
               className="events-create-btn"
+              onClick={() => navigate('/create')}
               whileTap={{ scale: 0.96 }}
               whileHover={{ scale: 1.03 }}
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
@@ -421,8 +430,9 @@ export default function Events() {
             aria-label="Event view"
           >
             {[
-              { id: 'all', label: 'All Events' },
-              { id: 'popular', label: 'Popular Events' },
+              { id: 'all',        label: 'All Events' },
+              { id: 'popular',    label: 'Popular Events' },
+              { id: 'interested', label: 'Interested' },
             ].map(tab => (
               <button
                 key={tab.id}
@@ -451,11 +461,12 @@ export default function Events() {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3 }}
               >
-                <span className="events-empty__icon">🔍</span>
+                <span className="events-empty__icon">{activeTab === 'interested' ? '♡' : '🔍'}</span>
                 <p className="events-empty__text">
-                  No events found.
-                  <br />
-                  Try a different category or search term.
+                  {activeTab === 'interested'
+                    ? <>No interested events yet.<br />Tap the heart on any event to save it here.</>
+                    : <>No events found.<br />Try a different category or search term.</>
+                  }
                 </p>
               </motion.div>
             ) : (
