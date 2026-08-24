@@ -112,6 +112,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  /* Prevent fixed/transformed elements (e.g. dock nav) from creating a horizontal scrollbar */
+  overflow-x: hidden;
 }
 
 body {
@@ -230,6 +232,7 @@ textarea {
 /* --- Page padding for floating bottom dock --- */
 .page-with-nav {
   padding-top: var(--space-2xl);
+  /* Generous bottom clearance so content is never hidden behind the dock */
   padding-bottom: 120px;
 }
 
@@ -237,5 +240,11 @@ textarea {
   .page-with-nav {
     padding-top: var(--space-lg);
     padding-bottom: 110px;
+  }
+}
+
+@media (max-width: 430px) {
+  .page-with-nav {
+    padding-bottom: 100px;
   }
 }

@@ -8,6 +8,9 @@
 .events-page {
   position: relative;
   z-index: 1;
+  /* Prevent decorative deco elements (negative offsets) from causing overflow */
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .events-container {
@@ -503,16 +506,30 @@
 }
 
 /* ── Responsive ─────────────────────────────── */
+
+/* ────────────────────────────────────────────
+   TABLET  ≤ 768px
+   ──────────────────────────────────────────── */
 @media (max-width: 768px) {
+  /* Container */
   .events-container {
     padding: var(--space-lg) var(--space-md);
     border-radius: var(--radius-lg);
+    /* Tighten 3-D shadow so it doesn't overflow narrow screens */
+    box-shadow: 4px 4px 0px var(--border);
   }
 
+  /* Header */
+  .events-header {
+    margin-bottom: var(--space-md);
+  }
+
+  /* Toolbar: stack search and create button vertically */
   .events-toolbar {
     flex-direction: column;
     align-items: stretch;
     gap: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
   .events-create-btn {
@@ -520,6 +537,38 @@
     width: 100%;
   }
 
+  /* Category pills: keep horizontal scroll, don't shrink pills */
+  .events-categories {
+    margin-bottom: var(--space-md);
+    /* Ensure pills never shrink and row never wraps — just scrolls */
+    flex-wrap: nowrap;
+  }
+
+  .events-category-pill {
+    flex-shrink: 0;
+  }
+
+  /* Tabs: allow them to scroll horizontally on tight screens */
+  .events-tabs {
+    gap: var(--space-lg);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin-bottom: var(--space-md);
+    /* Prevent tab underline from being clipped */
+    padding-bottom: 1px;
+  }
+
+  .events-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .events-tab {
+    flex-shrink: 0;
+  }
+
+  /* Event card: stack image above body */
   .event-card {
     flex-direction: column;
     gap: var(--space-sm);
@@ -529,22 +578,60 @@
   .event-card__image-wrap {
     width: 100%;
     height: 160px;
+    /* ensure image never overflows card */
+    max-width: 100%;
   }
 
+  /* Footer: wrap so interested-count and button never overlap */
   .event-card__footer {
     flex-wrap: wrap;
+    gap: var(--space-xs);
   }
 
-  .events-deco--heart,
-  .events-deco--star,
-  .events-deco--arrow {
+  /* Hide the bg deco elements that use negative offsets outside the container */
+  .events-bg-deco--sparkle,
+  .events-bg-deco--heart {
     display: none;
   }
 }
 
+/* ────────────────────────────────────────────
+   MOBILE  ≤ 480px
+   ──────────────────────────────────────────── */
 @media (max-width: 480px) {
+  /* Tighter container padding */
+  .events-container {
+    padding: var(--space-md) var(--space-sm);
+    border-radius: var(--radius-md);
+    box-shadow: 3px 3px 0px var(--border);
+  }
+
+  /* Smaller title so it doesn't overflow */
   .events-title {
     font-size: var(--text-xl);
+  }
+
+  .events-subtitle {
+    font-size: var(--text-xs);
+  }
+
+  /* Search input: slightly smaller text so placeholder fits */
+  .events-search-input {
+    font-size: var(--text-xs);
+  }
+
+  /* Tabs: shrink gap further */
+  .events-tabs {
+    gap: var(--space-md);
+  }
+
+  .events-tab {
+    font-size: var(--text-xs);
+  }
+
+  /* Shorter image on narrow cards */
+  .event-card__image-wrap {
+    height: 140px;
   }
 
   .event-card__title {
@@ -553,6 +640,56 @@
 
   .event-card__meta {
     gap: var(--space-xs);
+  }
+
+  .event-card__description {
+    font-size: var(--text-xs);
+  }
+
+  /* Footer: full-width button on very small screens */
+  .event-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .event-card__interested-btn {
+    align-self: flex-end;
+  }
+}
+
+/* ────────────────────────────────────────────
+   TINY  ≤ 380px  (iPhone SE, Galaxy A series)
+   ──────────────────────────────────────────── */
+@media (max-width: 380px) {
+  .events-container {
+    padding: var(--space-sm) var(--space-xs);
+    border-radius: var(--radius-sm);
+    /* Remove 3-D shadow to avoid any overflow at extreme widths */
+    box-shadow: 2px 2px 0px var(--border);
+  }
+
+  .events-title {
+    font-size: var(--text-lg);
+  }
+
+  /* Category pills: even tighter padding */
+  .events-category-pill {
+    padding: 5px var(--space-sm);
+    font-size: var(--text-xs);
+  }
+
+  .event-card {
+    padding: var(--space-xs);
+  }
+
+  .event-card__image-wrap {
+    height: 120px;
+  }
+
+  /* Interested button: shrink slightly so it always fits */
+  .event-card__interested-btn {
+    padding: 5px 10px;
+    font-size: 11px;
   }
 }
 

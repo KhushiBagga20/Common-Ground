@@ -129,10 +129,11 @@
   cursor: pointer;
 }
 
-/* Mobile responsive dock */
+/* ── Mobile: ≤ 640px — hide labels, expand to fill width ── */
 @media (max-width: 640px) {
   .dock-nav {
     bottom: 16px;
+    /* Fill viewport width minus edge gutters; cap so it never exceeds 420px */
     width: calc(100% - 32px);
     max-width: 420px;
   }
@@ -143,6 +144,7 @@
     width: 100%;
   }
 
+  /* Hide text labels — icon-only on mobile */
   .dock-nav__label {
     display: none;
   }
@@ -151,7 +153,55 @@
     padding: 8px 14px;
   }
 
+  /* Dividers take too much space on mobile */
   .dock-nav__divider {
     display: none;
+  }
+}
+
+/* ── Small mobile: ≤ 430px — tighter item padding ── */
+@media (max-width: 430px) {
+  .dock-nav {
+    /* Narrower gutters on small phones */
+    width: calc(100% - 24px);
+    bottom: 14px;
+  }
+
+  .dock-nav__inner {
+    padding: 5px 8px;
+    gap: 2px;
+  }
+
+  .dock-nav__item {
+    padding: 7px 10px;
+  }
+
+  .dock-nav__theme-toggle,
+  .dock-nav__sunflower {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ── Tiny: ≤ 380px — minimum comfortable tap targets ── */
+@media (max-width: 380px) {
+  .dock-nav {
+    width: calc(100% - 16px);
+    bottom: 12px;
+  }
+
+  .dock-nav__inner {
+    padding: 4px 6px;
+    gap: 0;
+  }
+
+  .dock-nav__item {
+    padding: 7px 8px;
+  }
+
+  .dock-nav__theme-toggle,
+  .dock-nav__sunflower {
+    width: 30px;
+    height: 30px;
   }
 }
