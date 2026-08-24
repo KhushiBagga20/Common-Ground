@@ -1,295 +1,388 @@
+<div align="center">
+
 # 🌻 CommonGround
 
-> **Find your people, not just hobbies.**
+### *Find your people, not just hobbies.*
 
-CommonGround is a hobby discovery and community platform built for college students and young adults. It is not a social network. It's not an infinite content feed. It's the digital room you walk into when you think *"I want to try something new"* — and end up meeting people who share the exact same spark.
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vite.dev)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-13-FF0055?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![License](https://img.shields.io/badge/License-MIT-FFD43B?style=flat-square)](LICENSE)
+
+**A hobby discovery and community platform for college students and young adults.**
+
+Not a social network. Not an infinite feed.
+The place you walk into when you think — *"I want to try something new."*
+
+[🚀 Live Demo](#) · [📖 Documentation](#-design-philosophy) · [⚡ Quick Start](#-quick-start)
 
 ---
 
-## 🗺️ Visual User Journey
+</div>
+
+## 🧭 The Core Loop
+
+> Every feature in CommonGround supports one journey:
 
 ```mermaid
-flowchart TD
-    A["👋 Land on CommonGround"] --> B["🎲 Discover Hobbies\n(Surprise Me / Cloud)"]
-    B --> C["🃏 Swipe Deck Onboarding\n(Swipe Right / Left)"]
-    C --> D["📌 Build Interest Portfolio\n(Stored in Local State)"]
-    D --> E["🌍 Personalised Ground Feed\n(Selected Topics & Discussions)"]
-    E --> F["🧑‍🤝‍🧑 Community Hubs\n(Shared Projects & Threads)"]
-    F --> G["🤝 Meaningful Connection\n(Participation over Vanity)"]
+flowchart LR
+    A["🔍 Discover"] --> B["💡 Interest"]
+    B --> C["👥 Community"]
+    C --> D["🎯 Participation"]
+    D --> E["🤝 People"]
 
-    style A fill:#F7F6F2,stroke:#191919,stroke-width:2px
-    style C fill:#FFD43B,stroke:#191919,stroke-width:2px,color:#111
-    style E fill:#4D7CFE,stroke:#191919,stroke-width:2px,color:#fff
-    style F fill:#5BCB77,stroke:#191919,stroke-width:2px,color:#111
-    style G fill:#FF72B6,stroke:#191919,stroke-width:2px,color:#111
+    style A fill:#FFD43B,stroke:#191919,stroke-width:2px,color:#111
+    style B fill:#4D7CFE,stroke:#191919,stroke-width:2px,color:#fff
+    style C fill:#5BCB77,stroke:#191919,stroke-width:2px,color:#111
+    style D fill:#FF72B6,stroke:#191919,stroke-width:2px,color:#111
+    style E fill:#9B72FF,stroke:#191919,stroke-width:2px,color:#fff
+```
+
+```
+"I don't know what I'm interested in."
+         ↓
+"I found something interesting."
+         ↓
+"Oh, other people like this too."
+         ↓
+"These people are doing interesting things."
+         ↓
+"I want to participate."
 ```
 
 ---
 
-## 📐 Page Wireframes & Layout Mechanics
+## 🗺️ Pages & Routes
 
-### 1. Onboarding — Hobby Swipe Deck (`/onboarding`)
+CommonGround has **9 fully-built pages**, each with its own responsive CSS:
 
-```
-+-----------------------------------------------------------------------+
-|  [🌻 Logo]           [====== Progress: 3/20 ======]         [☀️ Theme] |
-+-----------------------------------------------------------------------+
-|                                                                       |
-|                     ┌───────────────────────────┐                     |
-|                     │  📸 Photography     [Creative]│                 |
-|                     │ ------------------------- │                     |
-|                     │                           │                     |
-|                     │   "Capture moments, play  │                     |
-|                     │    with light & shadow"   │   <--- (Drag/Swipe) |
-|                     │                           │                     |
-|                     │   👥 284 Members          │                     |
-|                     └───────────────────────────┘                     |
-|                        ┌─────────────────────┐                        |
-|                        │ Next Card Behind... │                        |
-|                        └─────────────────────┘                        |
-|                                                                       |
-|              [ ❌ PASS (Left) ]      [ 💚 INTERESTED (Right) ]         |
-+-----------------------------------------------------------------------+
-```
+| Route | Page | What It Does |
+|:------|:-----|:-------------|
+| `/` | **Landing** | Hero with interactive sunflower mascot, animated checkerboard, hobby cloud, text loop ribbon, community showcase |
+| `/discover` | **Discover** | Full-screen "Hobby Tinder" — swipe right to save, left to skip. Spring physics, rotation, stacked cards |
+| `/onboarding` | **Onboarding** | Step-by-step guided hobby selection with the Stepper component |
+| `/ground` | **Ground** | Personalized home feed — your interests, trending communities, discussions, vibe check, people to follow |
+| `/explore` | **Explore** | Browse all hobbies by category with accordion gallery and depth carousel |
+| `/community/:id` | **Community** | Full community hub — posts, discussions, members, related interests |
+| `/events` | **Events** | Browse, filter, and RSVP to upcoming workshops, meetups, and online events |
+| `/create` | **Create Post** | Rich post creation — discussions, questions, ideas, projects with image uploads and tags |
+| `/profile` | **Profile** | User profile with about, hobbies, activity feed, badges, achievements, connections |
 
 ---
 
-### 2. Personalised Ground (`/ground`)
+## ✨ Key Features
 
-```
-+-----------------------------------------------------------------------+
-|  [🌻 CommonGround]        Ground   Explore   Profile         [ + Create ]|
-+-----------------------------------------------------------------------+
-|                                                                       |
-|  MY INTERESTS:  [📸 Photography ✖] [🧗 Bouldering ✖] [🎸 Guitar ✖]      |
-|                                                                       |
-|  +-------------------------------------+  +-------------------------+ |
-|  | 📸 Photography Community             |  | 💡 Related Hobbies       | |
-|  | "Anyone doing a street shoot this   |  | ----------------------- | |
-|  |  weekend in downtown?"              |  | [🎬 Film]               | |
-|  |  💬 18 replies  •  2h ago           |  | [✏️ Drawing]            | |
-|  +-------------------------------------+  +-------------------------+ |
-|  | 🧗 Bouldering Hub                   |  | 📈 Active Communities   | |
-|  | "Best indoor shoes for beginners?"   |  | ----------------------- | |
-|  |  💬 34 replies  •  5h ago           |  | 🧗 Bouldering (124)     | |
-|  +-------------------------------------+  | 📸 Photography (284)    | |
-|                                           +-------------------------+ |
-+-----------------------------------------------------------------------+
-```
+<table>
+<tr>
+<td width="50%">
 
----
+### 🃏 Hobby Swipe Deck
+Tinder-style card swiping with drag gestures, spring physics, rotation based on drag direction, and stacked-card reveals.
 
-### 3. Community Hub (`/community/:id`)
+### 🌻 Living Sunflower Mascot
+SVG character with cursor-tracking eyes (spring-based), random idle blinking, click reactions, and button awareness.
 
-```
-+-----------------------------------------------------------------------+
-|  ← Back to Ground                                                     |
-|                                                                       |
-|  📸 PHOTOGRAPHY COMMUNITY                           [ + Join Hub ]     |
-|  "From street photography to film, capture what others walk past."     |
-|  👥 284 Members  •  🏷️ Creative Category                              |
-|  -------------------------------------------------------------------- |
-|                                                                       |
-|  [ Discussions ]    [ Questions ]    [ Projects ]    [ Members ]      |
-|                                                                       |
-|  +------------------------------------------------------------------+ |
-|  | 👤 Alex Chen  •  2 hours ago                      [📸 Photography] |
-|  | 💬 "Should I finally switch from phone to a digital camera?"     |
-|  | "I've been shooting on mobile for 6 months..."                    |
-|  | 💬 14 Comments  •  🤝 8 Interested                             |
-|  +------------------------------------------------------------------+ |
-+-----------------------------------------------------------------------+
-```
+### ♟️ Interactive Checkerboard
+240 DOM tiles that react to cursor proximity — tiles push away, flash accent colours, and smoothly transition via `requestAnimationFrame`.
+
+</td>
+<td width="50%">
+
+### 🌓 Dark / Light Mode
+Full theme support via `[data-theme]` attribute with CSS custom properties. Persisted in `localStorage`. Smooth transitions.
+
+### 📱 Fully Responsive
+10+ breakpoints from 1440px → 360px. Mobile-first bottom dock nav. Adaptive grids, hidden decorative elements on small screens.
+
+### 🎭 Hand-Drawn Personality
+Doodles, sketch arrows, sunflowers, smileys, and a Caveat handwritten font layer — all on top of a Swiss-clean grid structure.
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 🎨 Design System Architecture
+## 🎨 Design Philosophy
+
+> **"Keep the structure Swiss-clean. Make the personality hand-drawn."**
+
+```
+BLACK AND WHITE CREATE THE WORLD.
+COLOR MARKS WHAT MATTERS.
+IMPERFECTION MAKES IT HUMAN.
+```
+
+### Color System
+
+```
+ Light Mode                              Dark Mode
+ ─────────────────────────────           ─────────────────────────────
+ Background   #F7F6F2  ░░░░░░           Background   #0D0D0D  ██████
+ Surface      #FFFFFF  ░░░░░░           Surface      #171717  ██████
+ Text         #111111  ██████           Text         #F7F6F2  ░░░░░░
+ Muted        #6F6F6A  ▓▓▓▓▓▓           Muted        #A6A49D  ▓▓▓▓▓▓
+ Border       #191919  ██████           Border       #F7F6F2  ░░░░░░
+```
+
+### Accent Palette (~10–15% of the UI)
+
+```
+ Yellow  ■ #FFD43B    Blue  ■ #4D7CFE    Pink    ■ #FF72B6
+ Red     ■ #FF5C5C    Green ■ #5BCB77    Orange  ■ #FF914D
+ Purple  ■ #9B72FF
+```
+
+### Visual Motifs
+
+| Motif | Meaning | Used In |
+|:------|:--------|:--------|
+| ♟️ **Chessboard** | Common ground — different things meeting | Hero backgrounds, section headers, page canvases |
+| 🌻 **Sunflower** | Discovery & growth | Mascot, onboarding completion, navbar, community joins |
+| 😊 **Smileys** | Human warmth | Empty states, success moments, reactions |
+| ✏️ **Doodles** | Playful imperfection | Sketch arrows, hand-drawn shapes, annotations |
+
+---
+
+## 🏗️ Architecture
 
 ```mermaid
 graph TB
-    subgraph DesignSystem["🎨 CommonGround Design Token System"]
-        Tokens["index.css\nCustom CSS Properties"]
-        Neutral["Monochrome Core\n88% Neutral Canvas"]
-        Accents["Vivid Accents\n12% Hand-Drawn Highlights"]
-        Typography["Typography\nInter (Grid) + Caveat (Hand)"]
+    subgraph Pages["📄 Pages (9 Routes)"]
+        Landing["Landing"]
+        Discover["Discover"]
+        Onboarding["Onboarding"]
+        Ground["Ground"]
+        Explore["Explore"]
+        Community["Community/:id"]
+        Events["Events"]
+        CreatePost["Create Post"]
+        Profile["Profile"]
     end
 
-    subgraph VisualMotifs["✏️ Hand-Drawn Motifs"]
-        Chess["♟️ Chessboard Pattern\n(Common Ground)"]
-        Sunflower["🌻 Sunflower Bloom\n(Discovery & Growth)"]
-        Stairs["🪜 Stairs\n(Progression Steps)"]
-        Smiley["😊 Smiley Faces\n(Human Warmth)"]
+    subgraph Components["🧩 Components"]
+        Layout["Layout: Navbar, Footer, PageCanvas"]
+        Common["Common: Button, InterestTag, Smiley, Sunflower..."]
+        LandingC["Landing: HobbyCloud, HobbyPath, RabbitHole..."]
+        ProfileC["Profile: ProfileHeader, ActivityCard, BadgesCard..."]
+        CardSwap["CardSwap: Gesture-driven card deck"]
+        Hobby["Hobby: HobbyCard, HobbyDeck, SwipeControls"]
     end
 
-    Tokens --> Neutral
-    Tokens --> Accents
-    Tokens --> Typography
-    Neutral --> VisualMotifs
-    Accents --> VisualMotifs
+    subgraph Engine["⚡ Engine"]
+        FM["Framer Motion — Gestures, springs, layout"]
+        GSAP["GSAP — Complex timeline animations"]
+        Lenis["Lenis — Smooth scrolling"]
+        Router["React Router — Client-side routing"]
+    end
 
-    style Tokens fill:#FFD43B,stroke:#191919,stroke-width:2px,color:#111
-    style Neutral fill:#F7F6F2,stroke:#191919,stroke-width:2px
-    style Accents fill:#FF72B6,stroke:#191919,stroke-width:2px,color:#111
-```
+    subgraph Data["💾 Data Layer"]
+        Mock["Mock Data: hobbies, communities, posts, events, users, profile"]
+        Theme["useTheme Hook — Dark/light mode"]
+        Storage["localStorage — Interests, theme, profile persistence"]
+    end
 
-### 📊 Color Balance Visualizer
+    Pages --> Components
+    Pages --> Engine
+    Pages --> Data
 
-```
-CANVAS NEUTRAL (88%):  [██████████████████████████████████████████] #F7F6F2 / #0D0D0D
-ACCENT MARKERS (12%):  [█████] #FFD43B | #4D7CFE | #FF72B6 | #5BCB77 | #FF914D
+    style Pages fill:#4D7CFE,stroke:#191919,stroke-width:2px,color:#fff
+    style Components fill:#FFD43B,stroke:#191919,stroke-width:2px,color:#111
+    style Engine fill:#9B72FF,stroke:#191919,stroke-width:2px,color:#fff
+    style Data fill:#5BCB77,stroke:#191919,stroke-width:2px,color:#111
 ```
 
 ---
 
-## 📊 Category & Hobby Breakdown
+## 📁 Project Structure
 
 ```
-Creative     [████████████████████] 7 Hobbies  (Photography, Pottery, Film, Drawing, Writing, Fashion, Calligraphy)
-Fitness      [█████████] 3 Hobbies             (Running, Bouldering, Cycling)
-Lifestyle    [██████] 2 Hobbies                (Cooking, Gardening)
-Music        [███] 1 Hobby                     (Guitar)
-Tech         [███] 1 Hobby                     (AI & Machine Learning)
-Performance  [███] 1 Hobby                     (Dance)
-Strategy     [███] 1 Hobby                     (Chess)
-Entertainment[███] 1 Hobby                     (Gaming)
-Making       [███] 1 Hobby                     (Woodworking)
-Science      [███] 1 Hobby                     (Astronomy)
-Sports       [███] 1 Hobby                     (Skateboarding)
+common-ground/
+├── index.html                      # Entry HTML — meta, fonts, favicon
+├── package.json                    # Dependencies & scripts
+├── vite.config.js                  # Vite build config
+│
+└── src/
+    ├── main.jsx                    # React DOM entry point
+    ├── App.jsx                     # BrowserRouter + Routes + AnimatePresence
+    ├── index.css                   # 🎨 Global design tokens & CSS reset
+    │
+    ├── animations/
+    │   └── variants.js             # Shared Framer Motion presets
+    │                                 (pageVariants, staggerContainer,
+    │                                  cardHover, buttonTap, swipeCardVariants,
+    │                                  bloomVariants, drawPath...)
+    │
+    ├── components/
+    │   ├── CardSwap/
+    │   │   ├── CardSwap.jsx        # Full-screen gesture-driven card deck
+    │   │   └── CardSwap.css
+    │   │
+    │   ├── common/                 # ♻️ Reusable across pages
+    │   │   ├── AccordionGallery/   # Expandable image gallery
+    │   │   ├── Button.jsx          # Primary / Secondary / Ghost variants
+    │   │   ├── ChessPattern.jsx    # ♟️ Checkerboard SVG background
+    │   │   ├── DepthCarousel.jsx   # 3D perspective carousel
+    │   │   ├── DoodleDaisy.jsx     # Hand-drawn daisy illustration
+    │   │   ├── FlowingMenu.jsx     # Dynamic interactive menu
+    │   │   ├── InteractiveCheckerboard.jsx  # 🎮 Cursor-reactive tile grid
+    │   │   ├── InterestTag.jsx     # Colored pill tags with emoji
+    │   │   ├── ScrollStack.jsx     # Scroll-driven stack effect
+    │   │   ├── SketchArrow.jsx     # SVG hand-drawn arrows
+    │   │   ├── Smiley.jsx          # 😊 Expressive face illustrations
+    │   │   ├── Stepper.jsx         # Multi-step progress component
+    │   │   ├── Sunflower.jsx       # 🌻 Static blooming sunflower
+    │   │   ├── SunflowerGroup.jsx  # Companion sunflower field
+    │   │   ├── SunflowerMascot.jsx # 👀 Eye-tracking interactive mascot
+    │   │   └── TextLoop.jsx        # GSAP-powered marquee text ribbon
+    │   │
+    │   ├── hobby/                  # Onboarding deck components
+    │   │   ├── HobbyCard.jsx       # Individual swipeable card
+    │   │   ├── HobbyDeck.jsx       # Stack physics + gesture handler
+    │   │   └── SwipeControls.jsx   # Pass / Interested buttons
+    │   │
+    │   ├── landing/                # Landing page sections
+    │   │   ├── CommonGroundMerge.jsx    # Visual interest merging
+    │   │   ├── CommonGroundMerger.jsx   # Animated merge graphic
+    │   │   ├── CommunityFloat.jsx      # Floating community cards
+    │   │   ├── FinalCTA.jsx            # Call-to-action banner
+    │   │   ├── HobbyCardStack.jsx      # Card stack preview
+    │   │   ├── HobbyCloud.jsx          # Floating hobby pill cloud
+    │   │   ├── HobbyPath.jsx           # Illustrated journey path
+    │   │   ├── LandingJourney.jsx      # Step progression visual
+    │   │   ├── RabbitHole.jsx          # Deep-dive discovery section
+    │   │   └── SurpriseMe.jsx          # Random hobby generator
+    │   │
+    │   ├── layout/                 # App shell
+    │   │   ├── Navbar.jsx          # Floating bottom dock + theme toggle
+    │   │   ├── BottomNav.jsx       # Mobile bottom navigation
+    │   │   ├── Footer.jsx          # Storybook-style footer with parallax
+    │   │   └── PageCanvas.jsx      # Responsive page wrapper (<main>)
+    │   │
+    │   └── profile/                # Profile sub-components
+    │       ├── ProfileHeader.jsx       # Avatar, name, bio, edit mode
+    │       ├── ProfileStats.jsx        # Interest stats & visualizations
+    │       ├── ProfileTabs.jsx         # Tab switcher (About/Activity)
+    │       ├── AboutCard.jsx           # Bio & details card
+    │       ├── HobbiesCard.jsx         # Hobby collection display
+    │       ├── ActivityCard.jsx        # Activity feed timeline
+    │       ├── BadgesCard.jsx          # Achievement badges
+    │       ├── AchievementsCard.jsx    # Milestone tracker
+    │       ├── ConnectionsCard.jsx     # People connections
+    │       ├── ShareVibeCard.jsx       # Share your vibe CTA
+    │       ├── ProfileCompletionCard.jsx # Profile progress
+    │       └── JourneySteps.jsx        # Visual journey progression
+    │
+    ├── data/                       # 📊 Mock database
+    │   ├── hobbies.js              # 20 hobbies across 11 categories
+    │   ├── communities.js          # Community hubs with metadata
+    │   ├── posts.js                # Discussion threads & showcases
+    │   ├── events.js               # Workshops, meetups, online events
+    │   ├── users.js                # Student profiles
+    │   └── profileData.js          # User profile seed data
+    │
+    ├── hooks/
+    │   └── useTheme.js             # Custom hook: theme + localStorage + DOM sync
+    │
+    └── pages/                      # 📄 Top-level route views
+        ├── Landing.jsx / .css      # Front door — hero, checkerboard, mascot
+        ├── Discover.jsx / .css     # Hobby Tinder full-screen swiping
+        ├── Onboarding.jsx / .css   # Guided hobby selection stepper
+        ├── Ground.jsx / .css       # Personalized feed & interest hub
+        ├── Explore.jsx / .css      # Category browsing & discovery
+        ├── Community.jsx / .css    # Community hub with posts & members
+        ├── Events.jsx / .css       # Event listing, filtering & RSVP
+        ├── CreatePost.jsx / .css   # Rich post/thread creation
+        └── Profile.jsx / .css      # User profile with tabs & cards
 ```
 
 ---
 
-## ⚙️ System Architecture
+## 🔧 Tech Stack
 
-```mermaid
-graph LR
-    subgraph UI["🖥️ UI Layer (React 19)"]
-        Pages["Pages\n(Landing, Onboarding, Ground, Explore, Community, Profile)"]
-        Components["Components\n(HobbyDeck, DepthCarousel, ChessPattern, Sunflower)"]
-        Layout["Layout Shell\n(Navbar, BottomNav, PageCanvas)"]
-    end
-
-    subgraph Motion["✨ Motion & Animation Engine"]
-        FM["Framer Motion 13\n(Gesture physics, LayoutId)"]
-        GSAP["GSAP 3\n(Complex animations)"]
-        Lenis["Lenis\n(Smooth Scrolling)"]
-    end
-
-    subgraph State["💾 State & Data"]
-        MockData["Mock Data Engine\n(Hobbies, Communities, Posts, Users)"]
-        ThemeHook["useTheme\n(Data-Theme Switcher)"]
-        LocalStore["LocalStorage\n(Saved Interests & Preferences)"]
-    end
-
-    UI <--> Motion
-    UI <--> State
-
-    style UI fill:#4D7CFE,stroke:#191919,stroke-width:2px,color:#fff
-    style Motion fill:#9B72FF,stroke:#191919,stroke-width:2px,color:#fff
-    style State fill:#5BCB77,stroke:#191919,stroke-width:2px,color:#111
-```
+| Layer | Technology | Version | Purpose |
+|:------|:-----------|:--------|:--------|
+| **Framework** | React | 19.2 | UI components & state management |
+| **Build Tool** | Vite | 8.2 | Lightning-fast HMR & bundling |
+| **Routing** | React Router | 7.18 | Client-side navigation with dynamic routes |
+| **Animation** | Framer Motion | 13.0 | Gesture physics, springs, layout animations |
+| **Animation** | GSAP | 3.15 | Complex timeline animations (TextLoop) |
+| **Scrolling** | Lenis | 1.3 | Smooth scroll on desktop views |
+| **Icons** | Lucide React | 1.28 | Clean, consistent icon set |
+| **Fonts** | Inter + Caveat | — | Swiss typography + hand-drawn accents |
+| **Linting** | oxlint | 1.75 | Fast Rust-based linter |
 
 ---
 
-## 🔄 Card Swipe State Machine
+## 🔄 Hobby Swipe — State Machine
 
 ```mermaid
 stateDiagram-v2
     [*] --> Idle: Deck Loaded
-    Idle --> Dragging: Pointer/Touch Down
-    Dragging --> Idle: Released below threshold
-    Dragging --> SwipedRight: Dragged Right (> 120px)
-    Dragging --> SwipedLeft: Dragged Left (< -120px)
-    SwipedRight --> AddInterest: Save to Local State
-    SwipedLeft --> NextCard: Advance Index
-    AddInterest --> NextCard: Advance Index
-    NextCard --> Idle: Cards Remaining
-    NextCard --> SunflowerBloom: Deck Complete
-    SunflowerBloom --> GroundRedirect: Navigate to /ground
+
+    Idle --> Dragging: Pointer Down
+    Dragging --> Idle: Released (below threshold)
+
+    Dragging --> SwipedRight: Drag Right > 120px
+    Dragging --> SwipedLeft: Drag Left > 120px
+
+    SwipedRight --> SaveInterest: Add to localStorage
+    SwipedLeft --> NextCard: Skip
+
+    SaveInterest --> NextCard: Advance
+    NextCard --> Idle: Cards remaining
+    NextCard --> Complete: 🌻 Deck finished
+
+    Complete --> Ground: Navigate to /ground
 ```
 
 ---
 
-## ⚖️ CommonGround vs Traditional Platforms
+## ⚖️ How We're Different
 
 ```mermaid
 quadrantChart
-    title Platform Comparison Matrix
-    x-axis Low Community Intent --> High Community Intent
-    y-axis Vanity & Metrics --> Shared Interests & Doing
-    quadrant-1 CommonGround Target Zone
-    quadrant-2 Content Consumption
-    quadrant-3 Broadcast Noise
-    quadrant-4 Discussion Boards
+    title Where CommonGround Sits
+    x-axis "Low Community Intent" --> "High Community Intent"
+    y-axis "Vanity Metrics" --> "Shared Interests"
+    quadrant-1 "CommonGround Zone"
+    quadrant-2 "Content Consumption"
+    quadrant-3 "Broadcast Noise"
+    quadrant-4 "Discussion Boards"
     "Instagram": [0.2, 0.85]
     "TikTok": [0.15, 0.95]
     "Reddit": [0.65, 0.35]
+    "Discord": [0.55, 0.45]
     "Meetup": [0.75, 0.6]
-    "CommonGround": [0.9, 0.9]
+    "CommonGround": [0.88, 0.92]
 ```
+
+| | Instagram | Reddit | Discord | **CommonGround** |
+|:--|:----------|:-------|:--------|:-----------------|
+| Core unit | Post | Thread | Chat | **Interest** |
+| Discovery | Algorithm | Subreddits | Servers | **Hobby swiping** |
+| Identity | Followers | Karma | Roles | **What you enjoy** |
+| Goal | Engagement | Discussion | Conversation | **Participation → People** |
 
 ---
 
-## 📁 Detailed Codebase Architecture
+## 📊 Hobby Categories
 
 ```
-src/
-├── animations/
-│   └── variants.js          # Centralized spring & fade animation presets
-├── components/
-│   ├── CardSwap/            # Interactive card swap primitives
-│   ├── common/              # System-wide atomic components
-│   │   ├── Button            # Primary, Secondary & Ghost buttons
-│   │   ├── ChessPattern      # ♟️ Chessboard grid background
-│   │   ├── DepthCarousel     # 3D depth carousel
-│   │   ├── FlowingMenu       # Dynamic interactive menu
-│   │   ├── InteractiveCheckerboard  # Playful hover grid
-│   │   ├── InterestTag       # Colored hobby pill tags
-│   │   ├── ScrollStack       # Scroll-driven stack effect
-│   │   ├── SketchArrow       # SVG hand-drawn arrows
-│   │   ├── Smiley            # 😊 Hand-drawn smileys
-│   │   ├── Stepper           # Interactive step indicators
-│   │   ├── Sunflower         # 🌻 Blooming sunflower illustration
-│   │   ├── SunflowerGroup    # Multi-flower illustration scene
-│   │   ├── SunflowerMascot   # Interactive sunflower mascot
-│   │   └── TextLoop          # Smooth marquee text loops
-│   ├── hobby/               # Onboarding deck components
-│   │   ├── HobbyCard         # Gesture-enabled card UI
-│   │   ├── HobbyDeck         # Stack physics & gesture handler
-│   │   └── SwipeControls     # Pass / Interested button row
-│   ├── landing/             # Landing page sections
-│   │   ├── CommonGroundMerge # Visual merging interest graphic
-│   │   ├── CommunityFloat    # Floating community cards showcase
-│   │   ├── FinalCTA          # Call-to-action banner
-│   │   ├── HobbyCardStack    # Landing card stack preview
-│   │   ├── HobbyCloud        # Floating hobby pill cloud
-│   │   ├── HobbyPath         # Illustrated journey path
-│   │   ├── LandingJourney    # Visual step progression
-│   │   ├── RabbitHole        # Deep-dive discovery section
-│   │   └── SurpriseMe        # Random hobby generator
-│   └── layout/              # App framework
-│       ├── BottomNav         # Floating dock for mobile/desktop
-│       ├── Footer            # Project footer
-│       ├── Navbar            # Top navigation & theme toggle
-│       └── PageCanvas        # Responsive canvas wrapper
-├── data/                    # Local mock database
-│   ├── communities.js       # Community hubs & posts
-│   ├── hobbies.js           # 20 curated hobbies across 11 categories
-│   ├── posts.js             # Discussion threads & showcases
-│   └── users.js             # Mock student profiles
-├── hooks/
-│   └── useTheme.js          # Persistent dark/light theme switcher
-├── pages/                   # Top-level view routes
-│   ├── Landing.jsx          # Front door landing page
-│   ├── Onboarding.jsx       # Swipe deck hobby selection
-│   ├── Ground.jsx           # Personalized feed & interest hub
-│   ├── Explore.jsx          # Category directory & discovery
-│   ├── Community.jsx        # Dedicated community page
-│   ├── CreatePost.jsx       # Thread/post creation tool
-│   └── Profile.jsx          # User interest profile
-├── App.jsx                  # React Router + AnimatePresence shell
-├── index.css                # Global design system & tokens
-└── main.jsx                 # Application entry point
+Creative      ████████████████████  7   Photography, Pottery, Film, Drawing,
+                                        Writing, Fashion, Calligraphy
+Fitness       █████████             3   Running, Bouldering, Cycling
+Lifestyle     ██████                2   Cooking, Gardening
+Music         ████                  1   Guitar
+Tech          ████                  1   AI & Machine Learning
+Performance   ████                  1   Dance
+Strategy      ████                  1   Chess
+Entertainment ████                  1   Gaming
+Making        ████                  1   Woodworking
+Science       ████                  1   Astronomy
+Sports        ████                  1   Skateboarding
+─────────────────────────────────────────────
+Total                              20   hobbies across 11 categories
 ```
 
 ---
@@ -297,29 +390,40 @@ src/
 ## ⚡ Quick Start
 
 ```bash
-# 1. Clone repo
-git clone https://github.com/your-username/common-ground.git
-cd common-ground
+# Clone
+git clone https://github.com/KhushiBagga20/Common-Ground.git
+cd Common-Ground
 
-# 2. Install dependencies
+# Install
 npm install
 
-# 3. Start local development server
+# Dev server (localhost:5173)
 npm run dev
 
-# 4. Lint codebase
-npm run lint
-
-# 5. Build for production
+# Production build
 npm run build
+
+# Preview production build
+npm run preview
+
+# Lint
+npm run lint
 ```
+
+---
+
+## 👥 Team
+
+Built by a 4-person team as a frontend prototype over ~12 days.
 
 ---
 
 <div align="center">
 
+### 🌻 ♟️ 😊
+
 **CommonGround** — *Find your people, not just hobbies.*
 
-🌻 ♟️ 😊
+*The structure is Swiss-clean. The personality is hand-drawn.*
 
 </div>

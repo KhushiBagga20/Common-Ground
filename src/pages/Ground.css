@@ -1999,15 +1999,30 @@
   .g-interest-shelf-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
   .g-view > svg, .g-discover > svg { display: none !important; }
   .g-surp-sticker, .g-surp-plane { display: none; }
+
+  /* Top navbar — tighten gap so items don't overflow */
+  .g-header__actions { gap: 4px; }
+  .g-header__brand { gap: 4px; }
 }
 
 @media (max-width: 576px) {
-  .g-header { padding: 10px 12px; margin: 0 -16px; gap: 8px; }
-  .g-header__brand .g-header__logo { font-size: 1.1rem; }
+  .g-header { padding: 10px 12px; margin: 0 -16px; gap: 6px; }
   .g-toggle-pill { padding: 3px; }
   .g-toggle-btn { padding: 6px 12px; font-size: 0.78rem; }
-  .g-icon-btn { width: 34px; height: 34px; }
-  .g-header__avatar { width: 34px; height: 34px; }
+  .g-icon-btn { width: 32px; height: 32px; }
+  .g-header__avatar { width: 32px; height: 32px; }
+  .g-header__actions { gap: 2px; }
+
+  /* Hide brand and heart — just show toggle + actions on small phones */
+  .g-header__brand { display: none; }
+
+  /* Hide search and bell — not enough room on phones */
+  .g-header__actions button[aria-label="Search"] { display: none; }
+  .g-header__actions button[aria-label="Notifications"] { display: none; }
+
+  /* Toggle pill moves to the left; flex takes full width */
+  .g-header__center { justify-content: flex-start; }
+
   .g-hobbies-ref-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .g-trending-ref-grid { grid-template-columns: 1fr; gap: 14px; }
   .g-people-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -2033,13 +2048,12 @@
 }
 
 @media (max-width: 480px) {
-  .g-header__brand .g-header__logo { display: none; }
   .g-disc-card__top { flex-direction: column; align-items: flex-start; gap: 8px; }
   .g-disc-type-pill { align-self: flex-start; }
 }
 
 @media (max-width: 400px) {
-  .g-header__actions button[aria-label="Search"] { display: none; }
+  .g-header { padding: 8px 10px; gap: 4px; }
 }
 
 @media (max-width: 380px) {

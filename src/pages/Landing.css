@@ -379,14 +379,16 @@
     margin-right: var(--space-md);
   }
 
+  /* Hide flower SVGs on tablet and below */
   .landing__hero-right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 60%;
-    height: 45%;
-    min-height: 240px;
-    pointer-events: none;
+    display: none;
+  }
+
+  /* Pull yellow ribbon up to fill negative space and keep it prominent */
+  .landing__loop-banner {
+    margin-top: -60px;
+    position: relative;
+    z-index: 3;
   }
 
   .landing__hero-title {
@@ -403,17 +405,15 @@
 }
 
 @media (max-width: 640px) {
+  .landing__hero {
+    min-height: auto;
+  }
+
   .landing__hero-left {
     margin-left: var(--space-sm);
     margin-right: var(--space-sm);
     padding: 80px 16px var(--space-lg);
     gap: var(--space-lg);
-  }
-
-  .landing__hero-right {
-    width: 55%;
-    height: 38%;
-    opacity: 0.7;
   }
 
   .landing__hero-title {
@@ -429,5 +429,10 @@
   .landing__hero-actions > div,
   .landing__hero-actions button {
     width: 100% !important;
+  }
+
+  /* Bigger ribbon, tighter to hero on small mobile */
+  .landing__loop-banner {
+    margin-top: -30px;
   }
 }

@@ -196,12 +196,17 @@
   }
 
   .dock-nav__item {
-    padding: 7px 8px;
+    padding: 6px 8px;
   }
 
   .dock-nav__theme-toggle,
   .dock-nav__sunflower {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Hide sunflower on very small screens to save space */
+  .dock-nav__sunflower {
+    display: none;
   }
 }
