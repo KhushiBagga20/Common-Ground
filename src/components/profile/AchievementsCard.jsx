@@ -1,4 +1,8 @@
-import * as Icons from 'lucide-react';
+import { Award, Flame, Sparkles } from 'lucide-react';
+
+// Achievement data stores icon names as strings. Map only the icons we use —
+// a wildcard import would bundle the entire Lucide library into this page.
+const ACHIEVEMENT_ICONS = { Award, Flame, Sparkles };
 
 export default function AchievementsCard({ achievements }) {
   return (
@@ -10,8 +14,7 @@ export default function AchievementsCard({ achievements }) {
       <div className="profile-card__body">
         <div className="profile-achievements-list">
           {achievements.map((ach) => {
-            // Dynmically map the string representation to Lucide icon components
-            const IconComponent = Icons[ach.icon] || Icons.Award;
+            const IconComponent = ACHIEVEMENT_ICONS[ach.icon] || Award;
             
             return (
               <div key={ach.id} className="profile-achievement-item">

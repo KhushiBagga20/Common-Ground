@@ -16,43 +16,43 @@ import ChessPattern from '../components/common/ChessPattern';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
 import AccordionGallery from '../components/common/AccordionGallery/AccordionGallery';
 import { hobbies, hobbyCategories, getHobbyById } from '../data/hobbies';
-import { communities, getCommunitiesByHobby } from '../data/communities';
+import { communities, getCommunityById } from '../data/communities';
 import { posts as defaultPosts, getPostsByInterest } from '../data/posts';
 import { users } from '../data/users';
 import { staggerContainer, staggerItem } from '../animations/variants';
 import './Ground.css';
 
 // Import generated cute 2D sticker illustrations for hobbies
-import imgPhoto from '../assets/hobbies/hobby_photography_1786871191346.jpg';
-import imgGuitar from '../assets/hobbies/hobby_guitar_1786871505903.jpg';
-import imgPottery from '../assets/hobbies/hobby_pottery_1786871778302.jpg';
-import imgRunning from '../assets/hobbies/hobby_running_1786871855685.jpg';
-import imgFilm from '../assets/hobbies/hobby_film_1786871879712.jpg';
-import imgAiml from '../assets/hobbies/hobby_aiml_1786872114650.jpg';
-import imgDrawing from '../assets/hobbies/hobby_drawing_1786872318655.jpg';
-import imgCooking from '../assets/hobbies/hobby_cooking_1786872493583.jpg';
-import imgWriting from '../assets/hobbies/hobby_writing_1787487280393.jpg';
-import imgBouldering from '../assets/hobbies/hobby_bouldering_1787487296150.jpg';
-import imgDance from '../assets/hobbies/hobby_dance_1787487312624.jpg';
-import imgChess from '../assets/hobbies/hobby_chess_1787487328552.png';
-import imgGardening from '../assets/hobbies/hobby_gardening_1787487360591.jpg';
-import imgGaming from '../assets/hobbies/hobby_gaming_1787487377877.jpg';
-import imgFashion from '../assets/hobbies/hobby_fashion_1787487394290.jpg';
-import imgWoodworking from '../assets/hobbies/hobby_woodworking_1787487410811.jpg';
-import imgCycling from '../assets/hobbies/hobby_cycling_1787487427933.jpg';
-import imgAstronomy from '../assets/hobbies/hobby_astronomy_1787487444421.jpg';
-import imgCalligraphy from '../assets/hobbies/hobby_calligraphy_1787487461997.jpg';
-import imgSkateboarding from '../assets/hobbies/hobby_skateboarding_1787487479158.jpg';
+import imgPhoto from '../assets/hobbies/hobby_photography_1786871191346.webp';
+import imgGuitar from '../assets/hobbies/hobby_guitar_1786871505903.webp';
+import imgPottery from '../assets/hobbies/hobby_pottery_1786871778302.webp';
+import imgRunning from '../assets/hobbies/hobby_running_1786871855685.webp';
+import imgFilm from '../assets/hobbies/hobby_film_1786871879712.webp';
+import imgAiml from '../assets/hobbies/hobby_aiml_1786872114650.webp';
+import imgDrawing from '../assets/hobbies/hobby_drawing_1786872318655.webp';
+import imgCooking from '../assets/hobbies/hobby_cooking_1786872493583.webp';
+import imgWriting from '../assets/hobbies/hobby_writing_1787487280393.webp';
+import imgBouldering from '../assets/hobbies/hobby_bouldering_1787487296150.webp';
+import imgDance from '../assets/hobbies/hobby_dance_1787487312624.webp';
+import imgChess from '../assets/hobbies/hobby_chess_1787487328552.webp';
+import imgGardening from '../assets/hobbies/hobby_gardening_1787487360591.webp';
+import imgGaming from '../assets/hobbies/hobby_gaming_1787487377877.webp';
+import imgFashion from '../assets/hobbies/hobby_fashion_1787487394290.webp';
+import imgWoodworking from '../assets/hobbies/hobby_woodworking_1787487410811.webp';
+import imgCycling from '../assets/hobbies/hobby_cycling_1787487427933.webp';
+import imgAstronomy from '../assets/hobbies/hobby_astronomy_1787487444421.webp';
+import imgCalligraphy from '../assets/hobbies/hobby_calligraphy_1787487461997.webp';
+import imgSkateboarding from '../assets/hobbies/hobby_skateboarding_1787487479158.webp';
 
 // Import generated 16:9 header illustrations for communities
-import commPhotoImg from '../assets/communities/comm_street_photo_1786874778448.jpg';
-import commAcousticImg from '../assets/communities/comm_acoustic_1786874991573.jpg';
-import commRunningImg from '../assets/communities/comm_running_1786875006787.jpg';
-import commCinemaImg from '../assets/communities/comm_cinema_1786875039282.jpg';
-import commBookNookImg from '../assets/communities/book_nook.png';
-import commBoulderingImg from '../assets/communities/bouldering.png';
-import commHomeBakersImg from '../assets/communities/home_bakers.png';
-import commUrbanSketchersImg from '../assets/communities/urban_sketchers.png';
+import commPhotoImg from '../assets/communities/comm_street_photo_1786874778448.webp';
+import commAcousticImg from '../assets/communities/comm_acoustic_1786874991573.webp';
+import commRunningImg from '../assets/communities/comm_running_1786875006787.webp';
+import commCinemaImg from '../assets/communities/comm_cinema_1786875039282.webp';
+import commBookNookImg from '../assets/communities/book_nook.webp';
+import commBoulderingImg from '../assets/communities/bouldering.webp';
+import commHomeBakersImg from '../assets/communities/home_bakers.webp';
+import commUrbanSketchersImg from '../assets/communities/urban_sketchers.webp';
 
 // Import generated illustrations for vibes
 import vibeChillImg from '../assets/vibes/vibe_chill.svg';
@@ -61,6 +61,10 @@ import vibeSocialImg from '../assets/vibes/vibe_social.svg';
 import vibeActiveImg from '../assets/vibes/vibe_active.svg';
 import vibeLearnImg from '../assets/vibes/vibe_learn.svg';
 import vibeOutdoorsImg from '../assets/vibes/vibe_outdoors.svg';
+
+// Local hobby photos for the AccordionGallery
+import photoGuitar from '../assets/photos/guitar.webp';
+import photoPottery from '../assets/photos/pottery.webp';
 
 // ─────────────────────────────────────────────────────
 // HELPER SVG COMPONENTS FOR DECORATIVE DOODLES & ICONS
@@ -175,13 +179,11 @@ const ALL_HOBBIES_DATA = [
   { id: 'skateboarding', name: 'Skateboarding', count: '1.1K people', bgLight: '#FFF0ED', bgDark: '#2D1612', img: imgSkateboarding, description: 'Street skating & park tricks' },
 ];
 
-// Rich Community Cards Data with Generated Header Images
-const RICH_COMMUNITIES = [
+// Header art and member avatars for trending community cards.
+// Names and counts come from data/communities.js so cards always link to a real community.
+const COMMUNITY_CARD_ART = [
   {
     id: 'street-photography',
-    name: 'Street Photography',
-    peopleCount: '142 people',
-    postCount: '89 posts',
     bgColor: '#FFF0ED',
     image: commPhotoImg,
     avatars: [
@@ -192,9 +194,6 @@ const RICH_COMMUNITIES = [
   },
   {
     id: 'acoustic-sessions',
-    name: 'Acoustic Sessions',
-    peopleCount: '87 people',
-    postCount: '41 posts',
     bgColor: '#FFFCEB',
     image: commAcousticImg,
     avatars: [
@@ -205,9 +204,6 @@ const RICH_COMMUNITIES = [
   },
   {
     id: 'couch-to-5k',
-    name: 'Couch to 5K',
-    peopleCount: '234 people',
-    postCount: '167 posts',
     bgColor: '#EFFCF4',
     image: commRunningImg,
     avatars: [
@@ -218,9 +214,6 @@ const RICH_COMMUNITIES = [
   },
   {
     id: 'cinema-club',
-    name: 'Cinema Club',
-    peopleCount: '176 people',
-    postCount: '134 posts',
     bgColor: '#F3EFFF',
     image: commCinemaImg,
     avatars: [
@@ -229,10 +222,7 @@ const RICH_COMMUNITIES = [
     ]
   },
   {
-    id: 'book-nook',
-    name: 'Book Nook',
-    peopleCount: '96 people',
-    postCount: '52 posts',
+    id: 'creative-writing-circle',
     bgColor: '#FFF5EE',
     image: commBookNookImg,
     avatars: [
@@ -241,10 +231,7 @@ const RICH_COMMUNITIES = [
     ]
   },
   {
-    id: 'bouldering-crew',
-    name: 'Bouldering Crew',
-    peopleCount: '124 people',
-    postCount: '78 posts',
+    id: 'beta-crushers',
     bgColor: '#FFFCEB',
     image: commBoulderingImg,
     avatars: [
@@ -253,10 +240,7 @@ const RICH_COMMUNITIES = [
     ]
   },
   {
-    id: 'home-bakers',
-    name: 'Home Bakers',
-    peopleCount: '189 people',
-    postCount: '112 posts',
+    id: 'student-chefs',
     bgColor: '#FFF0ED',
     image: commHomeBakersImg,
     avatars: [
@@ -265,10 +249,7 @@ const RICH_COMMUNITIES = [
     ]
   },
   {
-    id: 'urban-sketchers',
-    name: 'Urban Sketchers',
-    peopleCount: '215 people',
-    postCount: '143 posts',
+    id: 'sketch-daily',
     bgColor: '#F3EFFF',
     image: commUrbanSketchersImg,
     avatars: [
@@ -278,16 +259,52 @@ const RICH_COMMUNITIES = [
   }
 ];
 
+const RICH_COMMUNITIES = COMMUNITY_CARD_ART
+  .map(art => ({ ...getCommunityById(art.id), ...art }))
+  .filter(c => c.name);
+
+// Map hobby images for AccordionGallery — real photographic images of people engaged in each hobby
+const HOBBY_IMAGES = {
+  photography: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
+  guitar: photoGuitar,
+  pottery: photoPottery,
+  running: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=800&q=80',
+  film: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
+  'ai-ml': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
+  drawing: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
+  cooking: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
+  writing: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80',
+  bouldering: 'https://images.unsplash.com/photo-1564769662533-4f00a87b4056?auto=format&fit=crop&w=800&q=80',
+  dance: 'https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?auto=format&fit=crop&w=800&q=80',
+  chess: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=80',
+  gardening: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80',
+  gaming: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
+  fashion: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80',
+  woodworking: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+  cycling: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80',
+  astronomy: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80',
+  calligraphy: 'https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&w=800&q=80',
+  skateboarding: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=800&q=80',
+};
+
+const FALLBACK_IMAGES = [
+  'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
+  'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80',
+];
+
 function RenderHobbyIllustration({ hobby }) {
   if (hobby.img) {
-    return <img src={hobby.img} alt={hobby.name} className="g-hobby-ref-img" />;
+    return <img src={hobby.img} alt={hobby.name} className="g-hobby-ref-img" loading="lazy" />;
   }
   return <span className="g-hobby-emoji-fallback">{hobby.emoji || '✨'}</span>;
 }
 
 function RenderCommunityHeaderImage({ community }) {
   if (community.image) {
-    return <img src={community.image} alt={community.name} className="g-comm-header-img" />;
+    return <img src={community.image} alt={community.name} className="g-comm-header-img" loading="lazy" />;
   }
   return null;
 }
@@ -443,6 +460,72 @@ const PEOPLE = [
   { id: 'p8', name: 'Aarav Mehta',    label: 'AI & ML Explorer',   bio: 'AI & ML explorer',                       interests: ['AI & ML', 'Coding', 'Chess'],          location: 'Hyderabad', communities: 7, posts: ['Building an image classifier as a side project 🤖', 'AI is not magic — it is a lot of linear algebra.'],  avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=150&q=80', accent: '#E0EFFF' },
 ];
 
+const POSTS = [
+  { id: 'p1', cls: 'g-av--photo',    emoji: '🎮', community: 'Gaming Club', time: '2h ago',  text: "Where every game becomes a shared adventure.", img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80', alt: 'Sunset cityscape',    comments: 24, shares: 12 },
+  { id: 'p2', cls: 'g-av--acoustic', emoji: '🎸', community: 'Acoustic Sessions',        time: '4h ago',  text: 'Jam session this Saturday! Open for everyone 🎸 DM to join!',                               img: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1200&q=80', alt: 'Guitar players',      comments: 18, shares: 5  },
+  { id: 'p3', cls: 'g-av--sketch',   emoji: '✏️', community: 'Sketch Squad',             time: '6h ago',  text: 'Quick sketch from class today ✏️',                                                         img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80', alt: 'Pencil sketch art',  comments: 11, shares: 3  },
+];
+const EXTRA_POSTS = [
+  { id: 'p4', cls: 'g-av--sketch',   emoji: '✏️', community: 'Sketch Squad',             time: '8h ago',  text: 'Experimenting with charcoal today! What do you think?',                                    img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1200&q=80', alt: 'Charcoal art',       comments: 14, shares: 8  },
+  { id: 'p5', cls: 'g-av--photo',    emoji: '📸', community: 'Street Photography Club', time: '10h ago', text: 'Every great story starts with a single frame.',                          img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80', alt: 'Rainy reflections',  comments: 32, shares: 21 },
+  { id: 'p6', cls: 'g-av--acoustic', emoji: '🎸', community: 'Acoustic Sessions',        time: '12h ago', text: 'Folk music nights are back! Wednesday 7 PM in the common hall.',                          img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80', alt: 'Folk music night',   comments: 20, shares: 15 },
+];
+
+// Defined at module level (not inside Ground) so liking/bookmarking re-renders
+// the card instead of remounting it and replaying its entrance animation.
+function PostCard({ post, delay = 0, liked, likeCount, bookmarked, onToggleLike, onToggleBookmark }) {
+  return (
+    <motion.article
+      className="g-post"
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -3, boxShadow: '0 10px 28px rgba(0,0,0,0.07)' }}
+      layout
+    >
+      <div className="g-post__header">
+        <div className="g-post__author">
+          <div className={`g-post__avbox ${post.cls}`}>{post.emoji}</div>
+          <div>
+            <h3 className="g-post__community font-rounded">{post.community}</h3>
+            <span className="g-post__time">{post.time}</span>
+          </div>
+        </div>
+        <button className="g-post__more" aria-label="More options"><MoreHorizontal size={16} /></button>
+      </div>
+      <p className="g-post__text">{post.text}</p>
+      <div className="g-post__img-wrap">
+        <img src={post.img} alt={post.alt} className="g-post__img" loading="lazy" />
+      </div>
+      <div className="g-post__actions">
+        <div className="g-post__action-row">
+          <button
+            className={`g-act-btn ${liked ? 'g-act-btn--liked' : ''}`}
+            onClick={() => onToggleLike(post.id)}
+            aria-label={`Like — ${likeCount}`}
+          >
+            <Heart size={14} fill={liked ? 'var(--red)' : 'none'} />
+            <span>{likeCount}</span>
+          </button>
+          <button className="g-act-btn" aria-label={`Comment — ${post.comments}`}>
+            <MessageCircle size={14} /><span>{post.comments}</span>
+          </button>
+          <button className="g-act-btn" aria-label={`Share — ${post.shares}`}>
+            <Share2 size={14} /><span>{post.shares}</span>
+          </button>
+        </div>
+        <button
+          className={`g-bookmark-btn ${bookmarked ? 'g-bookmark-btn--on' : ''}`}
+          onClick={() => onToggleBookmark(post.id)}
+          aria-label="Bookmark"
+        >
+          <Bookmark size={14} fill={bookmarked ? 'var(--text)' : 'none'} />
+        </button>
+      </div>
+    </motion.article>
+  );
+}
+
 function ProfileModal({ person, onClose, followed, onFollow }) {
   useEffect(() => {
     const fn = (e) => { if (e.key === 'Escape') onClose(); };
@@ -596,12 +679,12 @@ export default function Ground({ initialTab }) {
     return unique.slice(0, 6);
   }, [userInterests]);
 
+  // Keep state updaters pure: StrictMode calls them twice in dev, so nesting
+  // one setState inside another's updater would double-count.
   const toggleDiscLike = (id) => {
-    setDiscLiked(prev => {
-      const next = !prev[id];
-      setDiscLikes(cur => ({ ...cur, [id]: next ? (cur[id] || 0) + 1 : (cur[id] || 1) - 1 }));
-      return { ...prev, [id]: next };
-    });
+    const next = !discLiked[id];
+    setDiscLiked(prev => ({ ...prev, [id]: next }));
+    setDiscLikes(cur => ({ ...cur, [id]: next ? (cur[id] || 0) + 1 : (cur[id] || 1) - 1 }));
   };
 
   // Suggested unpicked hobbies for user
@@ -624,38 +707,6 @@ export default function Ground({ initialTab }) {
     return items;
   }, [userInterests]);
 
-  // Map hobby images for AccordionGallery — real photographic images of people engaged in each hobby
-  const HOBBY_IMAGES = {
-    photography: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
-    guitar: 'https://tse1.mm.bing.net/th/id/OIP.Er4GdXe4rKz6eOZ9_jwqqAHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
-    pottery: 'https://th.bing.com/th/id/OIP.m0hkLeKnpTZbdDyTZRCXtQHaE7?w=277&h=185&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
-    running: 'https://th.bing.com/th/id/OIP.0OMUeUBy8T23DYb2obsoTAHaEK?w=239&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
-    film: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
-    'ai-ml': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
-    drawing: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
-    cooking: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
-    writing: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80',
-    bouldering: 'https://images.unsplash.com/photo-1564769662533-4f00a87b4056?auto=format&fit=crop&w=800&q=80',
-    dance: 'https://th.bing.com/th/id/OIP.p04t-NRA0PJ4SBXUG1Dd9wHaEJ?w=303&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
-    chess: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=80',
-    gardening: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80',
-    gaming: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
-    fashion: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80',
-    woodworking: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-    cycling: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80',
-    astronomy: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80',
-    calligraphy: 'https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&w=800&q=80',
-    skateboarding: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=800&q=80',
-  };
-
-  const FALLBACK_IMAGES = [
-    'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80',
-  ];
-
   const accordionItems = useMemo(() => {
     return displayShelfItems.slice(0, 6).map((hobby, i) => ({
       image: HOBBY_IMAGES[hobby.id] || FALLBACK_IMAGES[i % FALLBACK_IMAGES.length],
@@ -676,11 +727,9 @@ export default function Ground({ initialTab }) {
   const toggleBookmark = (id) => setBookmarked(p => ({ ...p, [id]: !p[id] }));
   const toggleJoinComm = (id) => setJoinedCommunities(p => ({ ...p, [id]: !p[id] }));
   const toggleLike     = (id) => {
-    setLiked(prev => {
-      const next = !prev[id];
-      setLikes(cur => ({ ...cur, [id]: next ? (cur[id] || 0) + 1 : (cur[id] || 1) - 1 }));
-      return { ...prev, [id]: next };
-    });
+    const next = !liked[id];
+    setLiked(prev => ({ ...prev, [id]: next }));
+    setLikes(cur => ({ ...cur, [id]: next ? (cur[id] || 0) + 1 : (cur[id] || 1) - 1 }));
   };
 
   const scrollToTrending = () => {
@@ -743,68 +792,6 @@ export default function Ground({ initialTab }) {
     const comm = communities.find(c => c.hobbyId === rh.id) || communities[0];
     setTimeout(() => navigate(`/community/${comm.id}`), 350);
   };
-
-  const POSTS = [
-    { id: 'p1', cls: 'g-av--photo',    emoji: '🎮', community: 'Gaming Club', time: '2h ago',  text: "Where every game becomes a shared adventure.", img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80', alt: 'Sunset cityscape',    comments: 24, shares: 12 },
-    { id: 'p2', cls: 'g-av--acoustic', emoji: '🎸', community: 'Acoustic Sessions',        time: '4h ago',  text: 'Jam session this Saturday! Open for everyone 🎸 DM to join!',                               img: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1200&q=80', alt: 'Guitar players',      comments: 18, shares: 5  },
-    { id: 'p3', cls: 'g-av--sketch',   emoji: '✏️', community: 'Sketch Squad',             time: '6h ago',  text: 'Quick sketch from class today ✏️',                                                         img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=80', alt: 'Pencil sketch art',  comments: 11, shares: 3  },
-  ];
-  const EXTRA_POSTS = [
-    { id: 'p4', cls: 'g-av--sketch',   emoji: '✏️', community: 'Sketch Squad',             time: '8h ago',  text: 'Experimenting with charcoal today! What do you think?',                                    img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1200&q=80', alt: 'Charcoal art',       comments: 14, shares: 8  },
-    { id: 'p5', cls: 'g-av--photo',    emoji: '📸', community: 'Street Photography Club', time: '10h ago', text: 'Every great story starts with a single frame.',                          img: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80', alt: 'Rainy reflections',  comments: 32, shares: 21 },
-    { id: 'p6', cls: 'g-av--acoustic', emoji: '🎸', community: 'Acoustic Sessions',        time: '12h ago', text: 'Folk music nights are back! Wednesday 7 PM in the common hall.',                          img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80', alt: 'Folk music night',   comments: 20, shares: 15 },
-  ];
-
-  const PostCard = ({ post, delay = 0 }) => (
-    <motion.article
-      className="g-post"
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -3, boxShadow: '0 10px 28px rgba(0,0,0,0.07)' }}
-      layout
-    >
-      <div className="g-post__header">
-        <div className="g-post__author">
-          <div className={`g-post__avbox ${post.cls}`}>{post.emoji}</div>
-          <div>
-            <h3 className="g-post__community font-rounded">{post.community}</h3>
-            <span className="g-post__time">{post.time}</span>
-          </div>
-        </div>
-        <button className="g-post__more" aria-label="More options"><MoreHorizontal size={16} /></button>
-      </div>
-      <p className="g-post__text">{post.text}</p>
-      <div className="g-post__img-wrap">
-        <img src={post.img} alt={post.alt} className="g-post__img" loading="lazy" />
-      </div>
-      <div className="g-post__actions">
-        <div className="g-post__action-row">
-          <button
-            className={`g-act-btn ${liked[post.id] ? 'g-act-btn--liked' : ''}`}
-            onClick={() => toggleLike(post.id)}
-            aria-label={`Like — ${likes[post.id] ?? 0}`}
-          >
-            <Heart size={14} fill={liked[post.id] ? 'var(--red)' : 'none'} />
-            <span>{likes[post.id] ?? 0}</span>
-          </button>
-          <button className="g-act-btn" aria-label={`Comment — ${post.comments}`}>
-            <MessageCircle size={14} /><span>{post.comments}</span>
-          </button>
-          <button className="g-act-btn" aria-label={`Share — ${post.shares}`}>
-            <Share2 size={14} /><span>{post.shares}</span>
-          </button>
-        </div>
-        <button
-          className={`g-bookmark-btn ${bookmarked[post.id] ? 'g-bookmark-btn--on' : ''}`}
-          onClick={() => toggleBookmark(post.id)}
-          aria-label="Bookmark"
-        >
-          <Bookmark size={14} fill={bookmarked[post.id] ? 'var(--text)' : 'none'} />
-        </button>
-      </div>
-    </motion.article>
-  );
 
   return (
     <PageCanvas>
@@ -961,7 +948,18 @@ export default function Ground({ initialTab }) {
                   </div>
 
                   <div className="g-posts-list">
-                    {POSTS.map((p, i) => <PostCard key={p.id} post={p} delay={i * 0.06} />)}
+                    {POSTS.map((p, i) => (
+                      <PostCard
+                        key={p.id}
+                        post={p}
+                        delay={i * 0.06}
+                        liked={!!liked[p.id]}
+                        likeCount={likes[p.id] ?? 0}
+                        bookmarked={!!bookmarked[p.id]}
+                        onToggleLike={toggleLike}
+                        onToggleBookmark={toggleBookmark}
+                      />
+                    ))}
 
                     <AnimatePresence>
                       {showAllPosts && (
@@ -972,7 +970,18 @@ export default function Ground({ initialTab }) {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
                         >
-                          {EXTRA_POSTS.map((p, i) => <PostCard key={p.id} post={p} delay={i * 0.07} />)}
+                          {EXTRA_POSTS.map((p, i) => (
+                            <PostCard
+                              key={p.id}
+                              post={p}
+                              delay={i * 0.07}
+                              liked={!!liked[p.id]}
+                              likeCount={likes[p.id] ?? 0}
+                              bookmarked={!!bookmarked[p.id]}
+                              onToggleLike={toggleLike}
+                              onToggleBookmark={toggleBookmark}
+                            />
+                          ))}
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -1157,7 +1166,7 @@ export default function Ground({ initialTab }) {
                         whileHover={{ y: -4, boxShadow: '0 10px 28px rgba(0,0,0,0.09)' }}
                       >
                         <div className="g-person-card__band" style={{ background: person.accent }} />
-                        <img src={person.avatar} alt={person.name} className="g-person-card__avatar" />
+                        <img src={person.avatar} alt={person.name} className="g-person-card__avatar" loading="lazy" />
                         <p className="g-person-card__name font-rounded">{person.name}</p>
                         <p className="g-person-card__label">{person.label}</p>
                         <div className="g-person-card__pills">
@@ -1331,11 +1340,11 @@ export default function Ground({ initialTab }) {
                 <div className="g-surp-blob g-surp-blob--yellow" aria-hidden="true" />
 
                 <div className="g-surp-doodles" aria-hidden="true">
-                  <img src={imgPhoto} alt="" className="g-surp-sticker g-surp-sticker--a" />
-                  <img src={imgGuitar} alt="" className="g-surp-sticker g-surp-sticker--b" />
-                  <img src={imgCooking} alt="" className="g-surp-sticker g-surp-sticker--c" />
-                  <img src={imgRunning} alt="" className="g-surp-sticker g-surp-sticker--d" />
-                  <img src={imgDrawing} alt="" className="g-surp-sticker g-surp-sticker--e" />
+                  <img src={imgPhoto} alt="" loading="lazy" className="g-surp-sticker g-surp-sticker--a" />
+                  <img src={imgGuitar} alt="" loading="lazy" className="g-surp-sticker g-surp-sticker--b" />
+                  <img src={imgCooking} alt="" loading="lazy" className="g-surp-sticker g-surp-sticker--c" />
+                  <img src={imgRunning} alt="" loading="lazy" className="g-surp-sticker g-surp-sticker--d" />
+                  <img src={imgDrawing} alt="" loading="lazy" className="g-surp-sticker g-surp-sticker--e" />
                   <DPlane className="g-surp-plane" size={22} color="var(--blue)" />
                 </div>
 
@@ -1383,12 +1392,12 @@ export default function Ground({ initialTab }) {
 
                       <div className="g-trending-ref-card__body">
                         <h3 className="g-trending-ref-card__title font-rounded">{c.name}</h3>
-                        <p className="g-trending-ref-card__stats">{c.peopleCount} · {c.postCount}</p>
+                        <p className="g-trending-ref-card__stats">{c.memberCount} people · {c.postCount} posts</p>
 
                         <div className="g-trending-ref-card__footer">
                           <div className="g-trending-ref-card__avatars">
                             {c.avatars.map((av, idx) => (
-                              <img key={idx} src={av} alt="member" className="g-comm-avatar" style={{ zIndex: 3 - idx }} />
+                              <img key={idx} src={av} alt="member" loading="lazy" className="g-comm-avatar" style={{ zIndex: 3 - idx }} />
                             ))}
                           </div>
 
@@ -1442,7 +1451,7 @@ export default function Ground({ initialTab }) {
                         whileTap={{ scale: 0.96 }}
                       >
                         <div className="g-vibe-card__icon-wrap">
-                          <img src={vibe.image} alt={vibe.label} className="g-vibe-img" />
+                          <img src={vibe.image} alt={vibe.label} className="g-vibe-img" loading="lazy" />
                         </div>
                         <span className="g-vibe-card__label">{vibe.label}</span>
                         {isSelected && (

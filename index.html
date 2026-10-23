@@ -7,6 +7,21 @@
     <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="description" content="CommonGround — Discover hobbies, find communities, and connect with people who share your interests." />
     <meta name="theme-color" content="#F7F6F2" />
+    <script>
+      // Apply the saved (or system) theme before first paint to avoid a light flash.
+      // Keep in sync with src/hooks/useTheme.js.
+      (function () {
+        var theme;
+        try { theme = localStorage.getItem('cg-theme'); } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0D0D0D');
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />

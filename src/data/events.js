@@ -2,14 +2,14 @@
    COMMONGROUND � EVENTS MOCK DATA
    ============================================ */
 
-import potteryImg from '../assets/hobbies/hobby_pottery_1786871778302.jpg';
-import guitarImg from '../assets/hobbies/hobby_guitar_1786871505903.jpg';
-import drawingImg from '../assets/hobbies/hobby_drawing_1786872318655.jpg';
-import runningImg from '../assets/hobbies/hobby_running_1786871855685.jpg';
-import photographyImg from '../assets/hobbies/hobby_photography_1786871191346.jpg';
-import cookingImg from '../assets/hobbies/hobby_cooking_1786872493583.jpg';
-import filmImg from '../assets/hobbies/hobby_film_1786871879712.jpg';
-import aimlImg from '../assets/hobbies/hobby_aiml_1786872114650.jpg';
+import potteryImg from '../assets/hobbies/hobby_pottery_1786871778302.webp';
+import guitarImg from '../assets/hobbies/hobby_guitar_1786871505903.webp';
+import drawingImg from '../assets/hobbies/hobby_drawing_1786872318655.webp';
+import runningImg from '../assets/hobbies/hobby_running_1786871855685.webp';
+import photographyImg from '../assets/hobbies/hobby_photography_1786871191346.webp';
+import cookingImg from '../assets/hobbies/hobby_cooking_1786872493583.webp';
+import filmImg from '../assets/hobbies/hobby_film_1786871879712.webp';
+import aimlImg from '../assets/hobbies/hobby_aiml_1786872114650.webp';
 
 export const events = [
   {
