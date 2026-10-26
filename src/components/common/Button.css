@@ -81,6 +81,33 @@
   opacity: 0.9;
 }
 
+/* Tactile press — app pages only; the landing keeps its soft buttons.
+   Uses `translate` so it composes with framer-motion's inline transform. */
+.page-canvas .cg-btn--primary,
+.page-canvas .cg-btn--secondary,
+.page-canvas .cg-btn--accent {
+  border-color: var(--border);
+  box-shadow: var(--shadow-hard-sm);
+  transition: translate 0.5s var(--ease-press),
+              box-shadow 0.5s var(--ease-press),
+              background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.page-canvas .cg-btn--primary {
+  box-shadow: 3px 3px 0 var(--yellow);
+}
+
+.page-canvas .cg-btn--primary:active:not(:disabled),
+.page-canvas .cg-btn--secondary:active:not(:disabled),
+.page-canvas .cg-btn--accent:active:not(:disabled) {
+  translate: 3px 3px;
+  box-shadow: 0 0 0 var(--border);
+  transition-duration: 0.06s;
+  transition-timing-function: ease-out;
+}
+
 /* Icon */
 .cg-btn__icon {
   display: flex;

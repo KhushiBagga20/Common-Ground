@@ -1,0 +1,159 @@
+/* ============================================
+   PAGE HERO — each page gets its own colour,
+   matching its dock key (v2's "own weather")
+   ============================================ */
+
+.page-hero {
+  --pattern-ink: rgba(17, 17, 17, 0.09);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  min-height: 220px;
+  margin-bottom: var(--space-xl);
+  padding: clamp(24px, 4vw, 44px) clamp(20px, 4vw, 48px);
+  overflow: hidden;
+  border: 2.5px solid var(--ink);
+  border-radius: 28px;
+  background-color: var(--hero-color);
+  box-shadow: 6px 6px 0 var(--ink);
+  color: var(--ink);
+  isolation: isolate;
+}
+
+[data-theme="dark"] .page-hero {
+  border-color: #F7F6F2;
+  box-shadow: 6px 6px 0 #F7F6F2;
+}
+
+/* Paper grain over everything */
+.page-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Background patterns */
+.page-hero--dots {
+  background-image: radial-gradient(circle, var(--pattern-ink) 1.6px, transparent 2.2px);
+  background-size: 16px 16px;
+}
+
+.page-hero--stripes {
+  background-image: repeating-linear-gradient(90deg, var(--pattern-ink) 0 22px, transparent 22px 60px);
+}
+
+.page-hero--grid {
+  background-image:
+    linear-gradient(var(--pattern-ink) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--pattern-ink) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+.page-hero--rings {
+  background-image: repeating-radial-gradient(circle at 85% 50%, transparent 0 34px, var(--pattern-ink) 34px 40px);
+}
+
+/* Halftone field fading in from the right edge */
+.page-hero__halftone {
+  position: absolute;
+  top: -20%;
+  right: -6%;
+  width: 52%;
+  height: 140%;
+  background-image: radial-gradient(circle, rgba(17, 17, 17, 0.2) 3px, transparent 3.6px);
+  background-size: 14px 14px;
+  mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page-hero__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 720px;
+}
+
+.page-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 5px 10px 4px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+}
+
+.page-hero__led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hero-color);
+  box-shadow: 0 0 0 1.5px var(--ink);
+}
+
+.page-hero__title {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  color: var(--ink);
+}
+
+.page-hero__subtitle {
+  max-width: 520px;
+  font-size: var(--text-base);
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(17, 17, 17, 0.82);
+}
+
+.page-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: 6px;
+}
+
+.page-hero__art {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  margin-right: 40px;
+}
+
+.page-hero__burst {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+}
+
+@media (max-width: 640px) {
+  .page-hero {
+    min-height: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 22px;
+  }
+
+  .page-hero__title {
+    font-size: clamp(2.5rem, 13vw, 3.5rem);
+  }
+
+  .page-hero__art {
+    display: none;
+  }
+
+  .page-hero__burst {
+    width: 64px;
+    height: 64px;
+    top: 10px;
+    right: 10px;
+  }
+}

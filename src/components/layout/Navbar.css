@@ -1,103 +1,184 @@
 /* ============================================
    FLOATING BOTTOM DOCK NAVBAR
+   Keycap dock: glossy plastic keys on an ink
+   chassis. The active key is locked down with
+   its LED lit in the page's accent colour.
    ============================================ */
 
 .dock-nav {
+  --chassis: #111111;
+  --cap: #F7F6F2;
+  --cap-side: #CFCCC2;
+  --cap-fg: #111111;
+  --cap-line: #111111;
+  --chassis-fg: #F7F6F2;
+
   position: fixed;
-  bottom: 24px;
+  bottom: 20px;
   left: 50%;
   z-index: var(--z-nav);
   pointer-events: auto;
   user-select: none;
 }
 
+[data-theme="dark"] .dock-nav {
+  --chassis: #1B1B1B;
+  --cap: #2C2C2C;
+  --cap-side: #121212;
+  --cap-fg: #F7F6F2;
+  --cap-line: #000000;
+}
+
 .dock-nav__inner {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  padding: 6px 12px;
-  background: var(--surface);
+  gap: 10px;
+  padding: 8px 12px 8px 10px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 40%), var(--chassis);
   border: 1.5px solid var(--border);
-  border-radius: var(--radius-pill);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 18px 40px -14px rgba(0, 0, 0, 0.55);
   transition: border-color var(--duration-fast) var(--ease-out),
               background-color var(--duration-fast) var(--ease-out);
-}
-
-[data-theme="dark"] .dock-nav__inner {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-}
-
-/* Brand mark */
-.dock-nav__logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  color: var(--text);
-  font-size: 13px;
-  transition: transform var(--duration-fast) var(--ease-spring);
-}
-
-.dock-nav__logo:hover {
-  transform: scale(1.1);
 }
 
 /* Divider */
 .dock-nav__divider {
   width: 1px;
-  height: 20px;
-  background: var(--border-subtle);
-  margin: 0 2px;
+  height: 28px;
+  background: rgba(247, 246, 242, 0.18);
 }
 
 /* Links row */
 .dock-nav__links {
   display: flex;
   align-items: center;
-  gap: 4px;
-}
-
-.dock-nav__item {
-  position: relative;
-  display: flex;
-  align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: var(--radius-pill);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
 }
 
-.dock-nav__item:hover {
-  color: var(--text);
-}
-
-.dock-nav__item--active {
-  color: var(--bg);
-  font-weight: 600;
-}
-
-/* Active sliding pill background */
-.dock-nav__active-pill {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-pill);
-  background: var(--text);
-  z-index: 0;
-}
-
-.dock-nav__icon-wrap,
-.dock-nav__label {
+/* ── Keycap ─────────────────────────────── */
+.dock-key {
+  --depth: 6px;
+  --press: 0px;
   position: relative;
-  z-index: 1;
+  display: grid;
+  width: 84px;
+  height: 58px;
+  padding-bottom: var(--depth);
+  color: var(--cap-fg);
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.dock-key__base {
+  position: absolute;
+  inset: var(--depth) 0 0;
+  border: 2px solid var(--cap-line);
+  border-radius: 13px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 2px, transparent 2px 9px),
+    var(--cap-side);
+  z-index: -1;
+}
+
+.dock-key__top {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+  padding-top: 7px;
+  border: 2px solid var(--cap-line);
+  border-radius: 13px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 46%),
+    var(--cap);
+  box-shadow:
+    inset 0 -5px 0 rgba(17, 17, 17, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+  transform: translateY(var(--press));
+  transition: transform 0.5s var(--ease-press),
+              background-color var(--duration-fast) var(--ease-out);
+}
+
+[data-theme="dark"] .dock-key__top {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 46%),
+    var(--cap);
+  box-shadow:
+    inset 0 -5px 0 rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.dock-key:hover {
+  --press: 1.5px;
+}
+
+.dock-key:active {
+  --press: calc(var(--depth) - 1px);
+}
+
+.dock-key:active .dock-key__top {
+  transition-duration: 0.05s;
+  transition-timing-function: ease-out;
+}
+
+/* Active page: locked down, accent cap, LED on */
+.dock-key--active {
+  --press: calc(var(--depth) - 2px);
+  --cap: var(--key-accent);
+  --cap-fg: #111111;
+}
+
+[data-theme="dark"] .dock-key--active .dock-key__top {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 46%),
+    var(--cap);
+}
+
+.dock-key__meta {
+  position: absolute;
+  inset: 5px 8px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.dock-key__legend {
+  font-size: 9px;
+  line-height: 1;
+  opacity: 0.55;
+}
+
+.dock-key__led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(17, 17, 17, 0.22);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.2s, box-shadow 0.3s;
+}
+
+.dock-key--active .dock-key__led {
+  background: #F7F6F2;
+  box-shadow:
+    0 0 0 1.5px #111111,
+    0 0 6px 2px rgba(255, 255, 255, 0.9);
+}
+
+.dock-key__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* Theme toggle */
@@ -108,13 +189,15 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: var(--muted);
-  transition: all var(--duration-fast) var(--ease-out);
+  color: var(--chassis-fg);
+  opacity: 0.75;
+  transition: opacity var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
 }
 
 .dock-nav__theme-toggle:hover {
-  color: var(--text);
-  background: var(--border-subtle);
+  opacity: 1;
+  background: rgba(247, 246, 242, 0.12);
 }
 
 /* Sunflower home button */
@@ -129,51 +212,47 @@
   cursor: pointer;
 }
 
-/* ── Mobile: ≤ 640px — hide labels, expand to fill width ── */
+/* ── Mobile: ≤ 640px — keys share the width ── */
 @media (max-width: 640px) {
   .dock-nav {
-    bottom: 16px;
-    /* Fill viewport width minus edge gutters; cap so it never exceeds 420px */
-    width: calc(100% - 32px);
-    max-width: 420px;
+    bottom: 12px;
+    width: calc(100% - 24px);
+    max-width: 440px;
   }
 
   .dock-nav__inner {
-    justify-content: space-between;
-    padding: 6px 10px;
-    width: 100%;
+    gap: 6px;
+    padding: 7px 8px;
+    border-radius: 22px;
   }
 
-  /* Hide text labels — icon-only on mobile */
-  .dock-nav__label {
+  .dock-nav__links {
+    flex: 1;
+    gap: 5px;
+  }
+
+  .dock-key {
+    flex: 1;
+    width: auto;
+    height: 54px;
+    --depth: 5px;
+  }
+
+  .dock-key__legend {
     display: none;
   }
 
-  .dock-nav__item {
-    padding: 8px 14px;
+  .dock-key__meta {
+    inset: 5px 6px auto;
+    justify-content: flex-end;
   }
 
-  /* Dividers take too much space on mobile */
+  .dock-key__label {
+    font-size: 9px;
+  }
+
   .dock-nav__divider {
     display: none;
-  }
-}
-
-/* ── Small mobile: ≤ 430px — tighter item padding ── */
-@media (max-width: 430px) {
-  .dock-nav {
-    /* Narrower gutters on small phones */
-    width: calc(100% - 24px);
-    bottom: 14px;
-  }
-
-  .dock-nav__inner {
-    padding: 5px 8px;
-    gap: 2px;
-  }
-
-  .dock-nav__item {
-    padding: 7px 10px;
   }
 
   .dock-nav__theme-toggle,
@@ -183,29 +262,18 @@
   }
 }
 
-/* ── Tiny: ≤ 380px — minimum comfortable tap targets ── */
+/* ── Tiny: ≤ 380px — drop the sunflower to keep tap targets roomy ── */
 @media (max-width: 380px) {
   .dock-nav {
     width: calc(100% - 16px);
-    bottom: 12px;
+    bottom: 8px;
   }
 
-  .dock-nav__inner {
-    padding: 4px 6px;
-    gap: 0;
+  .dock-key__label {
+    font-size: 8px;
+    letter-spacing: 0.02em;
   }
 
-  .dock-nav__item {
-    padding: 6px 8px;
-  }
-
-  .dock-nav__theme-toggle,
-  .dock-nav__sunflower {
-    width: 28px;
-    height: 28px;
-  }
-
-  /* Hide sunflower on very small screens to save space */
   .dock-nav__sunflower {
     display: none;
   }

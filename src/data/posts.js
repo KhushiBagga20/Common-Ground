@@ -9,6 +9,7 @@ export const posts = [
     interests: ['photography'],
     createdAt: '2026-08-04T14:22:00Z',
     replyCount: 18,
+    likeCount: 18,
     tags: ['beginner', 'advice'],
   },
   {
@@ -21,6 +22,7 @@ export const posts = [
     interests: ['guitar'],
     createdAt: '2026-08-03T19:45:00Z',
     replyCount: 24,
+    likeCount: 24,
     tags: ['beginner', 'songs'],
   },
   {
@@ -33,6 +35,7 @@ export const posts = [
     interests: ['drawing'],
     createdAt: '2026-08-05T10:30:00Z',
     replyCount: 31,
+    likeCount: 31,
     tags: ['progress', 'faces', 'challenge'],
   },
   {
@@ -45,6 +48,7 @@ export const posts = [
     interests: ['cooking'],
     createdAt: '2026-08-04T22:10:00Z',
     replyCount: 42,
+    likeCount: 42,
     tags: ['tools', 'kitchen'],
   },
   {
@@ -57,6 +61,7 @@ export const posts = [
     interests: ['film'],
     createdAt: '2026-08-02T16:55:00Z',
     replyCount: 27,
+    likeCount: 27,
     tags: ['recommendations', 'slow-cinema'],
   },
   {
@@ -69,6 +74,7 @@ export const posts = [
     interests: ['running'],
     createdAt: '2026-08-05T07:15:00Z',
     replyCount: 36,
+    likeCount: 36,
     tags: ['motivation', 'beginner'],
   },
   {
@@ -81,6 +87,7 @@ export const posts = [
     interests: ['bouldering'],
     createdAt: '2026-08-04T20:30:00Z',
     replyCount: 15,
+    likeCount: 15,
     tags: ['send', 'milestone'],
   },
   {
@@ -93,6 +100,7 @@ export const posts = [
     interests: ['ai-ml'],
     createdAt: '2026-08-03T13:00:00Z',
     replyCount: 12,
+    likeCount: 12,
     tags: ['study', 'papers', 'transformers'],
   },
   {
@@ -105,6 +113,7 @@ export const posts = [
     interests: ['writing'],
     createdAt: '2026-08-05T11:20:00Z',
     replyCount: 19,
+    likeCount: 41,
     tags: ['challenge', 'flash-fiction'],
   },
   {
@@ -117,6 +126,7 @@ export const posts = [
     interests: ['chess'],
     createdAt: '2026-08-04T15:45:00Z',
     replyCount: 22,
+    likeCount: 47,
     tags: ['openings', 'beginner'],
   },
   {
@@ -129,6 +139,7 @@ export const posts = [
     interests: ['gardening'],
     createdAt: '2026-08-03T09:30:00Z',
     replyCount: 14,
+    likeCount: 31,
     tags: ['monstera', 'growth'],
   },
   {
@@ -141,6 +152,7 @@ export const posts = [
     interests: ['photography'],
     createdAt: '2026-08-02T18:20:00Z',
     replyCount: 21,
+    likeCount: 45,
     tags: ['film', 'portra', 'first-roll'],
   },
   {
@@ -153,6 +165,7 @@ export const posts = [
     interests: ['gaming'],
     createdAt: '2026-08-01T23:15:00Z',
     replyCount: 33,
+    likeCount: 69,
     tags: ['outer-wilds', 'recommendation'],
   },
   {
@@ -165,6 +178,7 @@ export const posts = [
     interests: ['dance'],
     createdAt: '2026-08-04T21:00:00Z',
     replyCount: 16,
+    likeCount: 35,
     tags: ['beginner', 'confidence'],
   },
 ];

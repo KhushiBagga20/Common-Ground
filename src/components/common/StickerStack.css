@@ -1,0 +1,25 @@
+.sticker-stack {
+  display: grid;
+  grid-template-columns: repeat(2, 86px);
+  grid-auto-rows: 86px;
+  gap: 6px;
+}
+
+.sticker-stack__tile {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  border: 2.5px solid #111111;
+  border-radius: 22px;
+  box-shadow: 4px 4px 0 #111111;
+  font-size: 44px;
+  line-height: 1;
+  cursor: default;
+  user-select: none;
+}
+
+/* Stagger the pile so it doesn't look like a grid */
+.sticker-stack__tile:nth-child(2) { translate: 0 18px; }
+.sticker-stack__tile:nth-child(3) { translate: 14px -6px; }
+.sticker-stack__tile:nth-child(4) { translate: -4px 10px; }

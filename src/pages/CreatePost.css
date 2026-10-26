@@ -125,23 +125,6 @@
 }
 .cp-back-btn:hover { color: var(--text); }
 
-/* ── Heading block ─────────────────────────────────────────── */
-.cp-heading-block { margin-bottom: var(--space-lg); }
-
-.cp-heading {
-  font-size: var(--text-2xl);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin-bottom: var(--space-xs);
-}
-
-.cp-subheading {
-  font-size: var(--text-sm);
-  color: var(--muted);
-  line-height: 1.5;
-}
-
 /* ── Post type buttons ─────────────────────────────────────── */
 .cp-type-row {
   display: flex;
@@ -418,9 +401,12 @@
 }
 
 .cp-right-heading {
-  font-size: var(--text-lg);
-  font-weight: 800;
-  letter-spacing: -0.015em;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 900;
+  font-stretch: 75%;
+  line-height: 0.95;
+  text-transform: uppercase;
   margin-bottom: var(--space-md);
 }
 
@@ -1003,11 +989,6 @@
   .cp-right-card {
     padding: var(--space-md);
     box-shadow: 3px 3px 0 var(--border);
-  }
-
-  /* Heading: scale down */
-  .cp-heading {
-    font-size: var(--text-xl);
   }
 
   /* Title input: smaller font so it doesn't feel oversized on phone */

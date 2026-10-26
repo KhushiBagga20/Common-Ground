@@ -1,0 +1,45 @@
+/* ============================================
+   CONFETTI — sticker bits that pop from a click
+   ============================================ */
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-toast);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti__burst {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.confetti__piece {
+  position: absolute;
+  left: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+  width: var(--size);
+  height: var(--size);
+  opacity: 0;
+  animation: confetti-fly 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.confetti__piece--dot {
+  border-radius: 50%;
+  background: currentColor;
+  border: 1.5px solid #111111;
+}
+
+.confetti__piece--square {
+  border-radius: 2px;
+  background: currentColor;
+  border: 1.5px solid #111111;
+}
+
+@keyframes confetti-fly {
+  0%   { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(0.3); }
+  60%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), calc(var(--dy) + 36px)) rotate(var(--rot)) scale(1); }
+}

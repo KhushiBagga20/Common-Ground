@@ -4,9 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Plus, Heart, Calendar, Clock, MapPin, Wifi, ChevronDown, X, Users, CheckCircle } from 'lucide-react';
 import PageCanvas from '../components/layout/PageCanvas';
+import PageHeader from '../components/common/PageHeader';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
+import Stamp from '../components/common/Stamp';
+import Ticker from '../components/common/Ticker';
+import LiveTicker from '../components/common/LiveTicker';
+import StickerStack from '../components/common/StickerStack';
+import { celebrate } from '../lib/celebrate';
+import { useAppData } from '../context/AppDataContext';
 import { staggerContainer, staggerItem } from '../animations/variants';
-import { events as allEventsData, categories } from '../data/events';
+import { categories } from '../data/events';
 import './Events.css';
 
 /* ── Avatar placeholder glyphs ───────────────── */
@@ -15,6 +22,12 @@ const AVATAR_GLYPHS = ['🙂', '😄', '🤩', '😊', '🥳', '😎'];
 function getAvatars(count) {
   const shown = Math.min(count, 3);
   return Array.from({ length: shown }, (_, i) => AVATAR_GLYPHS[i % AVATAR_GLYPHS.length]);
+}
+
+/* "Sat, 24 May 2025" → { dow: 'Sat', day: '24', month: 'May' } for the ticket stub */
+function stubDate(label) {
+  const m = /^(\w+),\s*(\d+)\s+(\w+)/.exec(label ?? '');
+  return m ? { dow: m[1], day: m[2], month: m[3] } : null;
 }
 
 /* ── Category badge color map ─────────────────── */
@@ -54,7 +67,7 @@ const EVENT_HOSTS = {
 
 /* ── EventDetailModal ─────────────────────────── */
 function EventDetailModal({ event, isInterested, onToggleInterest, isJoined, onJoin, onClose }) {
-  const interestedCount = isInterested ? event.interested + 1 : event.interested;
+  const interestedCount = event.interested;
   const avatars = getAvatars(interestedCount);
 
   useEffect(() => {
@@ -94,6 +107,19 @@ function EventDetailModal({ event, isInterested, onToggleInterest, isJoined, onJ
         </button>
         <div className="ed-image-wrap">
           <img src={event.image} alt={event.title} className="ed-image" />
+          <AnimatePresence>
+            {isJoined && (
+              <motion.div
+                className="ed-stamp"
+                initial={{ scale: 1.8, opacity: 0, rotate: -30 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 520, damping: 22 }}
+              >
+                <Stamp text="Going · See you there" center="GO!" color="var(--green)" size={96} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         <div className="ed-content">
           <span className="ed-category" style={{ color: CATEGORY_COLOR[event.category] ?? 'var(--muted)' }}>
@@ -124,23 +150,25 @@ function EventDetailModal({ event, isInterested, onToggleInterest, isJoined, onJ
                 {avatars.map((g, i) => <span key={i} className="event-card__avatar">{g}</span>)}
               </div>
               <Users size={13} style={{ color: 'var(--muted)' }} />
-              <span className="ed-interested-count">{interestedCount} interested</span>
+              <span className="ed-interested-count"><Ticker value={interestedCount} /> interested</span>
               <motion.button
                 className={`event-card__interested-btn${isInterested ? ' event-card__interested-btn--active' : ''}`}
-                onClick={onToggleInterest}
+                onClick={(e) => onToggleInterest(e.currentTarget)}
                 whileTap={{ scale: 0.94 }}
                 whileHover={{ scale: 1.04 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                 aria-label={isInterested ? 'Remove interest' : 'Mark as interested'}
                 aria-pressed={isInterested}
               >
-                <Heart size={13} fill={isInterested ? 'currentColor' : 'none'} strokeWidth={isInterested ? 0 : 2} />
+                <span key={String(isInterested)} className={isInterested ? 'pop' : ''} style={{ display: 'inline-flex' }}>
+                  <Heart size={13} fill={isInterested ? 'currentColor' : 'none'} strokeWidth={isInterested ? 0 : 2} />
+                </span>
                 {isInterested ? 'Interested ✓' : 'Interested'}
               </motion.button>
             </div>
             <motion.button
               className={`ed-join-btn${isJoined ? ' ed-join-btn--joined' : ''}`}
-              onClick={onJoin}
+              onClick={(e) => onJoin(e.currentTarget)}
               disabled={isJoined}
               whileTap={isJoined ? {} : { scale: 0.96 }}
               whileHover={isJoined ? {} : { scale: 1.03 }}
@@ -160,11 +188,13 @@ function EventDetailModal({ event, isInterested, onToggleInterest, isJoined, onJ
 /* ── EventCard ────────────────────────────────── */
 function EventCard({ event, isInterested, onToggle, onOpen }) {
   const avatars = getAvatars(event.interested);
-  const count = isInterested ? event.interested + 1 : event.interested;
+  const count = event.interested;
+  const stub = stubDate(event.date);
 
   return (
     <motion.article
-      className="event-card event-card--clickable"
+      className="event-card event-card--clickable sticker sticker--hover"
+      style={{ '--card-accent': CATEGORY_COLOR[event.category] ?? 'var(--yellow)' }}
       variants={staggerItem}
       layout
       onClick={onOpen}
@@ -181,6 +211,14 @@ function EventCard({ event, isInterested, onToggle, onOpen }) {
           className="event-card__image"
           loading="lazy"
         />
+        {/* Ticket-stub date */}
+        {stub && (
+          <span className="event-card__stub" aria-hidden="true">
+            <span className="event-card__stub-dow">{stub.dow}</span>
+            <span className="event-card__stub-day">{stub.day}</span>
+            <span className="event-card__stub-month">{stub.month}</span>
+          </span>
+        )}
       </div>
 
       {/* Body */}
@@ -231,24 +269,26 @@ function EventCard({ event, isInterested, onToggle, onOpen }) {
                 <span key={i} className="event-card__avatar">{g}</span>
               ))}
             </div>
-            <span>{count} interested</span>
+            <span><Ticker value={count} /> interested</span>
           </div>
 
           {/* Interested button — stopPropagation prevents opening modal */}
           <motion.button
             className={`event-card__interested-btn${isInterested ? ' event-card__interested-btn--active' : ''}`}
-            onClick={(e) => { e.stopPropagation(); onToggle(event.id); }}
+            onClick={(e) => { e.stopPropagation(); onToggle(event.id, e.currentTarget); }}
             whileTap={{ scale: 0.94 }}
             whileHover={{ scale: 1.04 }}
             transition={{ type: 'spring', stiffness: 400, damping: 20 }}
             aria-label={isInterested ? 'Remove interest' : 'Mark as interested'}
             aria-pressed={isInterested}
           >
-            <Heart
-              size={13}
-              fill={isInterested ? 'currentColor' : 'none'}
-              strokeWidth={isInterested ? 0 : 2}
-            />
+            <span key={String(isInterested)} className={isInterested ? 'pop' : ''} style={{ display: 'inline-flex' }}>
+              <Heart
+                size={13}
+                fill={isInterested ? 'currentColor' : 'none'}
+                strokeWidth={isInterested ? 0 : 2}
+              />
+            </span>
             {isInterested ? 'Interested ✓' : 'Interested'}
           </motion.button>
         </div>
@@ -265,27 +305,24 @@ export default function Events() {
   const [searchQuery, setSearchQuery]       = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeTab, setActiveTab]           = useState('all');
-  const [interestedSet, setInterestedSet]   = useState(new Set());
   const [showAll, setShowAll]               = useState(false);
-  const [selectedEvent, setSelectedEvent]   = useState(null);
-  const [joinedSet, setJoinedSet]           = useState(new Set());
+  const [selectedId, setSelectedId]         = useState(null);
+  const { events: allEventsData, isInterested, toggleInterested, isGoing, markGoing, interestedEventIds } = useAppData();
 
-  /* Toggle interested state */
-  const handleToggleInterest = useCallback((id) => {
-    setInterestedSet(prev => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }, []);
-
-  /* Join event (local state only) */
-  const handleJoin = useCallback((id) => {
-    setJoinedSet(prev => new Set([...prev, id]));
-  }, []);
+  // Look the open event up live so its counts update while the modal is open
+  const selectedEvent = allEventsData.find(e => e.id === selectedId) ?? null;
 
   /* Close modal */
-  const handleClose = useCallback(() => setSelectedEvent(null), []);
+  const handleClose = useCallback(() => setSelectedId(null), []);
+
+  /* Hearts fly when you mark an event; confetti when you're going */
+  const handleToggleInterest = useCallback(async (id, el) => {
+    if (await toggleInterested(id)) celebrate(el, { count: 10, shapes: ['heart'] });
+  }, [toggleInterested]);
+
+  const handleGoing = useCallback(async (id, el) => {
+    if (!isGoing(id) && await markGoing(id)) celebrate(el);
+  }, [isGoing, markGoing]);
 
   /* Filter events */
   const filteredEvents = useMemo(() => {
@@ -306,26 +343,22 @@ export default function Events() {
     }
 
     if (activeTab === 'popular') {
-      list = [...list].sort((a, b) => {
-        const ai = interestedSet.has(a.id) ? a.interested + 1 : a.interested;
-        const bi = interestedSet.has(b.id) ? b.interested + 1 : b.interested;
-        return bi - ai;
-      });
+      list = [...list].sort((a, b) => b.interested - a.interested);
     }
 
     if (activeTab === 'interested') {
-      list = list.filter(e => interestedSet.has(e.id));
+      list = list.filter(e => interestedEventIds.has(e.id));
     }
 
     return list;
-  }, [activeCategory, searchQuery, activeTab, interestedSet]);
+  }, [allEventsData, activeCategory, searchQuery, activeTab, interestedEventIds]);
 
   const visibleEvents = showAll ? filteredEvents : filteredEvents.slice(0, INITIAL_VISIBLE);
   const hasMore = filteredEvents.length > INITIAL_VISIBLE && !showAll;
 
   return (
     <PageCanvas>
-      <KineticCheckerboard />
+      <KineticCheckerboard tint="var(--blue)" />
 
       {/* ── Event Detail Modal ── */}
       <AnimatePresence>
@@ -333,10 +366,10 @@ export default function Events() {
           <EventDetailModal
             key={selectedEvent.id}
             event={selectedEvent}
-            isInterested={interestedSet.has(selectedEvent.id)}
-            onToggleInterest={() => handleToggleInterest(selectedEvent.id)}
-            isJoined={joinedSet.has(selectedEvent.id)}
-            onJoin={() => handleJoin(selectedEvent.id)}
+            isInterested={isInterested(selectedEvent.id)}
+            onToggleInterest={(el) => handleToggleInterest(selectedEvent.id, el)}
+            isJoined={isGoing(selectedEvent.id)}
+            onJoin={(el) => handleGoing(selectedEvent.id, el)}
             onClose={handleClose}
           />
         )}
@@ -354,15 +387,25 @@ export default function Events() {
         <span className="events-bg-deco events-bg-deco--heart" aria-hidden="true">♡</span>
         <span className="events-bg-deco events-bg-deco--heart" aria-hidden="true">♡</span>
 
-        <div className="events-container">
+        <motion.div className="events-live" variants={staggerItem}>
+          <LiveTicker />
+        </motion.div>
 
-          {/* ── Header ── */}
-          <motion.div className="events-header" variants={staggerItem}>
-            <h1 className="events-title">Events ✨</h1>
-            <p className="events-subtitle">
-              Discover workshops, meetups and events happening around you.
-            </p>
-          </motion.div>
+        <PageHeader
+          channel={2}
+          name="Events"
+          title="What's"
+          highlight="on."
+          subtitle="Workshops, meetups and online sessions happening around you. Tap one to see who's going."
+          color="var(--blue)"
+          highlightColor="var(--yellow)"
+          pattern="rings"
+          burst={`${allEventsData.length} new`}
+          burstColor="var(--pink)"
+          art={<StickerStack items={['🎟️', '🎸', '🏺', '🎨']} colors={['var(--paper)', 'var(--yellow)', 'var(--pink)', 'var(--green)']} />}
+        />
+
+        <div className="events-container">
 
           {/* ── Search + Create ── */}
           <motion.div className="events-toolbar" variants={staggerItem}>
@@ -481,9 +524,9 @@ export default function Events() {
                   <EventCard
                     key={event.id}
                     event={event}
-                    isInterested={interestedSet.has(event.id)}
+                    isInterested={isInterested(event.id)}
                     onToggle={handleToggleInterest}
-                    onOpen={() => setSelectedEvent(event)}
+                    onOpen={() => setSelectedId(event.id)}
                   />
                 ))}
               </motion.div>

@@ -67,26 +67,77 @@
 .comm__deco--leaf        { top: 560px; left: 42px;   opacity: 0.5; }
 
 /* ── Hero card ────────────────────────────────────────────────── */
+/* Hero — a solid panel in the community's own colour, with its own pattern */
 .comm__hero {
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-xl);
-  /* overflow:hidden clips accent bar & any internal overflow */
+  --pattern-ink: rgba(17, 17, 17, 0.09);
+  background-color: var(--comm-accent);
+  color: var(--ink);
+  border: 2.5px solid var(--ink);
+  border-radius: 28px;
+  /* overflow:hidden clips the pattern & any internal overflow */
   overflow: hidden;
-  box-shadow: 5px 5px 0 var(--border);
+  isolation: isolate;
+  box-shadow: 6px 6px 0 var(--ink);
   position: relative;
   z-index: 2;
-  transition:
-    box-shadow var(--duration-fast) var(--ease-out),
-    transform  var(--duration-fast) var(--ease-out);
+}
+
+[data-theme="dark"] .comm__hero {
+  border-color: #F7F6F2;
+  box-shadow: 6px 6px 0 #F7F6F2;
+}
+
+.comm__hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.comm__hero--dots    { background-image: radial-gradient(circle, var(--pattern-ink) 1.6px, transparent 2.2px); background-size: 16px 16px; }
+.comm__hero--stripes { background-image: repeating-linear-gradient(90deg, var(--pattern-ink) 0 22px, transparent 22px 60px); }
+.comm__hero--grid    { background-image: linear-gradient(var(--pattern-ink) 1.5px, transparent 1.5px), linear-gradient(90deg, var(--pattern-ink) 1.5px, transparent 1.5px); background-size: 26px 26px; }
+.comm__hero--rings   { background-image: repeating-radial-gradient(circle at 88% 50%, transparent 0 34px, var(--pattern-ink) 34px 40px); }
+
+/* Dark swatches (e.g. Chess) flip to cream type, a yellow shadow and cream buttons */
+.comm__hero--dark {
+  --pattern-ink: rgba(247, 246, 242, 0.1);
+  color: #F7F6F2;
+  box-shadow: 6px 6px 0 var(--yellow);
+}
+
+.comm__hero--dark .comm__join-btn {
+  border-color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--yellow);
+}
+
+.comm__hero--dark .comm__join-btn--joined {
+  background: var(--yellow);
 }
 
 /* Thin colorful top accent line — clipped by parent overflow:hidden */
+.comm__stamp {
+  position: absolute;
+  top: 18px;
+  right: 190px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .comm__stamp {
+    top: 12px;
+    right: 12px;
+  }
+}
+
 .comm__hero-accent {
-  height: 5px;
-  width: 100%;
-  background: var(--comm-accent, #4D7CFE);
-  flex-shrink: 0;
+  display: none;
 }
 
 .comm__hero-body {
@@ -109,39 +160,42 @@
 .comm__hero-category {
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: 8px;
+  padding: 5px 6px 5px 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--ink);
   font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--muted);
+  font-weight: 700;
 }
 
 .comm__hero-cat-badge {
   display: inline-block;
   padding: 2px 8px;
   border-radius: var(--radius-pill);
-  border: 1.5px solid var(--border-subtle);
-  font-size: var(--text-xs);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted);
 }
 
 .comm__hero-name {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--text);
-  text-transform: uppercase;
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  color: inherit;
 }
 
 .comm__hero-desc {
   font-size: var(--text-base);
-  color: var(--text-secondary);
-  line-height: 1.55;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.85;
+  line-height: 1.5;
   max-width: 560px;
-  font-style: italic;
 }
 
 .comm__hero-stats {
@@ -154,12 +208,17 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  padding: 5px 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--ink);
   font-size: var(--text-sm);
-  color: var(--muted);
+  font-weight: 600;
 }
 
 .comm__hero-stat strong {
-  color: var(--text);
+  color: var(--ink);
 }
 
 /* Right column */
@@ -173,10 +232,13 @@
 
 /* Community identity icon */
 .comm__hero-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-lg);
-  border: 2px solid;
+  width: 84px;
+  height: 84px;
+  border-radius: 24px;
+  border: 2.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 4px 4px 0 var(--ink);
+  rotate: -6deg;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,7 +246,7 @@
 }
 
 .comm__hero-icon-emoji {
-  font-size: 2rem;
+  font-size: 2.6rem;
   line-height: 1;
 }
 
@@ -207,16 +269,17 @@
     color            var(--duration-fast) var(--ease-out),
     box-shadow       var(--duration-fast) var(--ease-out);
 
-  /* Default: primary black */
-  background: var(--text);
-  color: var(--bg);
-  box-shadow: 3px 3px 0 var(--border);
+  /* Default: ink button on the coloured hero */
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 3px 3px 0 var(--paper);
 }
 
 .comm__join-btn--joined {
-  background: var(--card-bg);
-  color: var(--text);
-  box-shadow: 2px 2px 0 var(--border);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
 }
 
 /* ── Tags row ─────────────────────────────────────────────────── */
@@ -321,10 +384,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: var(--text-lg);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text);
 }
 
 /* Create-post CTA strip */
@@ -754,7 +813,7 @@
   }
 
   .comm__hero-name {
-    font-size: 1.5rem;
+    font-size: clamp(2.2rem, 11vw, 3rem);
   }
 
   .comm__create-cta {

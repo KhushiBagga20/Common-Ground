@@ -3,15 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import PageCanvas from '../components/layout/PageCanvas';
+import PageHeader from '../components/common/PageHeader';
+import KineticCheckerboard from '../components/common/KineticCheckerboard';
+import StickerStack from '../components/common/StickerStack';
+import Burst from '../components/common/Burst';
 import InterestTag from '../components/common/InterestTag';
 import Smiley from '../components/common/Smiley';
-import { hobbies, hobbyCategories } from '../data/hobbies';
-import { communities, getTrendingCommunities } from '../data/communities';
+import { hobbyCategories } from '../data/hobbies';
+import { useAppData } from '../context/AppDataContext';
 import { staggerContainer, staggerItem } from '../animations/variants';
+import { revealAt, isDarkColor } from '../lib/motion';
 import './Explore.css';
 
 export default function Explore() {
   const navigate = useNavigate();
+  const { hobbies, communities, trendingCommunities, getHobby } = useAppData();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -29,12 +35,17 @@ export default function Explore() {
       );
     }
     return result;
-  }, [searchQuery, activeCategory]);
+  }, [hobbies, searchQuery, activeCategory]);
 
-  const trendingCommunities = getTrendingCommunities();
+  // Hobbies without a community land on Community's "might not exist yet" state
+  const openHobby = (hobby) => {
+    const community = communities.find(c => c.hobbyId === hobby.id);
+    navigate(`/community/${community ? community.id : hobby.id}`);
+  };
 
   return (
     <PageCanvas>
+      <KineticCheckerboard tint="var(--yellow)" />
       <motion.div
         className="explore"
         variants={staggerContainer}
@@ -42,13 +53,17 @@ export default function Explore() {
         animate="animate"
       >
         {/* Header */}
-        <motion.div className="explore__header" variants={staggerItem}>
-          <div className="explore__header-row">
-            <h1 className="explore__title">Explore</h1>
-            <Smiley size={28} mood="happy" animate={false} />
-          </div>
-          <p className="text-muted">Browse hobbies, discover communities, find your thing.</p>
-        </motion.div>
+        <PageHeader
+          channel={1}
+          name="Explore"
+          title="Find your"
+          highlight="thing."
+          subtitle="Browse every hobby, peek into the communities around them, and follow whatever makes you curious."
+          color="var(--yellow)"
+          highlightColor="var(--pink)"
+          pattern="dots"
+          art={<StickerStack items={['📸', '🎸', '🧗', '🎨']} colors={['var(--paper)', 'var(--blue)', 'var(--green)', 'var(--pink)']} />}
+        />
 
         {/* Search */}
         <motion.div className="explore__search" variants={staggerItem}>
@@ -83,29 +98,28 @@ export default function Explore() {
 
         {/* Hobbies grid */}
         <motion.section className="explore__section" variants={staggerItem}>
-          <h2 className="explore__section-title">
+          <h2 className="explore__section-title section-title">
             {activeCategory === 'All' ? 'All Hobbies' : activeCategory}
-            <span className="text-muted" style={{ fontWeight: 400, fontSize: 'var(--text-sm)', marginLeft: 8 }}>
-              {filteredHobbies.length}
-            </span>
+            <span className="explore__count mono-label">{String(filteredHobbies.length).padStart(2, '0')}</span>
           </h2>
           <div className="explore__hobby-grid">
             {filteredHobbies.map((hobby, i) => (
               <motion.div
                 key={hobby.id}
-                className="explore__hobby-card"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.03, duration: 0.35 }}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                onClick={() => navigate(`/community/${communities.find(c => c.hobbyId === hobby.id)?.id || ''}`)}
+                className={`explore__poster sticker sticker--hover ${isDarkColor(hobby.color) ? 'explore__poster--dark' : ''}`}
+                style={{ '--poster-color': hobby.color, '--card-accent': 'var(--border)' }}
+                {...revealAt(i, 4)}
+                onClick={() => openHobby(hobby)}
               >
-                <div className="explore__hobby-emoji">{hobby.emoji}</div>
-                <div className="explore__hobby-info">
-                  <h3 className="explore__hobby-name">{hobby.name}</h3>
-                  <p className="explore__hobby-desc text-muted">{hobby.description}</p>
+                <div className="explore__poster-top mono-label">
+                  <span>No.{String(hobbies.indexOf(hobby) + 1).padStart(2, '0')}</span>
+                  <span className="explore__poster-cat">{hobby.category}</span>
                 </div>
-                <div className="explore__hobby-accent" style={{ backgroundColor: hobby.color }} />
+                <div className="explore__poster-art">
+                  <span className="explore__poster-emoji wiggle-on-hover">{hobby.emoji}</span>
+                </div>
+                <h3 className="explore__poster-title display">{hobby.name}</h3>
+                <p className="explore__poster-label">{hobby.description}</p>
               </motion.div>
             ))}
           </div>
@@ -120,19 +134,20 @@ export default function Explore() {
 
         {/* Trending communities */}
         <motion.section className="explore__section" variants={staggerItem}>
-          <h2 className="explore__section-title">Trending communities</h2>
+          <h2 className="explore__section-title section-title">Trending communities 🔥</h2>
           <div className="explore__trending">
             {trendingCommunities.map((community, i) => (
               <motion.div
                 key={community.id}
-                className="explore__trending-card"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + i * 0.05, duration: 0.35 }}
-                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="explore__trending-card sticker sticker--hover"
+                style={{ '--card-accent': community.color, '--comm-color': community.color }}
+                {...revealAt(i, 4)}
                 onClick={() => navigate(`/community/${community.id}`)}
               >
-                <div className="explore__trending-accent" style={{ backgroundColor: community.color }} />
+                <div className="explore__trending-band">
+                  <span className="explore__trending-emoji">{getHobby(community.hobbyId)?.emoji ?? '✨'}</span>
+                  {i === 0 && <Burst text="HOT" color="var(--yellow)" size={58} className="explore__trending-burst" />}
+                </div>
                 <h3 className="explore__trending-name">{community.name}</h3>
                 <p className="explore__trending-desc text-muted">{community.description}</p>
                 <div className="explore__trending-meta text-muted">
@@ -145,7 +160,7 @@ export default function Explore() {
 
         {/* Interest tags cloud */}
         <motion.section className="explore__section" variants={staggerItem}>
-          <h2 className="explore__section-title">Quick explore</h2>
+          <h2 className="explore__section-title section-title">Quick explore</h2>
           <div className="explore__tags-cloud">
             {hobbies.map(hobby => (
               <InterestTag
@@ -153,7 +168,7 @@ export default function Explore() {
                 label={hobby.name}
                 emoji={hobby.emoji}
                 color={hobby.color}
-                onClick={() => navigate(`/community/${communities.find(c => c.hobbyId === hobby.id)?.id || ''}`)}
+                onClick={() => openHobby(hobby)}
               />
             ))}
           </div>

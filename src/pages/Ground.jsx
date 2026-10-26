@@ -15,10 +15,12 @@ import Sunflower from '../components/common/Sunflower';
 import ChessPattern from '../components/common/ChessPattern';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
 import AccordionGallery from '../components/common/AccordionGallery/AccordionGallery';
-import { hobbies, hobbyCategories, getHobbyById } from '../data/hobbies';
-import { communities, getCommunitiesByHobby } from '../data/communities';
-import { posts as defaultPosts, getPostsByInterest } from '../data/posts';
-import { users } from '../data/users';
+import { hobbyCategories } from '../data/hobbies';
+import { useAppData } from '../context/AppDataContext';
+import Ticker from '../components/common/Ticker';
+import LiveTicker from '../components/common/LiveTicker';
+import { celebrate } from '../lib/celebrate';
+import { revealAt } from '../lib/motion';
 import { staggerContainer, staggerItem } from '../animations/variants';
 import './Ground.css';
 
@@ -536,9 +538,6 @@ export default function Ground({ initialTab }) {
   const [liked, setLiked]                             = useState({});
   const [bookmarked, setBookmarked]                   = useState({});
   const [likes, setLikes]                             = useState({ p1: 128, p2: 87, p3: 64, p4: 95, p5: 154, p6: 110 });
-  const [discLiked, setDiscLiked]                     = useState({});
-  const [discLikes, setDiscLikes]                     = useState({ p1: 18, p2: 24, p3: 31, p4: 42, p5: 27, p6: 36, p7: 15, p8: 12 });
-  const [joinedCommunities, setJoinedCommunities]     = useState({});
   
   const [showAllHobbies, setShowAllHobbies]           = useState(false);
   const [showAllCommunities, setShowAllCommunities]   = useState(false);
@@ -555,18 +554,18 @@ export default function Ground({ initialTab }) {
   const hobbiesRef  = useRef(null);
   const vibeRef     = useRef(null);
 
-  // Dynamic user interests from localStorage with rich curated fallback
+  const {
+    hobbies, communities, posts: defaultPosts, interests, getHobby: getHobbyById, postsForInterest: getPostsByInterest,
+    isJoined, toggleJoin, isLiked: isPostLiked, toggleLike: togglePostLike,
+  } = useAppData();
+
+  // Hobbies picked on Discover, with a curated fallback
   const userInterests = useMemo(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem('cg-interests') || '[]');
-      const mapped = stored.map(id => getHobbyById(id)).filter(Boolean);
-      if (mapped.length > 0) return mapped;
-    } catch {
-      // fallback
-    }
+    const mapped = interests.map(id => getHobbyById(id)).filter(Boolean);
+    if (mapped.length > 0) return mapped;
     const defaultIds = ['photography', 'guitar', 'drawing', 'cooking', 'astronomy', 'bouldering'];
     return defaultIds.map(id => getHobbyById(id)).filter(Boolean);
-  }, []);
+  }, [interests, getHobbyById]);
 
   const hasInterests = userInterests.length > 0;
 
@@ -594,21 +593,13 @@ export default function Ground({ initialTab }) {
       }
     }
     return unique.slice(0, 6);
-  }, [userInterests]);
-
-  const toggleDiscLike = (id) => {
-    setDiscLiked(prev => {
-      const next = !prev[id];
-      setDiscLikes(cur => ({ ...cur, [id]: next ? (cur[id] || 0) + 1 : (cur[id] || 1) - 1 }));
-      return { ...prev, [id]: next };
-    });
-  };
+  }, [userInterests, defaultPosts, getPostsByInterest]);
 
   // Suggested unpicked hobbies for user
   const suggestions = useMemo(() => {
     const ids = new Set(userInterests.map(h => h.id));
     return hobbies.filter(h => !ids.has(h.id)).slice(0, 6);
-  }, [userInterests]);
+  }, [userInterests, hobbies]);
 
   // Display items for interest shelf: selected hobbies + recommended to always fill grid gracefully
   const displayShelfItems = useMemo(() => {
@@ -622,7 +613,7 @@ export default function Ground({ initialTab }) {
       });
     }
     return items;
-  }, [userInterests]);
+  }, [userInterests, hobbies]);
 
   // Map hobby images for AccordionGallery — real photographic images of people engaged in each hobby
   const HOBBY_IMAGES = {
@@ -674,7 +665,6 @@ export default function Ground({ initialTab }) {
 
   const toggleFollow   = (id) => setFollowed(p => ({ ...p, [id]: !p[id] }));
   const toggleBookmark = (id) => setBookmarked(p => ({ ...p, [id]: !p[id] }));
-  const toggleJoinComm = (id) => setJoinedCommunities(p => ({ ...p, [id]: !p[id] }));
   const toggleLike     = (id) => {
     setLiked(prev => {
       const next = !prev[id];
@@ -729,6 +719,15 @@ export default function Ground({ initialTab }) {
   const visiblePeople = showAllPeople ? PEOPLE : PEOPLE.slice(0, 4);
   const visibleCommunities = showAllCommunities ? RICH_COMMUNITIES : RICH_COMMUNITIES.slice(0, 5);
 
+  // Live member/post counts for the trending cards (they roll when you join)
+  const communityStats = (card) => {
+    const live = communities.find(x => x.id === card.id);
+    if (!live) return `${card.peopleCount} · ${card.postCount}`;
+    return <><Ticker value={live.memberCount} /> people · <Ticker value={live.postCount} /> posts</>;
+  };
+
+  const communityAccent = (card) => communities.find(x => x.id === card.id)?.color ?? 'var(--yellow)';
+
   const vibeRecommendations = useMemo(() => {
     if (!selectedVibe) return [];
     const current = VIBES.find(v => v.id === selectedVibe);
@@ -755,14 +754,10 @@ export default function Ground({ initialTab }) {
     { id: 'p6', cls: 'g-av--acoustic', emoji: '🎸', community: 'Acoustic Sessions',        time: '12h ago', text: 'Folk music nights are back! Wednesday 7 PM in the common hall.',                          img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80', alt: 'Folk music night',   comments: 20, shares: 15 },
   ];
 
-  const PostCard = ({ post, delay = 0 }) => (
+  const PostCard = ({ post, index = 0 }) => (
     <motion.article
-      className="g-post"
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -3, boxShadow: '0 10px 28px rgba(0,0,0,0.07)' }}
-      layout
+      className="g-post sticker"
+      {...revealAt(index, 1)}
     >
       <div className="g-post__header">
         <div className="g-post__author">
@@ -782,11 +777,16 @@ export default function Ground({ initialTab }) {
         <div className="g-post__action-row">
           <button
             className={`g-act-btn ${liked[post.id] ? 'g-act-btn--liked' : ''}`}
-            onClick={() => toggleLike(post.id)}
+            onClick={(e) => {
+              if (!liked[post.id]) celebrate(e.currentTarget, { count: 8, shapes: ['heart'] });
+              toggleLike(post.id);
+            }}
             aria-label={`Like — ${likes[post.id] ?? 0}`}
           >
-            <Heart size={14} fill={liked[post.id] ? 'var(--red)' : 'none'} />
-            <span>{likes[post.id] ?? 0}</span>
+            <span key={String(!!liked[post.id])} className={liked[post.id] ? 'pop' : ''} style={{ display: 'inline-flex' }}>
+              <Heart size={14} fill={liked[post.id] ? 'var(--red)' : 'none'} />
+            </span>
+            <Ticker value={likes[post.id] ?? 0} />
           </button>
           <button className="g-act-btn" aria-label={`Comment — ${post.comments}`}>
             <MessageCircle size={14} /><span>{post.comments}</span>
@@ -808,7 +808,7 @@ export default function Ground({ initialTab }) {
 
   return (
     <PageCanvas>
-      <KineticCheckerboard />
+      <KineticCheckerboard tint="var(--yellow)" />
       <div className="g-checker-bg" aria-hidden="true" />
 
       <div className="ground">
@@ -852,6 +852,11 @@ export default function Ground({ initialTab }) {
           </div>
         </header>
 
+        {/* ══ LIVE STRIP ══════════════════════════════ */}
+        <div className="g-live">
+          <LiveTicker />
+        </div>
+
         {/* ══ VIEW SWITCHER ════════════════════════════ */}
         <AnimatePresence mode="wait">
           {activeTab === 'ground' ? (
@@ -877,8 +882,13 @@ export default function Ground({ initialTab }) {
                   </svg>
 
                   <div className="g-greeting__text">
-                    <h1 className="g-greeting__title font-rounded">
-                      {hasInterests ? 'Good morning, Explorer! ☀️' : 'Welcome to CommonGround! ☀️'}
+                    <span className="g-greeting__kicker mono-label">
+                      <span className="g-greeting__led" aria-hidden="true" />
+                      Channel 01 · Your Ground
+                    </span>
+                    <h1 className="g-greeting__title display">
+                      {hasInterests ? 'Good morning,' : 'Welcome to'}{' '}
+                      <span className="outline-word">{hasInterests ? 'Explorer!' : 'CommonGround!'}</span>
                     </h1>
                     <p className="g-greeting__sub">
                       {hasInterests
@@ -961,7 +971,7 @@ export default function Ground({ initialTab }) {
                   </div>
 
                   <div className="g-posts-list">
-                    {POSTS.map((p, i) => <PostCard key={p.id} post={p} delay={i * 0.06} />)}
+                    {POSTS.map((p, i) => <PostCard key={p.id} post={p} index={i} />)}
 
                     <AnimatePresence>
                       {showAllPosts && (
@@ -972,7 +982,7 @@ export default function Ground({ initialTab }) {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
                         >
-                          {EXTRA_POSTS.map((p, i) => <PostCard key={p.id} post={p} delay={i * 0.07} />)}
+                          {EXTRA_POSTS.map((p, i) => <PostCard key={p.id} post={p} index={i} />)}
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -998,9 +1008,8 @@ export default function Ground({ initialTab }) {
                     ].map(({ bg, icon, title, sub }) => (
                       <motion.div
                         key={title}
-                        className={`g-hap ${bg}`}
+                        className={`g-hap ${bg} sticker sticker--hover`}
                         onClick={() => setActiveTab('discover')}
-                        whileHover={{ x: 4, transition: { type: 'spring', stiffness: 400 } }}
                       >
                         <div className="g-hap__inner">
                           <div className="g-hap__icon">{icon}</div>
@@ -1043,11 +1052,11 @@ export default function Ground({ initialTab }) {
 
                   <div className="g-disc-3d-grid">
                     {personalizedDiscussions.map((post, i) => {
-                      const author = users.find(u => u.id === post.authorId) || { name: 'Explorer', bio: '' };
+                      const author = { name: post.authorName || 'Explorer' };
                       const hobbyId = post.interests?.[0];
                       const hobbyObj = getHobbyById(hobbyId) || { name: 'Interest', emoji: '✨', color: '#FF72B6' };
-                      const isLiked = discLiked[post.id];
-                      const likeCount = discLikes[post.id] ?? (post.replyCount * 2 + 3);
+                      const isLiked = isPostLiked(post.id);
+                      const likeCount = post.likeCount ?? 0;
 
                       return (
                         <motion.article
@@ -1056,10 +1065,7 @@ export default function Ground({ initialTab }) {
                           style={{
                             '--card-accent': hobbyObj.color || '#FF72B6',
                           }}
-                          initial={{ opacity: 0, y: 16 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.08 + i * 0.05, duration: 0.3 }}
-                          whileHover={{ y: -6, x: -3 }}
+                          {...revealAt(i, 2)}
                           onClick={() => {
                             const targetComm = communities.find(c => c.id === post.communityId || c.hobbyId === hobbyId);
                             if (targetComm) navigate(`/community/${targetComm.id}`);
@@ -1105,11 +1111,17 @@ export default function Ground({ initialTab }) {
                             <div className="g-disc-card__actions">
                               <button
                                 className={`g-disc-action-btn ${isLiked ? 'g-disc-action-btn--liked' : ''}`}
-                                onClick={() => toggleDiscLike(post.id)}
-                                aria-label="Upvote discussion"
+                                onClick={async (e) => {
+                                  const el = e.currentTarget;
+                                  if (await togglePostLike(post.id)) celebrate(el, { count: 8, shapes: ['heart'] });
+                                }}
+                                aria-label={isLiked ? 'Remove upvote' : 'Upvote discussion'}
+                                aria-pressed={isLiked}
                               >
-                                <Heart size={14} fill={isLiked ? 'var(--red)' : 'none'} />
-                                <span>{likeCount}</span>
+                                <span key={String(isLiked)} className={isLiked ? 'pop' : ''} style={{ display: 'inline-flex' }}>
+                                  <Heart size={14} fill={isLiked ? 'var(--red)' : 'none'} />
+                                </span>
+                                <Ticker value={likeCount} />
                               </button>
 
                               <div className="g-disc-replies font-rounded">
@@ -1370,11 +1382,9 @@ export default function Ground({ initialTab }) {
                   {visibleCommunities.map((c, i) => (
                     <motion.div
                       key={c.id}
-                      className="g-trending-ref-card"
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.05, duration: 0.28 }}
-                      whileHover={{ y: -5, scale: 1.012 }}
+                      className="g-trending-ref-card sticker sticker--hover"
+                      style={{ '--card-accent': communityAccent(c) }}
+                      {...revealAt(i, 5)}
                       onClick={() => navigate(`/community/${c.id}`)}
                     >
                       <div className="g-trending-ref-card__img" style={{ backgroundColor: c.bgColor }}>
@@ -1383,7 +1393,7 @@ export default function Ground({ initialTab }) {
 
                       <div className="g-trending-ref-card__body">
                         <h3 className="g-trending-ref-card__title font-rounded">{c.name}</h3>
-                        <p className="g-trending-ref-card__stats">{c.peopleCount} · {c.postCount}</p>
+                        <p className="g-trending-ref-card__stats">{communityStats(c)}</p>
 
                         <div className="g-trending-ref-card__footer">
                           <div className="g-trending-ref-card__avatars">
@@ -1393,13 +1403,14 @@ export default function Ground({ initialTab }) {
                           </div>
 
                           <button
-                            className={`g-join-btn font-rounded ${joinedCommunities[c.id] ? 'g-join-btn--active' : ''}`}
-                            onClick={(e) => {
+                            className={`g-join-btn font-rounded ${isJoined(c.id) ? 'g-join-btn--active' : ''}`}
+                            onClick={async (e) => {
                               e.stopPropagation();
-                              toggleJoinComm(c.id);
+                              const el = e.currentTarget;
+                              if (await toggleJoin(c.id)) celebrate(el);
                             }}
                           >
-                            {joinedCommunities[c.id] ? 'Joined ✓' : 'Join'}
+                            {isJoined(c.id) ? 'Joined ✓' : 'Join'}
                           </button>
                         </div>
                       </div>

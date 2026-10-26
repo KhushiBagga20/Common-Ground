@@ -1,12 +1,14 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart } from 'lucide-react';
+import { Heart, LogIn, LogOut } from 'lucide-react';
 import Lenis from 'lenis';
 
 // Layout & Common Components
 import PageCanvas from '../components/layout/PageCanvas';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
+import Button from '../components/common/Button';
+import Smiley from '../components/common/Smiley';
 
 // Profile Sub-components
 import ProfileHeader from '../components/profile/ProfileHeader';
@@ -22,35 +24,28 @@ import ConnectionsCard from '../components/profile/ConnectionsCard';
 import AchievementsCard from '../components/profile/AchievementsCard';
 
 // Data
-import { profileData } from '../data/profileData';
-import { communities } from '../data/communities';
+import { useAppData } from '../context/AppDataContext';
+import { useAuth } from '../context/AuthContext';
+import { useProfile } from '../hooks/useProfile';
 
 // Animation Variants
 import { staggerContainer, staggerItem } from '../animations/variants';
+import { revealOnScroll } from '../lib/motion';
 
 // Stylesheet
 import './Profile.css';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const [profile, setProfile] = useState(() => {
-    const saved = localStorage.getItem('cg-profile');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error("Failed to parse cg-profile from localStorage", e);
-      }
-    }
-    // Seed localStorage so it's consistently stored
-    localStorage.setItem('cg-profile', JSON.stringify(profileData));
-    return profileData;
-  });
+  const { profile, updateProfile, loading } = useProfile();
+  const { communities, isJoined, deletePost } = useAppData();
+  const { configured, user, openSignIn, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState('about');
 
   // Smooth scroll activation on desktop views
   useEffect(() => {
     let lenis;
+    let frameId;
     if (window.innerWidth > 768) {
       lenis = new Lenis({
         duration: 1.1,
@@ -62,35 +57,34 @@ export default function Profile() {
 
       const raf = (time) => {
         lenis.raf(time);
-        requestAnimationFrame(raf);
+        frameId = requestAnimationFrame(raf);
       };
 
-      requestAnimationFrame(raf);
+      frameId = requestAnimationFrame(raf);
     }
 
     return () => {
+      cancelAnimationFrame(frameId);
       if (lenis) {
         lenis.destroy();
       }
     };
   }, []);
 
-  const handleProfileUpdate = (updatedFields) => {
-    setProfile(prev => {
-      const next = {
-        ...prev,
-        ...updatedFields
-      };
-      localStorage.setItem('cg-profile', JSON.stringify(next));
-      return next;
-    });
+  // Deleting an activity also removes the post it points to
+  const handleDeleteActivity = (activityId) => {
+    const activity = profile.activities.find(a => a.id === activityId);
+    if (activity?.postId) deletePost(activity.postId);
+    updateProfile({ activities: profile.activities.filter(a => a.id !== activityId) });
   };
 
   // Get relevant communities
+  // Joined communities, plus the ones matching your hobbies
   const userCommunities = useMemo(() => {
+    if (!profile) return [];
     const hobbyIds = profile.hobbies.map(h => h.id);
-    return communities.filter(c => hobbyIds.includes(c.hobbyId));
-  }, [profile.hobbies]);
+    return communities.filter(c => isJoined(c.id) || hobbyIds.includes(c.hobbyId));
+  }, [profile, communities, isJoined]);
 
   // Tab switcher content
   const renderTabContent = () => {
@@ -109,15 +103,15 @@ export default function Profile() {
               <AboutCard aboutMe={profile.aboutMe} />
             </motion.div>
             
-            <motion.div variants={staggerItem} style={{ marginBottom: 'var(--space-lg)' }}>
+            <motion.div {...revealOnScroll} style={{ marginBottom: 'var(--space-lg)' }}>
               <HobbiesCard hobbies={profile.hobbies} />
             </motion.div>
             
-            <motion.div variants={staggerItem} style={{ marginBottom: 'var(--space-lg)' }}>
-              <ActivityCard activities={profile.activities} />
+            <motion.div {...revealOnScroll} style={{ marginBottom: 'var(--space-lg)' }}>
+              <ActivityCard activities={profile.activities} onDelete={handleDeleteActivity} />
             </motion.div>
             
-            <motion.div variants={staggerItem}>
+            <motion.div {...revealOnScroll}>
               <BadgesCard badges={profile.badges} />
             </motion.div>
           </motion.div>
@@ -178,7 +172,7 @@ export default function Profile() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <ActivityCard activities={profile.activities} />
+            <ActivityCard activities={profile.activities} onDelete={handleDeleteActivity} />
           </motion.div>
         );
 
@@ -219,7 +213,27 @@ export default function Profile() {
               <h3 className="profile-card__title">Account Settings</h3>
             </div>
             <div className="profile-card__body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-              <div>
+              <div className="profile-account">
+                <span className="mono-label text-muted">Account</span>
+                {!configured && (
+                  <p className="profile-account__text">
+                    Demo mode — your profile and activity are saved in this browser only.
+                  </p>
+                )}
+                {configured && !user && (
+                  <>
+                    <p className="profile-account__text">You're browsing as a guest.</p>
+                    <Button size="sm" icon={<LogIn size={15} />} onClick={() => openSignIn()}>Sign in with email</Button>
+                  </>
+                )}
+                {configured && user && (
+                  <>
+                    <p className="profile-account__text">Signed in as <strong>{user.email}</strong></p>
+                    <Button size="sm" variant="secondary" icon={<LogOut size={15} />} onClick={signOut}>Sign out</Button>
+                  </>
+                )}
+              </div>
+              <div style={{ borderTop: '1.5px solid var(--border-light)', paddingTop: 'var(--space-md)' }}>
                 <label className="text-muted" style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase' }}>Theme preference</label>
                 <p className="text-secondary" style={{ fontSize: 'var(--text-sm)', marginTop: '2px' }}>
                   You can change the global theme from the floating bottom navigation.
@@ -247,10 +261,22 @@ export default function Profile() {
     }
   };
 
+  if (loading || !profile) {
+    return (
+      <PageCanvas maxWidth="1320px">
+        <KineticCheckerboard tint="var(--green)" />
+        <div className="profile-loading">
+          <Smiley size={44} mood="happy" />
+          <p className="text-muted">Loading your profile…</p>
+        </div>
+      </PageCanvas>
+    );
+  }
+
   return (
     <PageCanvas maxWidth="1320px">
       {/* Background Checkerboard Texture */}
-      <KineticCheckerboard />
+      <KineticCheckerboard tint="var(--green)" />
 
       <motion.div
         className="profile-container"
@@ -261,9 +287,22 @@ export default function Profile() {
         <div className="profile-grid">
           {/* Main Column */}
           <main className="profile-grid__main">
-            {/* Header section */}
+            {/* Guests see the sample profile until they sign in */}
+            {configured && !user && (
+              <motion.button
+                type="button"
+                className="profile-guest-banner"
+                variants={staggerItem}
+                onClick={() => openSignIn('Sign in to make this profile yours.')}
+              >
+                <span className="mono-label">Guest</span>
+                <span>You're viewing a sample profile. <strong>Sign in to make it yours →</strong></span>
+              </motion.button>
+            )}
+
+            {/* Header section — keyed so its edit form picks up a freshly loaded profile */}
             <motion.section variants={staggerItem}>
-              <ProfileHeader data={profile} onUpdate={handleProfileUpdate} />
+              <ProfileHeader key={profile.id ?? 'local'} data={profile} onUpdate={updateProfile} />
             </motion.section>
 
             {/* Stats section */}
@@ -294,11 +333,11 @@ export default function Profile() {
               <ProfileCompletionCard items={profile.completionItems} />
             </motion.div>
             
-            <motion.div variants={staggerItem}>
+            <motion.div {...revealOnScroll}>
               <ConnectionsCard connections={profile.connections} />
             </motion.div>
             
-            <motion.div variants={staggerItem}>
+            <motion.div {...revealOnScroll}>
               <AchievementsCard achievements={profile.achievements} />
             </motion.div>
           </aside>

@@ -2,11 +2,9 @@
    GROUND PAGE — CommonGround Design System v6 (Reference Match)
    ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
-
 /* ─── FONT UTILITY ────────────────────────────────────────── */
 .font-rounded {
-  font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -214,7 +212,7 @@
   font-weight: 700;
   color: var(--text);
   margin-bottom: 4px;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 [data-theme="dark"] .g-cute-note__title {
   color: #FFF;
@@ -278,7 +276,7 @@
 
 .g-header__logo {
   color: var(--text);
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 
 .g-header__center {
@@ -307,7 +305,7 @@
   cursor: pointer;
   transition: color 0.15s, background 0.15s;
   white-space: nowrap;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 .g-toggle-btn:hover { color: var(--text); }
 .g-toggle-btn--on {
@@ -362,11 +360,13 @@
 }
 
 .g-sec-title {
-  font-size: 1.28rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 75%;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  line-height: 0.95;
+  text-transform: uppercase;
   color: var(--text);
-  font-family: 'Fredoka', system-ui, sans-serif;
-  letter-spacing: -0.01em;
 }
 
 .g-title-spark {
@@ -398,7 +398,7 @@
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
   padding: 5px 12px;
   border-radius: 8px;
 }
@@ -1022,7 +1022,7 @@
   font-weight: 700;
   color: var(--text);
   margin-bottom: 4px;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 
 .g-hobby-ref-card__count {
@@ -1063,15 +1063,7 @@
   transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-theme="dark"] .g-trending-ref-card {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), var(--shadow-sm);
-}
 
-.g-trending-ref-card:hover {
-  transform: translateY(-6px) scale(1.015);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), var(--shadow-md);
-  border-color: var(--border-subtle);
-}
 
 .g-trending-ref-card__img {
   height: 135px;
@@ -1108,7 +1100,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 
 .g-trending-ref-card__stats {
@@ -1147,7 +1139,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.18s;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 
 .g-join-btn:hover {
@@ -1261,7 +1253,7 @@
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text);
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 
 .g-vibe-card__dot {
@@ -1461,10 +1453,10 @@
 }
 
 .g-community-banner__body { flex: 0 0 auto; width: 48%; z-index: 1; }
-.g-community-banner__title { font-size: clamp(1.7rem, 3.2vw, 2.5rem); font-weight: 700; color: var(--text); line-height: 1.05; margin-bottom: 12px; font-family: 'Fredoka', system-ui, sans-serif; }
+.g-community-banner__title { font-size: clamp(1.7rem, 3.2vw, 2.5rem); font-weight: 700; color: var(--text); line-height: 1.05; margin-bottom: 12px; font-family: var(--font-primary); }
 .g-community-banner__accent { color: var(--pink); }
 .g-community-banner__sub { font-size: 0.94rem; color: var(--muted); line-height: 1.55; margin-bottom: 20px; }
-.g-community-btn { background: var(--text); color: var(--bg); border: none; border-radius: 12px; padding: 11px 22px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.18s; font-family: 'Fredoka', system-ui, sans-serif; }
+.g-community-btn { background: var(--text); color: var(--bg); border: none; border-radius: 12px; padding: 11px 22px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.18s; font-family: var(--font-primary); }
 .g-community-btn:hover { background: var(--pink); color: white; transform: scale(1.02); }
 
 .g-community-banner__illo { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 12px; position: relative; min-height: 180px; }
@@ -1498,13 +1490,13 @@
 .g-surp-plane      { position: absolute; top: 22px; right: 20%; animation: g-plane 4s ease-in-out infinite; opacity: 0.6; }
 
 .g-surp-content { display: flex; flex-direction: column; align-items: center; text-align: center; z-index: 1; padding: 0 20px; max-width: 400px; }
-.g-surp-title { font-size: clamp(1.25rem, 2.2vw, 1.6rem); font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; font-family: 'Fredoka', system-ui, sans-serif; }
+.g-surp-title { font-size: clamp(1.25rem, 2.2vw, 1.6rem); font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; font-family: var(--font-primary); }
 .g-surp-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
 .g-surp-btn {
   background: var(--surface); border: 2px solid var(--text); border-radius: 999px;
   padding: 10px 24px; font-size: 0.85rem; font-weight: 700; color: var(--text);
   cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
-  transition: background 0.18s, color 0.18s, transform 0.18s; font-family: 'Fredoka', system-ui, sans-serif;
+  transition: background 0.18s, color 0.18s, transform 0.18s; font-family: var(--font-primary);
 }
 .g-surp-btn:hover { background: var(--text); color: var(--bg); transform: scale(1.04); }
 .g-surp-btn--spin .g-surp-btn-icon { animation: g-spin 0.7s ease-in-out; }
@@ -1520,30 +1512,40 @@
   align-items: stretch;
 }
 
+/* Greeting — the Ground's yellow hero (v2-style poster panel) */
 .g-greeting {
-  background: var(--surface);
-  border: 2px solid var(--border);
-  border-radius: 24px;
-  padding: 28px 26px;
+  --outline-fill: var(--pink);
+  background-color: var(--yellow);
+  background-image: radial-gradient(circle, rgba(17, 17, 17, 0.09) 1.6px, transparent 2.2px);
+  background-size: 16px 16px;
+  border: 2.5px solid var(--ink);
+  border-radius: 26px;
+  padding: 30px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   position: relative;
   overflow: hidden;
-  min-height: 148px;
-  box-shadow: 4px 4px 0 var(--border);
-  transition: box-shadow 0.22s, transform 0.2s;
+  isolation: isolate;
+  min-height: 190px;
+  color: var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
 }
 .g-greeting::before {
   content: '';
   position: absolute;
-  top: 0; left: 32px; right: 32px;
-  height: 5px;
-  background: var(--yellow);
-  border-radius: 0 0 4px 4px;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
 }
-.g-greeting:hover { box-shadow: 6px 6px 0 var(--border); transform: translateY(-2px); }
+[data-theme="dark"] .g-greeting,
+[data-theme="dark"] .g-inspiration {
+  border-color: #F7F6F2;
+  box-shadow: 6px 6px 0 #F7F6F2;
+}
 
 .g-greeting__trail {
   position: absolute;
@@ -1555,28 +1557,47 @@
 
 .g-greeting__text { flex: 1; z-index: 1; }
 
+.g-greeting__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 5px 10px 4px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.g-greeting__led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 1.5px var(--ink);
+}
+
 .g-greeting__title {
-  font-size: clamp(1.35rem, 2vw, 1.9rem);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.15;
-  margin-bottom: 8px;
-  white-space: normal;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  color: var(--ink);
+  margin-bottom: 12px;
 }
 
 .g-greeting__sub {
-  font-size: 0.92rem;
-  color: var(--muted);
-  font-weight: 500;
+  font-size: 0.95rem;
+  color: rgba(17, 17, 17, 0.8);
+  font-weight: 600;
 }
 
 .g-greeting__sf { flex-shrink: 0; z-index: 1; }
 
+/* Quote — a pink striped panel beside the greeting */
 .g-inspiration {
-  background: var(--surface);
-  border: 2px solid var(--border);
-  border-radius: 24px;
+  background-color: var(--pink);
+  background-image: repeating-linear-gradient(-45deg, rgba(17, 17, 17, 0.07) 0 14px, transparent 14px 34px);
+  color: var(--ink);
+  border: 2.5px solid var(--ink);
+  border-radius: 26px;
   padding: 28px 22px;
   display: flex;
   align-items: center;
@@ -1584,28 +1605,22 @@
   gap: 14px;
   position: relative;
   overflow: hidden;
-  min-height: 148px;
-  box-shadow: 4px 4px 0 var(--border);
-  transition: box-shadow 0.22s, transform 0.2s;
+  min-height: 190px;
+  box-shadow: 6px 6px 0 var(--ink);
+  transition: transform 0.4s var(--ease-press);
 }
-.g-inspiration::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 32px; right: 32px;
-  height: 5px;
-  background: var(--pink);
-  border-radius: 0 0 4px 4px;
-}
-.g-inspiration:hover { box-shadow: 6px 6px 0 var(--border); transform: translateY(-2px); }
+.g-inspiration:hover { transform: rotate(-0.6deg); }
 
 .g-inspiration__body { flex: 1; z-index: 1; }
 
 .g-inspiration__quote {
-  font-size: clamp(0.97rem, 1.5vw, 1.22rem);
-  font-weight: 700;
-  line-height: 1.52;
-  color: var(--text);
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 78%;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 
 .g-inspiration__plant { width: 70px; height: 88px; flex-shrink: 0; }
@@ -1641,14 +1656,7 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), var(--shadow-sm);
   transition: box-shadow 0.22s, transform 0.25s cubic-bezier(0.16,1,0.3,1);
 }
-.g-post:hover {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), var(--shadow-md);
-  transform: translateY(-4px);
-}
 
-[data-theme="dark"] .g-post {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), var(--shadow-sm);
-}
 
 .g-post__header { display: flex; align-items: center; justify-content: space-between; }
 .g-post__author { display: flex; align-items: center; gap: 10px; }
@@ -1670,7 +1678,7 @@
   font-weight: 700;
   color: var(--text);
   margin-bottom: 2px;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 .g-post__time { font-size: 0.72rem; color: var(--muted); }
 
@@ -1726,7 +1734,7 @@
   border: 1.8px solid var(--border-light); border-radius: 14px;
   padding: 13px; font-size: 0.86rem; font-weight: 700; color: var(--text);
   cursor: pointer; text-align: center; transition: all 0.18s;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), var(--shadow-sm);
 }
 .g-load-more:hover { border-color: var(--pink); color: var(--pink); background: var(--g-pink); }
@@ -1740,7 +1748,6 @@
   border: 1.8px solid var(--border-light); cursor: pointer;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), var(--shadow-sm); transition: all 0.18s;
 }
-.g-hap:hover { border-color: var(--border-subtle); transform: translateX(4px) translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), var(--shadow-md); }
 .g-hap--green  { background: var(--g-hap-green); }
 .g-hap--purple { background: var(--g-hap-purple); }
 .g-hap--yellow { background: var(--g-hap-yellow); }
@@ -1756,7 +1763,7 @@
 .g-hap__title {
   font-size: 0.84rem; font-weight: 700; color: var(--text); margin-bottom: 2px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 .g-hap__sub { font-size: 0.72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -1790,7 +1797,7 @@
 
 .g-person-card__name {
   font-size: 0.9rem; font-weight: 700; color: var(--text); line-height: 1.2;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 .g-person-card__label { font-size: 0.74rem; color: var(--muted); }
 
@@ -1804,7 +1811,7 @@
   width: 100%; margin-top: 4px; border: 1.8px solid var(--border);
   background: var(--surface); color: var(--text); font-size: 0.78rem; font-weight: 700;
   padding: 8px 10px; border-radius: 12px; cursor: pointer; transition: all 0.18s;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: var(--font-primary);
 }
 .g-view-btn:hover { background: var(--pink); border-color: var(--pink); color: white; transform: scale(1.02); }
 
@@ -1820,7 +1827,7 @@
   flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
   gap: 12px; max-width: 460px; margin: 0 auto; z-index: 1;
 }
-.g-cta__title { font-size: 1.75rem; font-weight: 700; color: var(--text); font-family: 'Fredoka', system-ui, sans-serif; }
+.g-cta__title { font-size: 1.75rem; font-weight: 700; color: var(--text); font-family: var(--font-primary); }
 .g-cta__sub { font-size: 0.95rem; color: var(--muted); line-height: 1.55; }
 .g-cta__plane, .g-cta__sf { flex-shrink: 0; z-index: 1; display: flex; align-items: center; }
 .g-cta-plane-anim { animation: g-plane 5s ease-in-out infinite; }
@@ -1850,7 +1857,7 @@
 .g-modal__top { display: flex; align-items: flex-start; gap: 14px; padding: 0 24px; margin-top: -34px; position: relative; z-index: 1; }
 .g-modal__avatar { width: 72px; height: 72px; border-radius: 50%; border: 3.5px solid var(--surface); object-fit: cover; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
 .g-modal__identity { padding-top: 38px; flex: 1; }
-.g-modal__name { font-size: 1.1rem; font-weight: 700; color: var(--text); font-family: 'Fredoka', system-ui, sans-serif; }
+.g-modal__name { font-size: 1.1rem; font-weight: 700; color: var(--text); font-family: var(--font-primary); }
 .g-modal__label { font-size: 0.78rem; color: var(--pink); font-weight: 600; margin-top: 2px; }
 .g-modal__bio { font-size: 0.8rem; color: var(--muted); margin-top: 4px; line-height: 1.45; }
 .g-modal__loc { display: flex; align-items: center; gap: 4px; font-size: 0.73rem; color: var(--muted); margin-top: 5px; }
@@ -1863,11 +1870,11 @@
 .g-modal__stat-item { display: flex; align-items: center; }
 .g-modal__stat-sep { width: 1.5px; height: 28px; background: var(--border-light); margin-right: 20px; }
 .g-modal__stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.g-modal__stat-n { font-size: 1.2rem; font-weight: 700; color: var(--text); font-family: 'Fredoka', system-ui, sans-serif; }
+.g-modal__stat-n { font-size: 1.2rem; font-weight: 700; color: var(--text); font-family: var(--font-primary); }
 .g-modal__stat-l { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
 
 .g-modal__section { padding: 14px 24px 0; }
-.g-modal__section-title { font-size: 0.8rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 9px; font-family: 'Fredoka', system-ui, sans-serif; }
+.g-modal__section-title { font-size: 0.8rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 9px; font-family: var(--font-primary); }
 .g-modal__tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .g-modal__tag { font-size: 0.74rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; background: var(--g-pink); color: var(--text); border: 1.5px solid var(--border-light); }
 .g-modal__post { display: flex; align-items: flex-start; gap: 8px; font-size: 0.82rem; color: var(--text); line-height: 1.45; background: var(--bg); padding: 10px 14px; border-radius: 12px; margin-bottom: 6px; }
@@ -1877,7 +1884,7 @@
   width: calc(100% - 48px); margin: 20px 24px 0; padding: 13px 18px;
   background: var(--text); color: var(--bg); border: 2px solid var(--text);
   border-radius: 14px; font-size: 0.88rem; font-weight: 700; cursor: pointer;
-  transition: all 0.2s; font-family: 'Fredoka', system-ui, sans-serif;
+  transition: all 0.2s; font-family: var(--font-primary);
 }
 .g-modal__follow:hover { background: var(--pink); border-color: var(--pink); color: white; }
 .g-modal__follow--active { background: var(--border-light) !important; color: var(--text) !important; border-color: var(--border-light) !important; }
@@ -1890,9 +1897,9 @@
   box-shadow: var(--shadow-sm);
 }
 .g-quiz-banner__body { flex: 1; z-index: 1; }
-.g-quiz-banner__title { font-size: 1.35rem; font-weight: 700; color: var(--text); margin-bottom: 4px; font-family: 'Fredoka', system-ui, sans-serif; }
+.g-quiz-banner__title { font-size: 1.35rem; font-weight: 700; color: var(--text); margin-bottom: 4px; font-family: var(--font-primary); }
 .g-quiz-banner__sub { font-size: 0.86rem; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
-.g-quiz-btn { background: var(--text); color: var(--bg); border: none; border-radius: 12px; padding: 10px 20px; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: all 0.18s; font-family: 'Fredoka', system-ui, sans-serif; }
+.g-quiz-btn { background: var(--text); color: var(--bg); border: none; border-radius: 12px; padding: 10px 20px; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: all 0.18s; font-family: var(--font-primary); }
 .g-quiz-btn:hover { background: var(--pink); color: white; transform: scale(1.02); }
 .g-quiz-banner__sf { flex-shrink: 0; }
 
@@ -1903,7 +1910,7 @@
   width: 100%; padding: 14px 18px 14px 50px; border-radius: 18px;
   border: 1.8px solid var(--border-light); background: var(--surface);
   color: var(--text); font-size: 0.92rem; font-weight: 600; outline: none;
-  transition: border-color 0.18s, box-shadow 0.18s; font-family: 'Fredoka', system-ui, sans-serif;
+  transition: border-color 0.18s, box-shadow 0.18s; font-family: var(--font-primary);
   box-shadow: var(--shadow-sm);
 }
 .g-search-input:focus { border-color: var(--pink); box-shadow: 0 0 0 4px rgba(255,114,182,0.12); }
@@ -1914,7 +1921,7 @@
 .g-pill {
   padding: 8px 18px; border-radius: 999px; font-size: 0.84rem; font-weight: 600;
   border: 1.8px solid var(--border-light); background: var(--surface); color: var(--text);
-  cursor: pointer; white-space: nowrap; transition: all 0.15s; font-family: 'Fredoka', system-ui, sans-serif;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s; font-family: var(--font-primary);
   box-shadow: var(--shadow-sm);
 }
 .g-pill:hover { background: var(--border-light); }
@@ -2067,4 +2074,9 @@
 
 @media (max-width: 360px) {
   .g-toggle-btn { padding: 6px 8px; font-size: 0.74rem; }
+}
+
+/* ─── LIVE STRIP (under the header) ───────────────────────── */
+.g-live {
+  margin: -6px 0 22px;
 }
