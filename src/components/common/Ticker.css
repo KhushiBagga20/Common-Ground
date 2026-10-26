@@ -1,0 +1,11 @@
+.ticker {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Old and new values share one cell while they roll past each other */
+.ticker__value {
+  grid-area: 1 / 1;
+}

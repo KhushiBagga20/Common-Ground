@@ -5,6 +5,7 @@ import { ArrowLeft, Sun, Moon } from 'lucide-react';
 import CardSwap, { HOBBIES_DECK } from '../components/CardSwap/CardSwap';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
 import { useTheme } from '../hooks/useTheme';
+import { useAppData } from '../context/AppDataContext';
 import { staggerContainer, staggerItem } from '../animations/variants';
 import './Discover.css';
 
@@ -19,14 +20,16 @@ export default function Discover() {
 
   const progressCount = Math.min(selectedHobbies.length, HOBBIES_DECK.length);
 
+  const { saveInterests } = useAppData();
+
   const handleSelectionChange = useCallback((hobbies) => {
     setSelectedHobbies(hobbies);
-    // Persist to localStorage so Ground page picks up the selections
+    // Saved to your account when signed in, else this browser — Ground picks them up
     if (hobbies.length > 0) {
-      localStorage.setItem('cg-interests', JSON.stringify(hobbies.map(h => h.id)));
+      saveInterests(hobbies.map(h => h.id));
       localStorage.setItem('cg-onboarded', 'true');
     }
-  }, []);
+  }, [saveInterests]);
 
   return (
     <div className="discover">

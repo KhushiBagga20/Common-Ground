@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Users, MessageCircle, ArrowLeft, Heart, Share2,
   Plus, Sparkles, Info,
@@ -11,9 +11,11 @@ import InterestTag from '../components/common/InterestTag';
 import Smiley from '../components/common/Smiley';
 import Sunflower from '../components/common/Sunflower';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
-import { getCommunityById } from '../data/communities';
-import { getPostsByCommunity } from '../data/posts';
-import { getHobbyById } from '../data/hobbies';
+import Stamp from '../components/common/Stamp';
+import Ticker from '../components/common/Ticker';
+import { celebrate } from '../lib/celebrate';
+import { revealAt, isDarkColor } from '../lib/motion';
+import { useAppData } from '../context/AppDataContext';
 import { users } from '../data/users';
 import { staggerContainer, staggerItem } from '../animations/variants';
 import './Community.css';
@@ -122,30 +124,36 @@ function DoodleLeaf({ style = {} }) {
   );
 }
 
+const HERO_PATTERNS = ['dots', 'stripes', 'grid', 'rings'];
+
 /* ── Main Component ───────────────────────────────────────────── */
 export default function Community() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [joined, setJoined] = useState(false);
-  const [likedPosts, setLikedPosts] = useState({});
+  const { getCommunity, getHobby, postsForCommunity, isJoined, toggleJoin, isLiked, toggleLike } = useAppData();
 
-  const community    = getCommunityById(id);
-  const communityPosts = useMemo(() => community ? getPostsByCommunity(id) : [], [id, community]);
-  const hobby        = community ? getHobbyById(community.hobbyId) : null;
+  const community      = getCommunity(id);
+  const communityPosts = community ? postsForCommunity(id) : [];
+  const hobby          = community ? getHobby(community.hobbyId) : null;
+  const joined         = isJoined(id);
 
-  const relatedHobbies = useMemo(() => {
-    if (!community?.relatedHobbies) return [];
-    return community.relatedHobbies.map(hid => getHobbyById(hid)).filter(Boolean);
-  }, [community]);
+  const relatedHobbies = (community?.relatedHobbies ?? []).map(hid => getHobby(hid)).filter(Boolean);
+
+  // Confetti from the button when you join; hearts when you like
+  const handleJoin = async (e) => {
+    const el = e.currentTarget;
+    if (await toggleJoin(id)) celebrate(el);
+  };
+
+  const handleLike = async (e, postId) => {
+    const el = e.currentTarget;
+    if (await toggleLike(postId)) celebrate(el, { count: 8, shapes: ['heart'] });
+  };
 
   const members = useMemo(() => {
     if (!community) return [];
     return users.filter(u => u.communities.includes(id)).slice(0, 5);
   }, [id, community]);
-
-  function toggleLike(postId) {
-    setLikedPosts(prev => ({ ...prev, [postId]: !prev[postId] }));
-  }
 
   /* ── Not found ─────────────────────────────────────────────── */
   if (!community) {
@@ -163,11 +171,14 @@ export default function Community() {
   }
 
   const accentColor = community.color || '#4D7CFE';
+  const darkHero = isDarkColor(accentColor);
+  // Each community gets its own pattern, like v2's room doors
+  const pattern = HERO_PATTERNS[[...community.id].reduce((n, c) => n + c.charCodeAt(0), 0) % HERO_PATTERNS.length];
 
   return (
     <PageCanvas maxWidth="1200px">
-      {/* Kinetic checkerboard background */}
-      <KineticCheckerboard />
+      {/* Kinetic checkerboard background, tinted to the community */}
+      <KineticCheckerboard tint={accentColor} />
 
       {/* Page decorations — behind all cards */}
       <div className="comm__deco-layer" aria-hidden="true">
@@ -227,7 +238,7 @@ export default function Community() {
 
         {/* ── Hero card ─────────────────────────────────────────── */}
         <motion.div
-          className="comm__hero"
+          className={`comm__hero comm__hero--${pattern} ${darkHero ? 'comm__hero--dark' : ''}`}
           variants={staggerItem}
           style={{ '--comm-accent': accentColor }}
           whileHover={{ y: -2 }}
@@ -235,6 +246,21 @@ export default function Community() {
         >
           {/* Accent bar — clipped by overflow:hidden on .comm__hero */}
           <div className="comm__hero-accent" />
+
+          {/* Member stamp — thuds down when you join */}
+          <AnimatePresence>
+            {joined && (
+              <motion.div
+                className="comm__stamp"
+                initial={{ scale: 1.8, opacity: 0, rotate: -30 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                exit={{ scale: 0.6, opacity: 0, transition: { duration: 0.15 } }}
+                transition={{ type: 'spring', stiffness: 520, damping: 22 }}
+              >
+                <Stamp text="Member · CommonGround" center="IN" color={darkHero ? '#F7F6F2' : '#111111'} size={104} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div className="comm__hero-body">
             <div className="comm__hero-left">
@@ -247,25 +273,25 @@ export default function Community() {
                 </span>
               )}
 
-              <h1 className="comm__hero-name">{community.name}</h1>
+              <h1 className="comm__hero-name display">{community.name}</h1>
 
               <p className="comm__hero-desc">{community.description}</p>
 
               <div className="comm__hero-stats">
                 <div className="comm__hero-stat">
                   <Users size={14} strokeWidth={2.2} />
-                  <span><strong>{community.memberCount}</strong> people</span>
+                  <span><strong><Ticker value={community.memberCount} /></strong> people</span>
                 </div>
                 <div className="comm__hero-stat">
                   <MessageCircle size={14} strokeWidth={2.2} />
-                  <span><strong>{community.postCount}</strong> posts</span>
+                  <span><strong><Ticker value={community.postCount} /></strong> posts</span>
                 </div>
               </div>
             </div>
 
             <div className="comm__hero-right">
               {/* Community identity icon */}
-              <div className="comm__hero-icon" style={{ background: `${accentColor}22`, borderColor: accentColor }}>
+              <div className="comm__hero-icon">
                 <span className="comm__hero-icon-emoji">
                   {hobby?.emoji || '🌿'}
                 </span>
@@ -273,8 +299,8 @@ export default function Community() {
 
               <motion.button
                 className={`comm__join-btn ${joined ? 'comm__join-btn--joined' : ''}`}
-                onClick={() => setJoined(!joined)}
-                whileHover={{ y: -2, boxShadow: joined ? '2px 2px 0 #191919' : '4px 4px 0 #191919' }}
+                onClick={handleJoin}
+                whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.96, y: 0 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               >
@@ -311,18 +337,14 @@ export default function Community() {
           <motion.div className="comm__main" variants={staggerItem}>
             {/* Section header */}
             <div className="comm__feed-header">
-              <h2 className="comm__feed-title">
+              <h2 className="comm__feed-title section-title">
                 <Sparkles size={18} strokeWidth={2} />
                 What's happening here
               </h2>
             </div>
 
             {/* Create post CTA */}
-            <motion.div
-              className="comm__create-cta"
-              whileHover={{ y: -2 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-            >
+            <motion.div className="comm__create-cta sticker">
               <div className="comm__create-cta-text">
                 <span className="comm__create-cta-label">Have something to share?</span>
                 <span className="comm__create-cta-sub text-muted">Start a discussion, ask a question, or share a project.</span>
@@ -342,18 +364,15 @@ export default function Community() {
             {/* Posts */}
             <div className="comm__posts">
               {communityPosts.map((post, i) => {
-                const author = users.find(u => u.id === post.authorId);
-                const isLiked = !!likedPosts[post.id];
+                const authorName = post.authorName || 'Anonymous';
+                const liked = isLiked(post.id);
                 const pastel  = postTypePastel(post.type);
 
                 return (
                   <motion.article
                     key={post.id}
-                    className="comm__post"
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.12 + i * 0.06, duration: 0.38 }}
-                    whileHover={{ y: -3, boxShadow: '3px 3px 0 #D6D5D0' }}
+                    className="comm__post sticker"
+                    {...revealAt(i, 1)}
                   >
                     {/* Post header */}
                     <div className="comm__post-head">
@@ -364,11 +383,11 @@ export default function Community() {
                         role="button"
                         tabIndex={0}
                       >
-                        {author?.name?.charAt(0) || '?'}
+                        {authorName.charAt(0)}
                       </div>
                       <div className="comm__post-author-info">
                         <span className="comm__post-author-name" onClick={() => navigate('/profile')} role="button" tabIndex={0}>
-                          {author?.name || 'Anonymous'}
+                          {authorName}
                         </span>
                         <span className="comm__post-timestamp text-muted">
                           {timeAgo(post.createdAt)}
@@ -399,14 +418,17 @@ export default function Community() {
                     {/* Post actions */}
                     <div className="comm__post-actions">
                       <motion.button
-                        className={`comm__post-action ${isLiked ? 'comm__post-action--liked' : ''}`}
-                        onClick={() => toggleLike(post.id)}
+                        className={`comm__post-action ${liked ? 'comm__post-action--liked' : ''}`}
+                        onClick={(e) => handleLike(e, post.id)}
                         whileTap={{ scale: 0.85 }}
                         transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-                        aria-label="Like post"
+                        aria-label={liked ? 'Unlike post' : 'Like post'}
+                        aria-pressed={liked}
                       >
-                        <Heart size={14} strokeWidth={2} fill={isLiked ? '#FF8FAB' : 'none'} />
-                        <span>{isLiked ? 'Liked' : 'Like'}</span>
+                        <span key={String(liked)} className={liked ? 'pop' : ''} style={{ display: 'inline-flex' }}>
+                          <Heart size={14} strokeWidth={2} fill={liked ? '#FF8FAB' : 'none'} />
+                        </span>
+                        <span>{liked ? 'Liked' : 'Like'} · <Ticker value={post.likeCount ?? 0} /></span>
                       </motion.button>
 
                       <div className="comm__post-action comm__post-action--replies">
@@ -507,11 +529,11 @@ export default function Community() {
                 <div className="comm__about-list">
                   <div className="comm__about-row">
                     <Users size={13} strokeWidth={2} />
-                    <span><strong>{community.memberCount}</strong> members</span>
+                    <span><strong><Ticker value={community.memberCount} /></strong> members</span>
                   </div>
                   <div className="comm__about-row">
                     <MessageCircle size={13} strokeWidth={2} />
-                    <span><strong>{community.postCount}</strong> posts</span>
+                    <span><strong><Ticker value={community.postCount} /></strong> posts</span>
                   </div>
                   {hobby && (
                     <div className="comm__about-row">

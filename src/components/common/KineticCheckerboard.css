@@ -27,6 +27,27 @@
   );
 }
 
+/* Page tint: squares pick up the page's colour */
+.kinetic-checkerboard--tinted {
+  background-color: color-mix(in srgb, var(--checker-tint) 10%, #f4f3ef);
+  background-image: conic-gradient(
+    color-mix(in srgb, var(--checker-tint) 30%, #e2e0da) 90deg,
+    transparent 90deg 180deg,
+    color-mix(in srgb, var(--checker-tint) 30%, #e2e0da) 180deg 270deg,
+    transparent 270deg
+  );
+}
+
+[data-theme="dark"] .kinetic-checkerboard--tinted {
+  background-color: #0F0E0C;
+  background-image: conic-gradient(
+    color-mix(in srgb, var(--checker-tint) 22%, #24221d) 90deg,
+    transparent 90deg 180deg,
+    color-mix(in srgb, var(--checker-tint) 22%, #24221d) 180deg 270deg,
+    transparent 270deg
+  );
+}
+
 @keyframes kinetic-checker-drift {
   0%   { background-position: 0px 0px; }
   100% { background-position: 80px 80px; }

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import CountUp from '../common/CountUp';
 
 /* ── Tiny hand-drawn doodle icons for each stat card ─────────── */
 
@@ -144,7 +145,7 @@ export default function ProfileStats({ stats }) {
           {/* Hand-drawn doodle icon — top-left corner */}
           <span className="profile-stats__doodle" aria-hidden="true">{item.doodle}</span>
 
-          <span className="profile-stats__value">{stats[item.key]}</span>
+          <CountUp className="profile-stats__value" value={stats[item.key]} />
           <span className="profile-stats__label">{item.label}</span>
         </motion.div>
       ))}

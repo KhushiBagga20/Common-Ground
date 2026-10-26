@@ -1,0 +1,134 @@
+/* ============================================
+   SIGN-IN DIALOG — magic link
+   ============================================ */
+
+.signin-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--space-md);
+  background: var(--overlay);
+}
+
+.signin-card {
+  position: relative;
+  width: min(420px, 100%);
+  padding: var(--space-xl);
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: 6px 6px 0 var(--border);
+}
+
+.signin-card__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--muted);
+}
+
+.signin-card__close:hover {
+  color: var(--text);
+  background: var(--border-light);
+}
+
+.signin-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.signin-card__led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 1.5px var(--border), 0 0 8px 1px var(--green);
+}
+
+.signin-card__title {
+  margin: var(--space-xs) 0 var(--space-sm);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.signin-card__text {
+  margin-bottom: var(--space-lg);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.signin-card__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0 var(--space-md);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.signin-card__field:focus-within {
+  border-color: var(--blue);
+}
+
+.signin-card__field input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0;
+  border: none;
+  background: transparent;
+}
+
+.signin-card__error {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--red);
+}
+
+.signin-card__submit {
+  width: 100%;
+  margin-top: var(--space-md);
+  padding: 13px var(--space-lg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 700;
+  box-shadow: 3px 3px 0 var(--yellow);
+  transition: translate 0.5s var(--ease-press), box-shadow 0.5s var(--ease-press);
+}
+
+.signin-card__submit:active:not(:disabled) {
+  translate: 3px 3px;
+  box-shadow: 0 0 0 var(--yellow);
+  transition-duration: 0.06s;
+}
+
+.signin-card__submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.signin-card__sent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+}
+
+.signin-card__sent .signin-card__text {
+  margin-bottom: 0;
+}

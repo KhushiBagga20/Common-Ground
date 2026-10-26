@@ -1,5 +1,12 @@
 import './KineticCheckerboard.css';
 
-export default function KineticCheckerboard() {
-  return <div className="kinetic-checkerboard" aria-hidden="true" />;
+/** Drifting checkerboard behind app pages; `tint` washes the squares in the page's colour */
+export default function KineticCheckerboard({ tint }) {
+  return (
+    <div
+      className={`kinetic-checkerboard ${tint ? 'kinetic-checkerboard--tinted' : ''}`}
+      style={tint ? { '--checker-tint': tint } : undefined}
+      aria-hidden="true"
+    />
+  );
 }

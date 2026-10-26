@@ -52,7 +52,7 @@ function inlineMarkdown(text) {
   return parts.length > 0 ? parts : text;
 }
 
-export default function ActivityCard({ activities: initialActivities }) {
+export default function ActivityCard({ activities: initialActivities, onDelete }) {
   const [activities, setActivities] = useState(initialActivities || []);
   const [deletingId, setDeletingId] = useState(null);
   const [pollVotes, setPollVotes] = useState({}); // { [activityId]: optionIndex }
@@ -85,17 +85,8 @@ export default function ActivityCard({ activities: initialActivities }) {
     setActivities(updated);
     setDeletingId(null);
 
-    // Update global state in localStorage
-    const saved = localStorage.getItem('cg-profile');
-    if (saved) {
-      try {
-        const profile = JSON.parse(saved);
-        profile.activities = profile.activities.filter(act => act.id !== id);
-        localStorage.setItem('cg-profile', JSON.stringify(profile));
-      } catch (e) {
-        console.error("Failed to delete activity from localStorage", e);
-      }
-    }
+    // The profile page saves the change (and removes the post itself)
+    onDelete?.(id);
   };
 
   const handleVote = (activityId, optionIdx) => {
@@ -228,9 +219,9 @@ export default function ActivityCard({ activities: initialActivities }) {
                   {act.media && (
                     <div style={{ marginTop: '10px', borderRadius: '12px', overflow: 'hidden', border: '2px solid var(--profile-card-border)', boxShadow: '3px 3px 0 var(--profile-shadow-offset)' }}>
                       {act.media.type?.startsWith('video/') ? (
-                        <video src={act.media.dataUrl} controls style={{ width: '100%', maxHeight: '320px', display: 'block', objectFit: 'contain', background: '#000' }} />
+                        <video src={act.media.dataUrl || act.media.url} controls style={{ width: '100%', maxHeight: '320px', display: 'block', objectFit: 'contain', background: '#000' }} />
                       ) : (
-                        <img src={act.media.dataUrl} alt="Post attachments" style={{ width: '100%', maxHeight: '320px', display: 'block', objectFit: 'cover' }} />
+                        <img src={act.media.dataUrl || act.media.url} alt="Post attachments" style={{ width: '100%', maxHeight: '320px', display: 'block', objectFit: 'cover' }} />
                       )}
                     </div>
                   )}

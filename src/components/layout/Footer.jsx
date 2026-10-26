@@ -162,10 +162,10 @@ export default function Footer() {
 
             {/* Product Nav Links */}
             <div className="cg-footer__links">
-              <Link to="/Ground" className="cg-footer__link">Ground</Link>
-              <Link to="/Events" className="cg-footer__link">Events</Link>
+              <Link to="/ground" className="cg-footer__link">Ground</Link>
+              <Link to="/events" className="cg-footer__link">Events</Link>
               <Link to="/onboarding" className="cg-footer__link">Hobbies</Link>
-              <Link to="/Profile" className="cg-footer__link">Profile</Link>
+              <Link to="/profile" className="cg-footer__link">Profile</Link>
             </div>
 
             {/* External Links */}
@@ -176,7 +176,7 @@ export default function Footer() {
               <a href="https://github.com" target="_blank" rel="noreferrer" className="cg-footer__link">
                 GitHub
               </a>
-              <Link to="/Ground" className="cg-footer__link">Contact</Link>
+              <Link to="/ground" className="cg-footer__link">Contact</Link>
             </div>
           </div>
 

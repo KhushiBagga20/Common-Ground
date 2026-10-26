@@ -310,6 +310,7 @@ common-ground/
 | **Scrolling** | Lenis | 1.3 | Smooth scroll on desktop views |
 | **Icons** | Lucide React | 1.28 | Clean, consistent icon set |
 | **Fonts** | Inter + Caveat | — | Swiss typography + hand-drawn accents |
+| **Backend** | Supabase | 2.118 | Postgres, magic-link auth, storage |
 | **Linting** | oxlint | 1.75 | Fast Rust-based linter |
 
 ---
@@ -409,6 +410,28 @@ npm run preview
 # Lint
 npm run lint
 ```
+
+---
+
+## 🗄️ Backend (Supabase)
+
+The app runs in **demo mode** out of the box: sample data, with your joins, likes, RSVPs and posts kept in this browser. Connect Supabase to get real accounts and shared data.
+
+1. **Create a project** at [supabase.com](https://supabase.com).
+2. **Create the tables.** In the dashboard's SQL Editor, run [`supabase/migrations/20261026120000_init.sql`](supabase/migrations/20261026120000_init.sql), then [`supabase/seed.sql`](supabase/seed.sql). If you use the Supabase CLI, `supabase db push` and `supabase db reset` do the same.
+3. **Allow the sign-in redirect.** Under Authentication → URL Configuration, add `http://localhost:5173/**` (and your deployed URL) to Redirect URLs. Email magic links are on by default.
+4. **Add your keys.** Copy `.env.example` to `.env.local` and fill in the project URL and anon key from Project Settings → API. Restart `npm run dev`.
+
+| What | Where it lives |
+|:-----|:---------------|
+| Hobbies, communities, events, posts | public tables, readable by anyone |
+| Your profile, interests and activity | `profiles` (one row per account, created on sign-up) |
+| Joins, likes, RSVPs | `community_members`, `post_likes`, `event_rsvps` — only you can see or change yours |
+| Post images | the public `post-media` Storage bucket, under your user id |
+
+Member, like and interested counts are kept by database triggers. Row-level security means people can only write their own rows.
+
+If you edit the sample data in `src/data`, regenerate the seed with `npm run db:seed-sql`.
 
 ---
 

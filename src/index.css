@@ -75,6 +75,9 @@
   /* Typography */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-accent: 'Caveat', cursive;
+  --font-display: 'Archivo', 'Inter', 'Arial Black', sans-serif;          /* poster headlines */
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;  /* labels, counters */
+  --font-pixel: 'Silkscreen', 'Space Mono', monospace;                  /* keycap legends */
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -93,6 +96,18 @@
   --duration-fast: 150ms;
   --duration-normal: 250ms;
   --duration-slow: 400ms;
+  /* Spring with ~20% overshoot, as a CSS linear() curve — for press-and-rebound */
+  --ease-press: linear(0, 0.152, 0.481, 0.824, 1.079, 1.21, 1.23, 1.178, 1.096, 1.021, 0.969, 0.947,
+    0.949, 0.964, 0.983, 0.999, 1.009, 1.013, 1.011, 1.007, 1.003, 0.999, 0.997, 0.998, 1);
+
+  /* Tactile depth — hard offset "sticker" shadows */
+  --shadow-hard: 4px 4px 0 var(--border);
+  --shadow-hard-sm: 3px 3px 0 var(--border);
+
+  /* Print materials for coloured panels */
+  --ink: #111111;
+  --paper: #FFF6DC;   /* cream label panels that sit on colour */
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.07 0 0 0 0 0.07 0 0 0 0 0.07 0 0 0 0.55 -0.22'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
 
   /* Z-index */
   --z-nav: 100;
@@ -181,6 +196,104 @@ textarea {
 
 .text-muted {
   color: var(--muted);
+}
+
+/* Small uppercase label for metadata, counters and eyebrows */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.pixel {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Poster headline voice — condensed heavy caps */
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 72%;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* A word set in colour with an ink outline and hard shadow */
+.outline-word {
+  color: var(--outline-fill, var(--pink));
+  -webkit-text-stroke: var(--outline-stroke, 2.5px) var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Shared section heading for app pages */
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 75%;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+/* --- Sticker cards: the shared card language ---
+   Ink outline + hard offset shadow. Interactive ones lift on hover and
+   their shadow picks up the card's accent (set --card-accent inline).
+   Scoped to .page-canvas so it wins over each page's own card rules,
+   and uses `translate` so it composes with framer-motion transforms. */
+.page-canvas .sticker {
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-hard-sm);
+  transition: translate 0.45s var(--ease-press),
+              box-shadow 0.45s var(--ease-press),
+              border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+}
+
+.page-canvas .sticker--hover {
+  cursor: pointer;
+}
+
+.page-canvas .sticker--hover:hover {
+  translate: -3px -3px;
+  box-shadow: 6px 6px 0 var(--card-accent, var(--yellow));
+}
+
+.page-canvas .sticker--hover:active {
+  translate: 1px 1px;
+  box-shadow: 1px 1px 0 var(--card-accent, var(--yellow));
+  transition-duration: 0.06s;
+  transition-timing-function: ease-out;
+}
+
+/* Little emoji/icons that wiggle when their card is hovered */
+@keyframes wiggle {
+  0%, 100% { rotate: 0deg; }
+  25%      { rotate: -12deg; }
+  75%      { rotate: 10deg; }
+}
+
+.page-canvas .sticker--hover:hover .wiggle-on-hover {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* A heart or icon that pops when switched on */
+@keyframes pop {
+  0%   { scale: 1; }
+  40%  { scale: 1.45; }
+  100% { scale: 1; }
+}
+
+.pop {
+  animation: pop 0.4s var(--ease-press);
 }
 
 /* --- Utility Classes --- */

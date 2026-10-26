@@ -38,7 +38,7 @@ export default function ShareVibeCard({ vibe }) {
         <Button
           size="sm"
           className="profile-card__sidebar-btn"
-          iconLeft={copied ? <Check size={14} /> : <Share2 size={14} />}
+          icon={copied ? <Check size={14} /> : <Share2 size={14} />}
           onClick={handleShare}
         >
           {copied ? "Copied Link!" : "Share Vibe"}

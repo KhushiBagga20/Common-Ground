@@ -353,7 +353,7 @@ export default function CardSwap({
             type="button"
             className="cardswap__btn cardswap__btn--like"
             style={{ width: '100%', marginTop: '12px' }}
-            onClick={() => navigate('/Ground')}
+            onClick={() => navigate('/ground')}
           >
             <span>EXPLORE COMMUNITIES →</span>
           </button>

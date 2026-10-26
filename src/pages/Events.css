@@ -25,23 +25,9 @@
   position: relative;
 }
 
-/* ── Header ─────────────────────────────────── */
-.events-header {
+/* ── Live strip above the panel ─────────────── */
+.events-live {
   margin-bottom: var(--space-lg);
-}
-
-.events-title {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.2;
-  margin-bottom: var(--space-xs);
-}
-
-.events-subtitle {
-  font-size: var(--text-sm);
-  color: var(--muted);
-  line-height: 1.5;
 }
 
 /* ── Search & Create Row ─────────────────────── */
@@ -182,6 +168,31 @@
   border-color: var(--pill-accent);
 }
 
+/* Chips feel like stickers: tilt on hover, the active one casts its accent */
+.events-category-pill {
+  transition: transform var(--duration-fast) var(--ease-out), rotate 0.4s var(--ease-press),
+              box-shadow 0.4s var(--ease-press), background-color var(--duration-fast) var(--ease-out);
+}
+
+.events-category-pill:hover {
+  rotate: -1.5deg;
+}
+
+.events-category-pill--active {
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* The chosen category fills with its own colour */
+.events-category-pill--active[data-accent] {
+  background: var(--pill-accent);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .events-category-pill--active {
+  box-shadow: 2px 2px 0 #F7F6F2;
+}
+
 /* ── Tabs ───────────────────────────────────── */
 .events-tabs {
   display: flex;
@@ -239,26 +250,60 @@
   gap: var(--space-md);
   padding: var(--space-md);
   background: var(--surface);
-  border: 1.5px solid var(--border-light);
   border-radius: var(--radius-lg);
-  transition: border-color var(--duration-fast) var(--ease-out),
-              transform var(--duration-fast) var(--ease-out);
   cursor: default;
 }
 
-.event-card:hover {
-  border-color: var(--border);
-  transform: translateY(-2px);
-}
-
-/* Image */
+/* Image — a little polaroid that tilts when the card is hovered */
 .event-card__image-wrap {
+  position: relative;
   flex-shrink: 0;
   width: 140px;
   height: 104px;
+  border: 2px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--bg);
+  transition: rotate 0.45s var(--ease-press), scale 0.45s var(--ease-press);
+}
+
+.event-card:hover .event-card__image-wrap {
+  rotate: -2.5deg;
+  scale: 1.04;
+}
+
+/* Ticket-stub date pinned to the image corner */
+.event-card__stub {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 38px;
+  padding: 3px 5px 4px;
+  border: 1.5px solid #111111;
+  border-radius: 6px;
+  background: #F7F6F2;
+  color: #111111;
+  font-family: var(--font-mono);
+  line-height: 1;
+  rotate: -4deg;
+  box-shadow: 2px 2px 0 #111111;
+}
+
+.event-card__stub-dow,
+.event-card__stub-month {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.event-card__stub-day {
+  font-family: var(--font-pixel);
+  font-size: 15px;
+  margin: 2px 0 1px;
 }
 
 .event-card__image {
@@ -519,11 +564,6 @@
     box-shadow: 4px 4px 0px var(--border);
   }
 
-  /* Header */
-  .events-header {
-    margin-bottom: var(--space-md);
-  }
-
   /* Toolbar: stack search and create button vertically */
   .events-toolbar {
     flex-direction: column;
@@ -606,15 +646,6 @@
     box-shadow: 3px 3px 0px var(--border);
   }
 
-  /* Smaller title so it doesn't overflow */
-  .events-title {
-    font-size: var(--text-xl);
-  }
-
-  .events-subtitle {
-    font-size: var(--text-xs);
-  }
-
   /* Search input: slightly smaller text so placeholder fits */
   .events-search-input {
     font-size: var(--text-xs);
@@ -666,10 +697,6 @@
     border-radius: var(--radius-sm);
     /* Remove 3-D shadow to avoid any overflow at extreme widths */
     box-shadow: 2px 2px 0px var(--border);
-  }
-
-  .events-title {
-    font-size: var(--text-lg);
   }
 
   /* Category pills: even tighter padding */
@@ -761,6 +788,16 @@
 }
 
 .ed-image { width: 100%; height: auto; display: block; }
+
+/* "Going" stamp thuds onto the image when you join */
+.ed-image-wrap { position: relative; }
+
+.ed-stamp {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  pointer-events: none;
+}
 
 .ed-content {
   padding: var(--space-xl);

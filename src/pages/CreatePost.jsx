@@ -9,9 +9,13 @@ import {
 import PageCanvas from '../components/layout/PageCanvas';
 import InterestTag from '../components/common/InterestTag';
 import Smiley from '../components/common/Smiley';
+import Stamp from '../components/common/Stamp';
+import PageHeader from '../components/common/PageHeader';
+import StickerStack from '../components/common/StickerStack';
+import { celebrate } from '../lib/celebrate';
 import KineticCheckerboard from '../components/common/KineticCheckerboard';
-import { hobbies } from '../data/hobbies';
-import { profileData } from '../data/profileData';
+import { useAppData } from '../context/AppDataContext';
+import { useProfile } from '../hooks/useProfile';
 import { staggerContainer, staggerItem } from '../animations/variants';
 import './CreatePost.css';
 
@@ -94,6 +98,8 @@ export default function CreatePost() {
   const navigate = useNavigate();
   const bodyRef  = useRef(null);
   const fileRef  = useRef(null);
+  const { hobbies, communities, createPost } = useAppData();
+  const { profile, updateProfile } = useProfile();
 
   // Core post state
   const [postType,          setPostType]          = useState('discussion');
@@ -103,7 +109,8 @@ export default function CreatePost() {
   const [customTags,        setCustomTags]        = useState([]);
   const [showCustomInput,   setShowCustomInput]   = useState(false);
   const [customInput,       setCustomInput]       = useState('');
-  const [submitted,         setSubmitted]         = useState(false);
+  const [submitted,         setSubmitted]         = useState(null); // the community it landed in, or { name: 'Ground' }
+  const [submitting,        setSubmitting]        = useState(false);
 
   // Active tool panel: null | 'photo' | 'poll' | 'event' | 'link'
   const [activeTool, setActiveTool] = useState(null);
@@ -239,41 +246,52 @@ export default function CreatePost() {
   };
 
   /* ── Submit ───────────────────────────────────────────────── */
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    if (submitting) return;
+    const button = e?.currentTarget;
     const interestNames = selectedInterests
       .map(id => id.startsWith('custom:') ? id.replace('custom:', '') : hobbies.find(h => h.id === id)?.name)
       .filter(Boolean);
 
-    const firstHobby    = hobbies.find(h => h.id === selectedInterests[0]);
-    const communityName = firstHobby ? firstHobby.name : customTags[0] || 'General';
+    // The post lands in the first picked hobby's community, if it has one
+    const firstHobby = hobbies.find(h => h.id === selectedInterests[0]);
+    const community  = firstHobby ? communities.find(c => c.hobbyId === firstHobby.id) : null;
+    const attachments = buildAttachments();
 
-    const savedProfile = localStorage.getItem('cg-profile');
-    let currentProfile = profileData;
-    if (savedProfile) {
-      try { currentProfile = JSON.parse(savedProfile); } catch { /* keep default */ }
-    }
+    setSubmitting(true);
+    const post = await createPost({
+      type: postType,
+      title: title.trim(),
+      body: body.trim(),
+      communityId: community?.id ?? null,
+      interests: selectedInterests.filter(id => !id.startsWith('custom:')),
+      tags: customTags,
+      attachments,
+      authorName: profile?.name,
+    });
+    setSubmitting(false);
+    if (!post) return;
 
     const newActivity = {
       id:          Date.now(),
+      postId:      post.id,
       userCreated: true,          // sentinel: this post can be deleted
       type:        postType,
-      community:   communityName,
+      community:   community?.name ?? firstHobby?.name ?? customTags[0] ?? 'General',
       title:       title,
       body:        body,
       interests:   interestNames,
       timestamp:   'Just now',
       replies:     0,
-      createdAt:   new Date().toISOString(),
-      ...buildAttachments(),
+      createdAt:   post.createdAt,
+      // Uploaded media has a URL; demo mode keeps the local data URL
+      ...(post.attachments?.media?.url ? post.attachments : attachments),
     };
+    updateProfile({ activities: [newActivity, ...(profile?.activities ?? [])] });
 
-    localStorage.setItem('cg-profile', JSON.stringify({
-      ...currentProfile,
-      activities: [newActivity, ...currentProfile.activities],
-    }));
-
-    setSubmitted(true);
-    setTimeout(() => navigate('/ground'), 2000);
+    celebrate(button, { count: 24 });
+    setSubmitted(community ?? { name: 'Ground' });
+    setTimeout(() => navigate(community ? `/community/${community.id}` : '/ground'), 2000);
   };
 
   const canSubmit = title.trim().length > 0 && selectedInterests.length > 0;
@@ -289,9 +307,16 @@ export default function CreatePost() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
         >
+          <motion.div
+            initial={{ scale: 1.8, rotate: -30, opacity: 0 }}
+            animate={{ scale: 1, rotate: 0, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 520, damping: 20, delay: 0.15 }}
+          >
+            <Stamp text={`Posted · ${submitted.name}`} center="OK!" color="var(--pink)" size={128} />
+          </motion.div>
           <Smiley size={56} mood="happy" />
           <h2>Posted!</h2>
-          <p className="text-muted">Your post is now live. Taking you back to Ground…</p>
+          <p className="text-muted">Your post is now live. Taking you to {submitted.name}…</p>
         </motion.div>
       </PageCanvas>
     );
@@ -308,7 +333,7 @@ export default function CreatePost() {
   /* ── Render ───────────────────────────────────────────────── */
   return (
     <PageCanvas maxWidth="1200px">
-      <KineticCheckerboard />
+      <KineticCheckerboard tint="var(--pink)" />
 
       {/* Page doodles */}
       <div className="cp-page-doodles" aria-hidden="true">
@@ -352,6 +377,21 @@ export default function CreatePost() {
         onChange={handleFileChange}
       />
 
+      {/* Pink hero */}
+      <motion.div variants={staggerContainer} initial="initial" animate="animate">
+        <PageHeader
+          channel={3}
+          name="Create"
+          title="Say"
+          highlight="something."
+          subtitle="Start a discussion, ask a question, pitch an idea or show off a project. It lands in the community for your first tagged hobby."
+          color="var(--pink)"
+          highlightColor="var(--yellow)"
+          pattern="stripes"
+          art={<StickerStack items={['💬', '❓', '💡', '🚀']} colors={['var(--paper)', 'var(--yellow)', 'var(--green)', 'var(--blue)']} />}
+        />
+      </motion.div>
+
       {/* Two-column grid */}
       <motion.div className="cp-two-col" variants={staggerContainer} initial="initial" animate="animate">
 
@@ -364,11 +404,6 @@ export default function CreatePost() {
           <motion.button className="cp-back-btn" onClick={() => navigate(-1)} whileHover={{ x: -3 }}>
             <ArrowLeft size={16} /><span>Back</span>
           </motion.button>
-
-          <div className="cp-heading-block">
-            <h1 className="cp-heading">Create a post ✨</h1>
-            <p className="cp-subheading">Share your thoughts, ideas or projects with the community! 💗</p>
-          </div>
 
           {/* Post type */}
           <div className="cp-type-row">
@@ -596,12 +631,12 @@ export default function CreatePost() {
             <motion.button
               className="cp-post-btn"
               onClick={handleSubmit}
-              disabled={!canSubmit}
+              disabled={!canSubmit || submitting}
               whileHover={canSubmit ? { scale: 1.03, y: -1 } : {}}
               whileTap={canSubmit ? { scale: 0.97 } : {}}
               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
             >
-              <Send size={16} /> Post
+              <Send size={16} /> {submitting ? 'Posting…' : 'Post'}
             </motion.button>
           </div>
         </motion.div>
